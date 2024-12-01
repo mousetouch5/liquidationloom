@@ -11,6 +11,7 @@ use App\Http\Controllers\OfficialEventController;
 use App\Http\Controllers\OfficialTransactionController;
 use App\Http\Controllers\OfficialReportController;
 use App\Http\Controllers\OfficialProjectController;
+use App\Http\Controllers\EditController;
 
 
 Route::get('/', function () {
@@ -39,4 +40,6 @@ Route::get('/Official/OfficialEvent', [OfficialEventController::class, 'index'])
 Route::get('/Official/OfficialTransaction', [OfficialTransactionController::class, 'index'])->name('Official.OfficialTransaction.index');
 Route::get('/Official/OfficialReport', [OfficialReportController::class, 'index'])->name('Official.OfficialReport.index');
 Route::get('/Official/OfficialProject', [OfficialProjectController::class, 'index'])->name('Official.OfficialProject.index');
+Route::get('/Official/Edit', [EditController::class, 'index'])->name('Official.Edit.index');
+
 

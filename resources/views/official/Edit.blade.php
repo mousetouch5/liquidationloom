@@ -1,12 +1,4 @@
 <x-app-layout>
-
-      
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-        AOS.init();
-      </script>
-
     <div class="flex h-full min-h-screen">
         <!-- Sidebar -->
         <aside class="w-1/4 bg-gray-100 shadow-lg h-[100vh]">
@@ -113,159 +105,139 @@
 
 
 
+                   <!-- Grid event section -->
+                   <div class="flex flex-col lg:flex-row lg:space-x-6 w-full">
+                    <!-- Content Section -->
+                    <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
+                          <!-- Title -->
+        <div class="p-4 bg-gray-50">
+            <h2 class="text-xl font-semibold text-gray-700">Events</h2>
+        </div>
 
-
-
-
-
-
-
-
-
-
-            
-
-                    <!-- grid event section -->
-        <div class="flex flex-col lg:flex-row lg:space-x-6">
-            <!-- Content Section -->
-            <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
-                <!-- Events Section -->
-                <section>
-                    <div class="flex justify-between items-center" 
-                    data-aos="fade-up"
-                            data-aos-duration="2000">
-                        <h2 class="text-lg font-semibold">Projects</h2>
-                        <div class="flex space-x-4">
-                            <button id="recent-events" class="px-4 py-2 text-black rounded-lg" style="background: rgba(205, 243, 255, 1);">Recent Projects</button>
-                            <button id="ongoing-events" class="px-4 py-2 bg-gray-200 rounded-lg">Ongoing Projects</button>
-                            <button id="upcoming-events" class="px-4 py-2 bg-gray-200 rounded-lg">Upcoming Projects</button>
-                        </div>
-                    </div>
-                
-                    <div class="grid grid-cols-3 gap-4 mt-4" 
-                    data-aos="fade-in"
-                            data-aos-duration="2000">
-                        <!-- Event Cards -->
-                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent">
-                            <img src="{{ asset('logo/card1.png') }}" alt="Event" class="rounded-lg">
-                            <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-                            <p class="text-sm text-gray-500">
-                                <!-- Event Date and Time -->
-                                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                    <!-- SVG path here -->
-                                </svg>
-                                16 Jul 2024, 8:30 AM
-                            </p>
-                        </div>
-                
-                        <!-- Event Cards -->
-                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="ongoing">
-                            <img src="{{ asset('logo/card2.png') }}" alt="Event" class="rounded-lg">
-                            <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-                            <p class="text-sm text-gray-500">
-                                <!-- Event Date and Time -->
-                                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                    <!-- SVG path here -->
-                                </svg>
-                                16 Jul 2024, 8:30 AM
-                            </p>
-                        </div>
-                
-                        <!-- Event Cards -->
-                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="upcoming">
-                            <img src="{{ asset('logo/card3.png') }}" alt="Event" class="rounded-lg">
-                            <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-                            <p class="text-sm text-gray-500">
-                                <!-- Event Date and Time -->
-                                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                    <!-- SVG path here -->
-                                </svg>
-                                16 Jul 2024, 8:30 AM
-                            </p>
-                        </div>
-                
-                    </div>
-                </section>
-                
-                <script>
-                // JavaScript to handle the event category toggle
-                document.addEventListener("DOMContentLoaded", function() {
-                    const buttons = document.querySelectorAll("button");
-                    const eventCards = document.querySelectorAll(".event-card");
-                
-                    // Function to filter event cards based on category
-                    function filterEvents(category) {
-                        eventCards.forEach(card => {
-                            if (category === "all" || card.getAttribute("data-category") === category) {
-                                card.classList.remove("hidden");
-                            } else {
-                                card.classList.add("hidden");
-                            }
-                        });
-                    }
-                
-                    // Event listener for button clicks
-                    buttons.forEach(button => {
-                        button.addEventListener("click", () => {
-                            // Reset all buttons' styles
-                            buttons.forEach(btn => btn.classList.remove("bg-blue-100"));
-                            button.classList.add("bg-blue-100");
-                
-                            // Determine which category to filter by
-                            if (button.id === "recent-events") {
-                                filterEvents("recent");
-                            } else if (button.id === "ongoing-events") {
-                                filterEvents("ongoing");
-                            } else if (button.id === "upcoming-events") {
-                                filterEvents("upcoming");
-                            }
-                        });
-                    });
-                
-                    // Initial load, show all events
-                    filterEvents("all");
-                });
-                </script>
-                
-               
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col" 
-            data-aos="fade-in"
-                    data-aos-duration="2000">
-                <img src="{{ asset('logo/card4.jfif') }}" alt="Barangay Clean-Up Drive" class="rounded-lg w-full mb-4 h-72">
-                <div>
-                    <h3 class="text-xl font-semibold">Barangay Clean-Up Drive Nets Big Haul</h3>
-                    <p class="mt-4 text-sm text-gray-500">
-                        Barangay Pahanocoy held a successful clean-up drive last weekend, collecting several truckloads of garbage and recyclables. Residents are encouraged to continue responsible waste disposal habits to keep the barangay clean.
-                    </p>
-                </div>
-            </section>
-
-                
-            </main>
         
-            <!-- Right-Side Content Section -->
-            <aside class="w-full lg:w-1/3 grid grid-cols-1 gap-6 mt-5"
-            data-aos="fade-left"
-                    data-aos-duration="2000">
-                <div class="bg-white shadow-lg rounded-lg p-6 relative"> <!-- added 'relative' to allow absolute positioning of the emoji -->
-                    <h4 class="text-lg font-semibold">Community Outreach</h4>
-                    <canvas id="pieChart" class="mt-4 h-32"></canvas> <!-- Pie chart -->
-                        <!-- 🦆 Emoji -->
+     
+        <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col">
+            <div class="container mx-auto p-8">
+                <h2 class="text-2xl font-semibold mb-6">Add New Event</h2>
+                
+                <!-- Event Name -->
+                <div class="mb-4">
+                    <label for="event_name" class="block text-sm font-semibold text-gray-700">Event Name:</label>
+                    <input type="text" id="event_name" name="event_name" placeholder="Enter Event Name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <span id="event_name_error" class="text-red-500 text-xs mt-1 hidden">Error: Event name is required.</span>
+                </div>
+            
+                <!-- Event Description -->
+                <div class="mb-4">
+                    <label for="description" class="block text-sm font-semibold text-gray-700">Event Description:</label>
+                    <textarea id="description" name="description" placeholder="Enter Event Description" rows="4" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                    <span id="description_error" class="text-red-500 text-xs mt-1 hidden">Error: Description is required.</span>
+                </div>
+            
+                <!-- Event Date -->
+                <div class="mb-4">
+                    <label for="event_date" class="block text-sm font-semibold text-gray-700">Event Date:</label>
+                    <input type="date" id="event_date" name="event_date" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <span id="event_date_error" class="text-red-500 text-xs mt-1 hidden">Error: Date is required.</span>
+                </div>
+            
+                <!-- Event Time -->
+                <div class="mb-4">
+                    <label for="event_time" class="block text-sm font-semibold text-gray-700">Event Time:</label>
+                    <input type="time" id="event_time" name="event_time" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <span id="event_time_error" class="text-red-500 text-xs mt-1 hidden">Error: Time is required.</span>
+                </div>
+            
+                <!-- Event Type -->
+                <div class="mb-4">
+                    <label for="event_type" class="block text-sm font-semibold text-gray-700">Event Type:</label>
+                    <select id="event_type" name="event_type" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <option value="">Select Event Type</option>
+                        <option value="conference">Conference</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="seminar">Seminar</option>
+                        <option value="community_outreach">Community Outreach</option>
+                    </select>
+                    <span id="event_type_error" class="text-red-500 text-xs mt-1 hidden">Error: Event type is required.</span>
+                </div>
+            
+                <!-- Event Location -->
+                <div class="mb-4">
+                    <label for="event_location" class="block text-sm font-semibold text-gray-700">Event Location:</label>
+                    <input type="text" id="event_location" name="event_location" placeholder="Enter Event Location" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <span id="event_location_error" class="text-red-500 text-xs mt-1 hidden">Error: Location is required.</span>
+                </div>
+            
+                <!-- Event Organizer -->
+                <div class="mb-4">
+                    <label for="event_organizer" class="block text-sm font-semibold text-gray-700">Event Organizer:</label>
+                    <input type="text" id="event_organizer" name="event_organizer" placeholder="Enter Organizer Name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <span id="event_organizer_error" class="text-red-500 text-xs mt-1 hidden">Error: Organizer is required.</span>
+                </div>
+            
+                <!-- Event Image -->
+                <div class="mb-4">
+                    <label for="event_image" class="block text-sm font-semibold text-gray-700">Event Image:</label>
+                    <input type="file" id="event_image" name="event_image" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <span id="event_image_error" class="text-red-500 text-xs mt-1 hidden">Error: Please upload an image.</span>
+                </div>
+            
+                <!-- Event Budget and Expenses -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-700">Event Budget:</h3>
+                    <div class="flex justify-between mt-4">
+                        <div class="w-full mr-2">
+                            <label for="event_budget" class="block text-sm font-semibold text-gray-700">Event Amount:</label>
+                            <input type="text" id="event_budget" name="event_budget" placeholder="Enter Budget" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <span id="event_budget_error" class="text-red-500 text-xs mt-1 hidden">Error: Budget amount is required.</span>
+                        </div>
+            
+                        <div class="w-full ml-2">
+                            <label for="event_spent" class="block text-sm font-semibold text-gray-700">Event Spent:</label>
+                            <input type="text" id="event_spent" name="event_spent" placeholder="Enter Total Spent" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <span id="event_spent_error" class="text-red-500 text-xs mt-1 hidden">Error: Spent amount is required.</span>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Additional Expenses Section -->
+                <div class="mb-4">
+                    <label for="additional_expenses" class="block text-sm font-semibold text-gray-700">Add Additional Expenses:</label>
+                    <textarea id="additional_expenses" name="additional_expenses" placeholder="Enter Additional Expenses" rows="4" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                    <span id="additional_expenses_error" class="text-red-500 text-xs mt-1 hidden">Error: Additional expenses are required.</span>
+                </div>
+            
+                <!-- Submit Button -->
+                <div class="flex justify-end mt-6">
+                    
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">Save and Submit</button>
+                </div>
+            </div>
+            
+        </section>
 
+       
+                    </main>
+                </div>
+                
+
+
+
+            <!-- Right-Side Content Section -->
+            <aside class="lg:w-1/3 w-full mt-5 lg:mt-0">
+                <div class="bg-white shadow-lg rounded-lg p-6 relative">
+                    <div class="bg-white shadow-md rounded-lg w-80 p-4">
+                    
+
+                               <!-- Pie Chart Placeholder -->
+                    <div class="text-center">
+                        <h3 class="text-sm font-semibold text-gray-700 mb-2">Community Outreach  </h3>
+                       
+                            <!-- Simulated Pie Chart -->
+                            <canvas id="pieChart" class="mt-4 h-72"></canvas>
+                      
+            
+                        <!-- Feedback -->
                         <div class="mt-4 space-y-2">
                             <div class="flex items-center justify-center space-x-2">
                                 <span class="text-2xl">😊</span>
@@ -276,14 +248,10 @@
                                 <span class="text-sm font-semibold text-gray-700">20%</span>
                             </div>
                         </div>
+                    </div>
 
-                </div>
-                
-        
                 <!-- Barangay Officials -->
-                <div class="bg-white shadow-lg rounded-lg p-6" 
-                data-aos="fade-left"
-                        data-aos-duration="2000">
+                <div class="bg-white shadow-lg rounded-lg p-6 mt-5">
                     <h4 class="text-lg font-semibold">Barangay Officials</h4>
                     <ul class="mt-4 space-y-4">
                         <li class="flex items-center space-x-4">
@@ -303,7 +271,7 @@
                         <li class="flex items-center space-x-4">
                             <img src="https://via.placeholder.com/40" alt="Official" class="w-10 h-10 rounded-full">
                             <div>
-                                <p class="text-sm font-semibold">Dominic Tangco</p>
+                                <p class="text-sm font-semibold">Juan Dela Cruz</p>
                                 <p class="text-xs text-gray-500">Barangay Treasurer</p>
                             </div>
                         </li>
@@ -311,55 +279,40 @@
                 </div>
             </aside>
         </div>
+    </div>
 
 
-
-        <!-- function button for recent, incoming ongoing -->
-         <style>
-                    /* Initially hide all events, we'll toggle visibility using JavaScript */
-                    .hidden {
-                        display: none;
-                    }
-                
-                    /* Active button style */
-                    .bg-blue-100 {
-                        background-color: rgba(205, 243, 255, 1);
-                    }
-                </style>
-
-
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('pieChart').getContext('2d');
-    var pieChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: [''],
-            datasets: [{
-                label: 'Community Outreach',
-                data: [40, 30, 30], // Example data points, adjust as needed
-                backgroundColor: ['#4CD7F6', '#CDF3FF'],
-                borderColor: '#ffffff',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top'
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [''],
+                datasets: [{
+                    label: 'Community Outreach',
+                    data: [40, 30, 30], // Example data points, adjust as needed
+                    backgroundColor: ['#4CD7F6', '#CDF3FF'],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
                         }
                     }
                 }
-            }
-        } // Close the options object
-    }); // Close the Chart initialization
-</script>
-
-</x-app-layout>
+            } // Close the options object
+        }); // Close the Chart initialization
+    </script>
+    
+    </x-app-layout>

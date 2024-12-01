@@ -1,4 +1,12 @@
 <x-app-layout>
+      
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+        AOS.init();
+      </script>
+
+
     <div class="flex h-full min-h-screen">
         <!-- Sidebar -->
         <aside class="w-full bg-gray-100 shadow-lg">
@@ -37,13 +45,18 @@
                 </a>
             </nav>
             
-            <a href="#" class=" px-6 py-3 flex items-center text-gray-600 hover:bg-blue-100">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.0014 5.71408C16.0014 5.41876 15.8972 5.13283 15.7097 4.92189L11.6302 0.328126C11.4427 0.117188 11.1885 0 10.9218 0H10.6676V6.00002H16.0014V5.71408ZM23.7937 14.4375L19.8059 9.91878C19.385 9.44534 18.6641 9.77815 18.6641 10.4485V13.5H15.9972V16.5H18.6641V19.5563C18.6641 20.2266 19.385 20.5594 19.8059 20.086L23.7937 15.5625C24.0688 15.2532 24.0688 14.7469 23.7937 14.4375ZM8.00069 15.75V14.25C8.00069 13.8375 8.30072 13.5 8.66742 13.5H16.0014V7.50002H10.3342C9.78418 7.50002 9.33414 6.99377 9.33414 6.37502V0H1.00009C0.445872 0 0 0.501564 0 1.125V22.8751C0 23.4985 0.445872 24.0001 1.00009 24.0001H15.0013C15.5555 24.0001 16.0014 23.4985 16.0014 22.8751V16.5H8.66742C8.30072 16.5 8.00069 16.1625 8.00069 15.75Z" fill="black"/>
-                    </svg>
-                    
-                <span class="ml-4">Log out</span>
-            </a>
+            <div class="absolute bottom-4 w-full">
+                <a href="#" class=" px-6 py-3 flex items-center text-gray-600 ">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.0014 5.71408C16.0014 5.41876 15.8972 5.13283 15.7097 4.92189L11.6302 0.328126C11.4427 0.117188 11.1885 0 10.9218 0H10.6676V6.00002H16.0014V5.71408ZM23.7937 14.4375L19.8059 9.91878C19.385 9.44534 18.6641 9.77815 18.6641 10.4485V13.5H15.9972V16.5H18.6641V19.5563C18.6641 20.2266 19.385 20.5594 19.8059 20.086L23.7937 15.5625C24.0688 15.2532 24.0688 14.7469 23.7937 14.4375ZM8.00069 15.75V14.25C8.00069 13.8375 8.30072 13.5 8.66742 13.5H16.0014V7.50002H10.3342C9.78418 7.50002 9.33414 6.99377 9.33414 6.37502V0H1.00009C0.445872 0 0 0.501564 0 1.125V22.8751C0 23.4985 0.445872 24.0001 1.00009 24.0001H15.0013C15.5555 24.0001 16.0014 23.4985 16.0014 22.8751V16.5H8.66742C8.30072 16.5 8.00069 16.1625 8.00069 15.75Z" fill="black"/>
+                        </svg>
+                        
+                        
+                        
+                        
+                    <span class="ml-4">Log out</span>
+                </a>
+                </div>
         </aside>
 
 
@@ -59,14 +72,18 @@
                 <!-- Events Section -->
                 <section>
                     <div class="flex justify-between items-center">
-                        <h2 class="text-lg font-semibold">Projects</h2>
+                        <h2 class="text-lg font-semibold" 
+                        data-aos="fade-up"
+                                data-aos-duration="2000">Projects</h2>
                         <div class="flex space-x-4">
                             <button class="px-4 py-2  text-black rounded-lg " style="background: rgba(205, 243, 255, 1);">Recent Projects</button>
                             <button class="px-4 py-2 bg-gray-200 rounded-lg">Ongoing Events</button>
                             <button class="px-4 py-2 bg-gray-200 rounded-lg">Upcoming Events</button>
                         </div>
                     </div>
-                    <div class="grid grid-cols-3 gap-4 mt-4">
+                    <div class="grid grid-cols-3 gap-4 mt-4"
+                    data-aos="fade-in"
+                            data-aos-duration="2000">
 
 
 
@@ -146,7 +163,9 @@
                     </div>
 
                        <!-- Expenses Table Section -->
-    <div class="bg-white shadow-md rounded-lg overflow-hidden w-full mt-5">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden w-full mt-5"
+    data-aos="fade-up"
+            data-aos-duration="2000">
         <table class="w-full">
             <thead>
                 <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
@@ -233,7 +252,9 @@
             <aside class="w-full lg:w-1/3 grid grid-cols-1 gap-6 mt-5">
 
                  <!-- Barangay Officials -->
-                 <div class="bg-white shadow-lg rounded-lg p-6">
+                 <div class="bg-white shadow-lg rounded-lg p-6" 
+                 data-aos="fade-left"
+                         data-aos-duration="2000">
                     <h4 class="text-lg font-semibold">Barangay Officials</h4>
                     <ul class="mt-4 space-y-4">
                         <li class="flex items-center space-x-4">
@@ -261,7 +282,9 @@
                 </div>
 
 
-                <div class="bg-white shadow-md rounded-lg w-80 p-4">
+                <div class="bg-white shadow-md rounded-lg w-80 p-4"
+                data-aos="fade-left"
+                        data-aos-duration="2000">
                     <!-- Community Outreach Budget -->
                     <div class="bg-cyan-500 text-white rounded-lg p-4 text-center mb-4">
                         <h2 class="text-sm font-semibold">Community Outreach</h2>
@@ -290,16 +313,160 @@
                         </div>
                     </div>
             
-                    <!-- Answer Survey Button -->
-                    <button class="bg-gray-200 text-gray-700 font-semibold text-sm rounded-full w-full py-3 mt-6 hover:bg-gray-300">
-                        ANSWER SURVEY
-                    </button>
-                </div>
+                          <!--survey boss -->
+                                    <!-- Button to Open the Modal Survey -->
+                                    <button class="btn bg-cyan-500 w-full mt-5"
+                                   
+                                             onclick="Survey.showModal()">Answer Question</button>
 
+                                    <!-- Modal Structure with Survey Questions -->
+                                    <dialog id="Survey" class="modal">
+                                    <div class="modal-box w-11/12 max-w-5xl" >
+                                        <h3 class="text-lg font-bold">Barangay Events and Projects Survey</h3>
+                                        <p class="py-4">This survey aims to understand your experience with events and projects held in our barangay. Your responses will help us improve future initiatives and better serve the community.</p>
+
+                                        <!-- Survey Form -->
+                                        <form id="surveyForm" >
+                                        <!-- Question 1: How often do you participate in barangay events? -->
+                                        <div class="mb-6">
+                                            <p class="text-sm font-semibold text-gray-700">1. How often do you participate in barangay events?</p>
+                                            <div class="mt-2 space-y-2">
+                                            <label class="inline-flex items-center">
+                                                <input type="radio" name="participation" value="never" class="form-radio">
+                                                <span class="ml-2">Never</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="radio" name="participation" value="rarely" class="form-radio">
+                                                <span class="ml-2">Rarely (once or twice a year)</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="radio" name="participation" value="sometimes" class="form-radio">
+                                                <span class="ml-2">Sometimes (3-5 times a year)</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="radio" name="participation" value="often" class="form-radio">
+                                                <span class="ml-2">Often (6 or more times a year)</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="radio" name="participation" value="always" class="form-radio">
+                                                <span class="ml-2">Always</span>
+                                            </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Question 2: What types of barangay events do you find most interesting or valuable? -->
+                                        <div class="mb-6">
+                                            <p class="text-sm font-semibold text-gray-700">2. What types of barangay events do you find most interesting or valuable? (select all that apply)</p>
+                                            <div class="mt-2 space-y-2">
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_types" value="cultural_celebrations" class="form-checkbox">
+                                                <span class="ml-2">Cultural celebrations (fiestas, etc.)</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_types" value="sports_tournaments" class="form-checkbox">
+                                                <span class="ml-2">Sports tournaments</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_types" value="health_fairs" class="form-checkbox">
+                                                <span class="ml-2">Health fairs/medical missions</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_types" value="clean_up_drives" class="form-checkbox">
+                                                <span class="ml-2">Clean-up drives/environmental projects</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_types" value="skills_workshops" class="form-checkbox">
+                                                <span class="ml-2">Skills workshops (e.g., livelihood training)</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_types" value="youth_programs" class="form-checkbox">
+                                                <span class="ml-2">Youth development programs</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_types" value="community_forums" class="form-checkbox">
+                                                <span class="ml-2">Community forums/meetings</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_types" value="social_events" class="form-checkbox">
+                                                <span class="ml-2">Social events (e.g., movie nights)</span>
+                                            </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Question 3: How do you usually find out about upcoming barangay events? -->
+                                        <div class="mb-6">
+                                            <p class="text-sm font-semibold text-gray-700">3. How do you usually find out about upcoming barangay events? (select all that apply)</p>
+                                            <div class="mt-2 space-y-2">
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_info" value="barangay_announcements" class="form-checkbox">
+                                                <span class="ml-2">Barangay announcements (posters, flyers)</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_info" value="social_media" class="form-checkbox">
+                                                <span class="ml-2">Barangay social media page</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_info" value="barangay_website" class="form-checkbox">
+                                                <span class="ml-2">Barangay website</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_info" value="text_alerts" class="form-checkbox">
+                                                <span class="ml-2">Community text message alerts</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_info" value="community_meetings" class="form-checkbox">
+                                                <span class="ml-2">Announcements during community meetings</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="event_info" value="word_of_mouth" class="form-checkbox">
+                                                <span class="ml-2">Word-of-mouth</span>
+                                            </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Question 4: In your opinion, how have these projects impacted the barangay? -->
+                                        <div class="mb-6">
+                                            <p class="text-sm font-semibold text-gray-700">4. In your opinion, how have these projects impacted the barangay? (select all that apply)</p>
+                                            <div class="mt-2 space-y-2">
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="impact" value="improved_infrastructure" class="form-checkbox">
+                                                <span class="ml-2">Improved infrastructure (roads, drainage, etc.)</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="impact" value="enhanced_safety" class="form-checkbox">
+                                                <span class="ml-2">Enhanced safety and security</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="impact" value="environmental_sustainability" class="form-checkbox">
+                                                <span class="ml-2">Increased environmental sustainability</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="impact" value="improved_services" class="form-checkbox">
+                                                <span class="ml-2">Improved access to basic services (water, sanitation)</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="checkbox" name="impact" value="community_development" class="form-checkbox">
+                                                <span class="ml-2">Boosted community development and livelihood opportunities</span>
+                                            </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Submit Button -->
+                                        <div class="flex justify-center mt-6">
+                                            <button type="submit" class="btn bg-cyan-500 text-white hover:bg-cyan-600 rounded-lg px-6 py-2">Submit</button>
+                                        </div>
+                                        
+                                        </form>
+
+                                        <!-- Close Button -->
+                                        <div class="modal-action">
+                                        <form method="dialog">
+                                            <button class="btn">Close</button>
+                                        </form>
+                                        </div>
+                                    </div>
+                                    </dialog>
                 </div>
-                
-        
-               
             </aside>
         </div>
         
@@ -336,5 +503,22 @@
         } // Close the options object
     }); // Close the Chart initialization
 </script>
+
+
+
+            <!-- JavaScript for Modal Survey -->
+                <script>
+                    const my_modal_4 = document.getElementById("Survey");
+                
+                    // Show the modal
+                    document.querySelector("[onclick='my_modal_4.showModal()']").addEventListener("click", function() {
+                    Survey.showModal();
+                    });
+                
+                    // Close the modal when the close button is clicked
+                    document.querySelector("form[method='dialog']").addEventListener("submit", function() {
+                    Survey.close();
+                    });
+                </script>
 
 </x-app-layout>

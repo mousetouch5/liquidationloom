@@ -1,4 +1,11 @@
 <x-app-layout>
+      
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+        AOS.init();
+      </script>
+
     <div class="flex h-full min-h-screen">
         <!-- Sidebar -->
         <aside class="w-full bg-gray-100 shadow-lg">
@@ -38,7 +45,7 @@
             </nav>
             
             <div class="absolute bottom-4 w-full">
-                <a href="#" class=" px-6 py-3 flex items-center text-gray-600 hover:bg-blue-100">
+                <a href="#" class=" px-6 py-3 flex items-center text-gray-600 ">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M16.0014 5.71408C16.0014 5.41876 15.8972 5.13283 15.7097 4.92189L11.6302 0.328126C11.4427 0.117188 11.1885 0 10.9218 0H10.6676V6.00002H16.0014V5.71408ZM23.7937 14.4375L19.8059 9.91878C19.385 9.44534 18.6641 9.77815 18.6641 10.4485V13.5H15.9972V16.5H18.6641V19.5563C18.6641 20.2266 19.385 20.5594 19.8059 20.086L23.7937 15.5625C24.0688 15.2532 24.0688 14.7469 23.7937 14.4375ZM8.00069 15.75V14.25C8.00069 13.8375 8.30072 13.5 8.66742 13.5H16.0014V7.50002H10.3342C9.78418 7.50002 9.33414 6.99377 9.33414 6.37502V0H1.00009C0.445872 0 0 0.501564 0 1.125V22.8751C0 23.4985 0.445872 24.0001 1.00009 24.0001H15.0013C15.5555 24.0001 16.0014 23.4985 16.0014 22.8751V16.5H8.66742C8.30072 16.5 8.00069 16.1625 8.00069 15.75Z" fill="black"/>
                         </svg>
@@ -57,63 +64,108 @@
 
 
 
+              
                     <!-- grid event section -->
-
         <div class="flex flex-col lg:flex-row lg:space-x-6">
             <!-- Content Section -->
             <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
                 <!-- Events Section -->
                 <section>
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-lg font-semibold">Recent Events</h2>
+                    <div class="flex justify-between items-center" 
+                    data-aos="fade-up"
+                            data-aos-duration="2000">
+                        <h2 class="text-lg font-semibold">Projects</h2>
                         <div class="flex space-x-4">
-                            <button class="px-4 py-2  text-black rounded-lg " style="background: rgba(205, 243, 255, 1);">Recent Events</button>
-                            <button class="px-4 py-2 bg-gray-200 rounded-lg">Ongoing Events</button>
-                            <button class="px-4 py-2 bg-gray-200 rounded-lg">Upcoming Events</button>
+                            <button id="recent-events" class="px-4 py-2 text-black rounded-lg" style="background: rgba(205, 243, 255, 1);">Recent Projects</button>
+                            <button id="ongoing-events" class="px-4 py-2 bg-gray-200 rounded-lg">Ongoing Projects</button>
+                            <button id="upcoming-events" class="px-4 py-2 bg-gray-200 rounded-lg">Upcoming Projects</button>
                         </div>
                     </div>
-                    <div class="grid grid-cols-3 gap-4 mt-4">
-
-
-
-                                                <!--card 3 -->
+                
+                    <div class="grid grid-cols-3 gap-4 mt-4" 
+                    data-aos="fade-in"
+                            data-aos-duration="2000">
                         <!-- Event Cards -->
-                    <div class="bg-white shadow-lg rounded-lg p-4">
-                        <img src="{{ asset('logo/card1.png') }}" alt="Event" class="rounded-lg">
-                        <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-
-                        <p class="text-sm text-gray-500">
-                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                <path d="M7.89556 17C6.80334 17 5.77691 16.7769 4.81629 16.3306C3.85566 15.8844 3.02005 15.2788 2.30945 14.5138C1.59885 13.7488 1.03629 12.8492 0.621775 11.815C0.207258 10.7808 0 9.67583 0 8.5C0 7.32417 0.207258 6.21917 0.621775 5.185C1.03629 4.15083 1.59885 3.25125 2.30945 2.48625C3.02005 1.72125 3.85566 1.11563 4.81629 0.669375C5.77691 0.223125 6.80334 0 7.89556 0C8.98777 0 10.0142 0.223125 10.9748 0.669375C11.9354 1.11563 12.7711 1.72125 13.4817 2.48625C14.1923 3.25125 14.7548 4.15083 15.1693 5.185C15.5839 6.21917 15.7911 7.32417 15.7911 8.5C15.7911 8.8825 15.7714 9.25792 15.7319 9.62625C15.6924 9.99458 15.6266 10.3558 15.5345 10.71C15.3503 10.4833 15.1364 10.2921 14.893 10.1363C14.6495 9.98042 14.3831 9.87417 14.0936 9.8175C14.133 9.605 14.1627 9.38896 14.1824 9.16938C14.2021 8.94979 14.212 8.72667 14.212 8.5C14.212 6.60167 13.6001 4.99375 12.3763 3.67625C11.1525 2.35875 9.6589 1.7 7.89556 1.7C6.13221 1.7 4.63864 2.35875 3.41483 3.67625C2.19102 4.99375 1.57911 6.60167 1.57911 8.5C1.57911 10.3983 2.19102 12.0063 3.41483 13.3238C4.63864 14.6413 6.13221 15.3 7.89556 15.3C8.56668 15.3 9.20819 15.1938 9.8201 14.9813C10.432 14.7688 10.9946 14.4713 11.5078 14.0888C11.6657 14.3296 11.8598 14.5421 12.0901 14.7263C12.3204 14.9104 12.5671 15.0521 12.8303 15.1513C12.1592 15.7321 11.4058 16.1854 10.5702 16.5113C9.73456 16.8371 8.84302 17 7.89556 17ZM13.6198 13.6C13.3435 13.6 13.1099 13.4973 12.9191 13.2919C12.7283 13.0865 12.6329 12.835 12.6329 12.5375C12.6329 12.24 12.7283 11.9885 12.9191 11.7831C13.1099 11.5777 13.3435 11.475 13.6198 11.475C13.8962 11.475 14.1298 11.5777 14.3206 11.7831C14.5114 11.9885 14.6068 12.24 14.6068 12.5375C14.6068 12.835 14.5114 13.0865 14.3206 13.2919C14.1298 13.4973 13.8962 13.6 13.6198 13.6ZM10.5011 12.495L7.106 8.84V4.25H8.68511V8.16L11.6065 11.305L10.5011 12.495Z" fill="#767676"/>
-                            </svg>
-                            16 Jul 2024, 8:30 AM
-                            
-                        </p>
+                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent">
+                            <img src="{{ asset('logo/card1.png') }}" alt="Event" class="rounded-lg">
+                            <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
+                            <p class="text-sm text-gray-500">
+                                <!-- Event Date and Time -->
+                                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
+                                    <!-- SVG path here -->
+                                </svg>
+                                16 Jul 2024, 8:30 AM
+                            </p>
+                        </div>
+                
+                        <!-- Event Cards -->
+                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="ongoing">
+                            <img src="{{ asset('logo/card2.png') }}" alt="Event" class="rounded-lg">
+                            <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
+                            <p class="text-sm text-gray-500">
+                                <!-- Event Date and Time -->
+                                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
+                                    <!-- SVG path here -->
+                                </svg>
+                                16 Jul 2024, 8:30 AM
+                            </p>
+                        </div>
+                
+                        <!-- Event Cards -->
+                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="upcoming">
+                            <img src="{{ asset('logo/card3.png') }}" alt="Event" class="rounded-lg">
+                            <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
+                            <p class="text-sm text-gray-500">
+                                <!-- Event Date and Time -->
+                                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
+                                    <!-- SVG path here -->
+                                </svg>
+                                16 Jul 2024, 8:30 AM
+                            </p>
+                        </div>
+                
                     </div>
-
-                    <!-- Event Cards -->
-                    <div class="bg-white shadow-lg rounded-lg p-4 ease-in duration-300">
-                        <img src="{{ asset('logo/card2.png') }}" alt="Event" class="rounded-lg">
-                        <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-                        <p class="text-sm text-gray-500">
-                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                <path d="M7.89556 17C6.80334 17 5.77691 16.7769 4.81629 16.3306C3.85566 15.8844 3.02005 15.2788 2.30945 14.5138C1.59885 13.7488 1.03629 12.8492 0.621775 11.815C0.207258 10.7808 0 9.67583 0 8.5C0 7.32417 0.207258 6.21917 0.621775 5.185C1.03629 4.15083 1.59885 3.25125 2.30945 2.48625C3.02005 1.72125 3.85566 1.11563 4.81629 0.669375C5.77691 0.223125 6.80334 0 7.89556 0C8.98777 0 10.0142 0.223125 10.9748 0.669375C11.9354 1.11563 12.7711 1.72125 13.4817 2.48625C14.1923 3.25125 14.7548 4.15083 15.1693 5.185C15.5839 6.21917 15.7911 7.32417 15.7911 8.5C15.7911 8.8825 15.7714 9.25792 15.7319 9.62625C15.6924 9.99458 15.6266 10.3558 15.5345 10.71C15.3503 10.4833 15.1364 10.2921 14.893 10.1363C14.6495 9.98042 14.3831 9.87417 14.0936 9.8175C14.133 9.605 14.1627 9.38896 14.1824 9.16938C14.2021 8.94979 14.212 8.72667 14.212 8.5C14.212 6.60167 13.6001 4.99375 12.3763 3.67625C11.1525 2.35875 9.6589 1.7 7.89556 1.7C6.13221 1.7 4.63864 2.35875 3.41483 3.67625C2.19102 4.99375 1.57911 6.60167 1.57911 8.5C1.57911 10.3983 2.19102 12.0063 3.41483 13.3238C4.63864 14.6413 6.13221 15.3 7.89556 15.3C8.56668 15.3 9.20819 15.1938 9.8201 14.9813C10.432 14.7688 10.9946 14.4713 11.5078 14.0888C11.6657 14.3296 11.8598 14.5421 12.0901 14.7263C12.3204 14.9104 12.5671 15.0521 12.8303 15.1513C12.1592 15.7321 11.4058 16.1854 10.5702 16.5113C9.73456 16.8371 8.84302 17 7.89556 17ZM13.6198 13.6C13.3435 13.6 13.1099 13.4973 12.9191 13.2919C12.7283 13.0865 12.6329 12.835 12.6329 12.5375C12.6329 12.24 12.7283 11.9885 12.9191 11.7831C13.1099 11.5777 13.3435 11.475 13.6198 11.475C13.8962 11.475 14.1298 11.5777 14.3206 11.7831C14.5114 11.9885 14.6068 12.24 14.6068 12.5375C14.6068 12.835 14.5114 13.0865 14.3206 13.2919C14.1298 13.4973 13.8962 13.6 13.6198 13.6ZM10.5011 12.495L7.106 8.84V4.25H8.68511V8.16L11.6065 11.305L10.5011 12.495Z" fill="#767676"/>
-                            </svg>
-                            16 Jul 2024, 8:30 AM</p>
-                    </div>
-
-                    <!-- Event Cards -->
-                    <div class="bg-white shadow-lg rounded-lg p-4 ease-in duration-300">
-                        <img src="{{ asset('logo/card3.png') }}" alt="Event" class="rounded-lg">
-                        <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-                        <p class="text-sm text-gray-500">
-                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                <path d="M7.89556 17C6.80334 17 5.77691 16.7769 4.81629 16.3306C3.85566 15.8844 3.02005 15.2788 2.30945 14.5138C1.59885 13.7488 1.03629 12.8492 0.621775 11.815C0.207258 10.7808 0 9.67583 0 8.5C0 7.32417 0.207258 6.21917 0.621775 5.185C1.03629 4.15083 1.59885 3.25125 2.30945 2.48625C3.02005 1.72125 3.85566 1.11563 4.81629 0.669375C5.77691 0.223125 6.80334 0 7.89556 0C8.98777 0 10.0142 0.223125 10.9748 0.669375C11.9354 1.11563 12.7711 1.72125 13.4817 2.48625C14.1923 3.25125 14.7548 4.15083 15.1693 5.185C15.5839 6.21917 15.7911 7.32417 15.7911 8.5C15.7911 8.8825 15.7714 9.25792 15.7319 9.62625C15.6924 9.99458 15.6266 10.3558 15.5345 10.71C15.3503 10.4833 15.1364 10.2921 14.893 10.1363C14.6495 9.98042 14.3831 9.87417 14.0936 9.8175C14.133 9.605 14.1627 9.38896 14.1824 9.16938C14.2021 8.94979 14.212 8.72667 14.212 8.5C14.212 6.60167 13.6001 4.99375 12.3763 3.67625C11.1525 2.35875 9.6589 1.7 7.89556 1.7C6.13221 1.7 4.63864 2.35875 3.41483 3.67625C2.19102 4.99375 1.57911 6.60167 1.57911 8.5C1.57911 10.3983 2.19102 12.0063 3.41483 13.3238C4.63864 14.6413 6.13221 15.3 7.89556 15.3C8.56668 15.3 9.20819 15.1938 9.8201 14.9813C10.432 14.7688 10.9946 14.4713 11.5078 14.0888C11.6657 14.3296 11.8598 14.5421 12.0901 14.7263C12.3204 14.9104 12.5671 15.0521 12.8303 15.1513C12.1592 15.7321 11.4058 16.1854 10.5702 16.5113C9.73456 16.8371 8.84302 17 7.89556 17ZM13.6198 13.6C13.3435 13.6 13.1099 13.4973 12.9191 13.2919C12.7283 13.0865 12.6329 12.835 12.6329 12.5375C12.6329 12.24 12.7283 11.9885 12.9191 11.7831C13.1099 11.5777 13.3435 11.475 13.6198 11.475C13.8962 11.475 14.1298 11.5777 14.3206 11.7831C14.5114 11.9885 14.6068 12.24 14.6068 12.5375C14.6068 12.835 14.5114 13.0865 14.3206 13.2919C14.1298 13.4973 13.8962 13.6 13.6198 13.6ZM10.5011 12.495L7.106 8.84V4.25H8.68511V8.16L11.6065 11.305L10.5011 12.495Z" fill="#767676"/>
-                            </svg>
-                            16 Jul 2024, 8:30 AM</p>
-                    </div>
-
-                    </div>
+                </section>
+                
+                <script>
+                // JavaScript to handle the event category toggle
+                document.addEventListener("DOMContentLoaded", function() {
+                    const buttons = document.querySelectorAll("button");
+                    const eventCards = document.querySelectorAll(".event-card");
+                
+                    // Function to filter event cards based on category
+                    function filterEvents(category) {
+                        eventCards.forEach(card => {
+                            if (category === "all" || card.getAttribute("data-category") === category) {
+                                card.classList.remove("hidden");
+                            } else {
+                                card.classList.add("hidden");
+                            }
+                        });
+                    }
+                
+                    // Event listener for button clicks
+                    buttons.forEach(button => {
+                        button.addEventListener("click", () => {
+                            // Reset all buttons' styles
+                            buttons.forEach(btn => btn.classList.remove("bg-blue-100"));
+                            button.classList.add("bg-blue-100");
+                
+                            // Determine which category to filter by
+                            if (button.id === "recent-events") {
+                                filterEvents("recent");
+                            } else if (button.id === "ongoing-events") {
+                                filterEvents("ongoing");
+                            } else if (button.id === "upcoming-events") {
+                                filterEvents("upcoming");
+                            }
+                        });
+                    });
+                
+                    // Initial load, show all events
+                    filterEvents("all");
+                });
+                </script>
                 </section>
                 <!-- closing event section -- >
 
@@ -125,7 +177,8 @@
 
 
               <!- Highlight Section image-->
-            <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col">
+            <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col"data-aos="fade-in"
+            data-aos-duration="2000">
                 <img src="{{ asset('logo/card4.jfif') }}" alt="Barangay Clean-Up Drive" class="rounded-lg w-full mb-4 h-72">
                 <div>
                     <h3 class="text-xl font-semibold">Barangay Clean-Up Drive Nets Big Haul</h3>
@@ -139,7 +192,8 @@
             </main>
         
             <!-- Right-Side Content Section -->
-            <aside class="w-full lg:w-1/3 grid grid-cols-1 gap-6 mt-5">
+            <aside class="w-full lg:w-1/3 grid grid-cols-1 gap-6 mt-5"data-aos="fade-left"
+            data-aos-duration="2000">
                 <div class="bg-white shadow-lg rounded-lg p-6 relative"> <!-- added 'relative' to allow absolute positioning of the emoji -->
                     <h4 class="text-lg font-semibold">Community Outreach</h4>
                     <canvas id="pieChart" class="mt-4 h-32"></canvas> <!-- Pie chart -->
@@ -160,7 +214,8 @@
                 
         
                 <!-- Barangay Officials -->
-                <div class="bg-white shadow-lg rounded-lg p-6">
+                <div class="bg-white shadow-lg rounded-lg p-6"data-aos="fade-left"
+                data-aos-duration="2000">
                     <h4 class="text-lg font-semibold">Barangay Officials</h4>
                     <ul class="mt-4 space-y-4">
                         <li class="flex items-center space-x-4">
