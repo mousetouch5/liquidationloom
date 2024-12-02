@@ -11,9 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        //
-    })
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->trustProxies('*', \Illuminate\Http\Request::HEADER_X_FORWARDED_ALL);
+})
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
