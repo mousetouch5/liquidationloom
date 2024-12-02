@@ -1,14 +1,6 @@
 <x-app-layout>
-
-
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-
-
-
     <div class="flex h-full min-h-screen">
         <!-- Sidebar -->
         <aside class="w-1/4 bg-gray-100 shadow-lg h-[100vh]">
@@ -154,82 +146,230 @@
             <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
                 <!-- Title -->
                 <div class="p-4 bg-gray-50">
-                    <h2 class="text-xl font-semibold text-gray-700" data-aos="fade-up" data-aos-duration="2000">
-                        Transaction</h2>
+                    <h2 class="text-xl font-semibold text-gray-700">Events</h2>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+
+
+                <div class="slider-container">
+                    <div class="slider">
+                        <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col" data-aos="fade-up"
+                            data-aos-duration="2000">
+                            <img src="{{ asset('logo/card4.jfif') }}" alt="Barangay Clean-Up Drive"
+                                class="rounded-lg w-full mb-4 h-72">
+                            <div>
+                                <h3 class="text-xl font-semibold">Barangay Clean-Up Drive Nets Big Haul</h3>
+                                <p class="mt-4 text-sm text-gray-500">
+                                    Barangay Pahanocoy held a successful clean-up drive last weekend, collecting several
+                                    truckloads of garbage and recyclables. Residents are encouraged to continue
+                                    responsible waste disposal habits to keep the barangay clean.
+                                </p>
+                            </div>
+                        </section>
+                        <!-- Add more sections here -->
+                        <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col" data-aos="fade-up"
+                            data-aos-duration="2000">
+                            <img src="{{ asset('logo/card4.jfif') }}" alt="Barangay Clean-Up Drive"
+                                class="rounded-lg w-full mb-4 h-72">
+                            <div>
+                                <h3 class="text-xl font-semibold">Barangay Clean-Up Drive Nets Big Haul</h3>
+                                <p class="mt-4 text-sm text-gray-500">
+                                    Barangay Pahanocoy held a successful clean-up drive last weekend, collecting several
+                                    truckloads of gadaaarbage and recyclables. Residents are encouraged to continue
+                                    responsible waste disposal habits to keep the barangay clean.
+                                </p>
+                            </div>
+                        </section>
+                    </div>
+                    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                    <button class="next" onclick="moveSlide(1)">&#10095;</button>
+                </div>
+
+
+                <script>
+                    let slideIndex = 0;
+
+                    function showSlides() {
+                        const slides = document.querySelectorAll('.slider section');
+                        const totalSlides = slides.length;
+
+                        // Calculate the offset for the current slide
+                        const offset = -slideIndex * 100; // Each slide takes up 100% of the width
+                        document.querySelector('.slider').style.transform = `translateX(${offset}%)`;
+                    }
+
+                    function moveSlide(n) {
+                        const slides = document.querySelectorAll('.slider section');
+
+                        slideIndex += n;
+
+                        if (slideIndex >= slides.length) {
+                            slideIndex = 0; // Loop back to the first slide
+                        } else if (slideIndex < 0) {
+                            slideIndex = slides.length - 1; // Loop to the last slide
+                        }
+
+                        showSlides();
+                    }
+
+                    // Initialize the slider
+                    showSlides();
+                </script>
+                <style>
+                    .slider-container {
+                        position: relative;
+                        max-width: 600px;
+                        /* Adjust as needed */
+                        margin: auto;
+                        overflow: hidden;
+                    }
+
+                    .slider {
+                        display: flex;
+                        transition: transform 0.5s ease-in-out;
+                        /* Smooth transition */
+                    }
+
+                    section {
+                        min-width: 100%;
+                        /* Each section takes full width */
+                    }
+
+                    .prev,
+                    .next {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background-color: rgba(255, 255, 255, 0.8);
+                        border: none;
+                        cursor: pointer;
+                    }
+
+                    .prev {
+                        left: 10px;
+                    }
+
+                    .next {
+                        right: 10px;
+                    }
+                </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!--EDIT -->
+                <div class="flex justify-end mr-4">
+                    <button onclick="window.location.href='{{ route('Official.Edit.index') }}'">
+                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_2474_689)">
+                                <path
+                                    d="M14.875 2.5009C15.1048 2.28203 15.3776 2.10842 15.6779 1.98996C15.9782 1.87151 16.3 1.81055 16.625 1.81055C16.95 1.81055 17.2718 1.87151 17.5721 1.98996C17.8724 2.10842 18.1452 2.28203 18.375 2.5009C18.6048 2.71977 18.7871 2.97961 18.9115 3.26558C19.0359 3.55154 19.0999 3.85804 19.0999 4.16757C19.0999 4.4771 19.0359 4.7836 18.9115 5.06956C18.7871 5.35553 18.6048 5.61537 18.375 5.83424L6.5625 17.0842L1.75 18.3342L3.0625 13.7509L14.875 2.5009Z"
+                                    stroke="#767676" stroke-width="4" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_2474_689">
+                                    <rect width="21" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        Edit
+                    </button>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
                 <!-- Expenses Table Section -->
-                <div class="bg-white shadow-md rounded-lg overflow-hidden w-full mt-5" data-aos="fade-up"
+                <div class="bg-white shadow-md rounded-lg overflow-hidden w-full mt-5"data-aos="fade-left"
                     data-aos-duration="2000">
-                    <table class="w-full table-auto">
+                    <table class="w-full">
                         <thead>
                             <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
-                                <th class="py-3 px-4">Event/Project</th>
+                                <th class="py-3 px-4">Expenses</th>
                                 <th class="py-3 px-4">Date</th>
-                                <th class="py-3 px-4">Budget</th>
+                                <th class="py-3 px-4">Amount</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($events as $event)
-                                <tr class="odd:bg-gray-50">
-                                    <td class="py-3 px-4">{{ $event->eventName }}</td>
-                                    <td class="px-3 py-4">{{ \Carbon\Carbon::parse($event->eventDate)->format('F Y') }}
-                                    <td class="py-3 px-4 text-green-500">{{ $event->budget }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                        <!-- Add a new row for inputs and file verification icon -->
-                        <tfoot class="mt-5">
                             <tr class="odd:bg-gray-50">
-                                <td class="py-3 px-4">
-                                    <label for="eventProject"
-                                        class="block text-sm font-medium text-gray-700">Event/Project</label>
-                                    <select id="eventProject" class="w-full p-2 border border-gray-300 rounded-lg">
-                                        <option value="community_outreach">Community Outreach</option>
-                                        <option value="lunch">Lunch</option>
-                                        <option value="afternoon_snacks">Afternoon Snacks</option>
-                                        <option value="performance_cost">Performance Cost</option>
-                                        <option value="gift_for_youth">Gift for Youth</option>
-                                        <option value="prizes_for_games">Prizes for Games</option>
-                                        <option value="emergency_funds">Emergency Funds</option>
-                                    </select>
-                                </td>
-                                <td class="py-3 px-4">
-                                    <label for="eventDate"
-                                        class="block text-sm font-medium text-gray-700">Date</label>
-                                    <input type="date" id="eventDate"
-                                        class="w-full p-2 border border-gray-300 rounded-lg">
-                                </td>
-                                <td class="py-3 px-4">
-                                    <label for="budgetAmount"
-                                        class="block text-sm font-medium text-gray-700">Budget</label>
-                                    <input type="number" id="budgetAmount" step="0.01"
-                                        class="w-full p-2 border border-gray-300 rounded-lg" placeholder="₱0.00">
-                                </td>
+                                <td class="py-3 px-4">Morning Snacks</td>
+                                <td class="py-3 px-4">16 Jul 10:00am</td>
+                                <td class="py-3 px-4 text-red-500">-₱2,000.00</td>
                             </tr>
-
-
-
-                            <!-- Row for the buttons -->
-                            <tr>
-                                <td colspan="3" class="py-3 px-4 text-center flex justify-center space-x-4">
-                                    <!-- Verify Button -->
-                                    <button
-                                        class="flex items-center justify-center bg-cyan-500 text-white rounded-lg p-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16">
-                                            <path
-                                                d="M7.293 4.293a1 1 0 0 1 1.414 0L12 7.586l3.293-3.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0L8 6.707l-2.707 2.707a1 1 0 0 1-1.414-1.414l3-3z" />
-                                            <path
-                                                d="M14 4.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8.5a1 1 0 0 1 .707.293l2.5 2.5A1 1 0 0 1 14 4.5z" />
-                                        </svg>
-                                        <span class="ml-2">Verify File</span>
-                                    </button>
-
-                                    <!-- Submit Button -->
-                                    <button type="submit" class="bg-cyan-500 text-white rounded-lg p-2">
-                                        Submit
-                                    </button>
-                                </td>
+                            <tr class="odd:bg-gray-50">
+                                <td class="py-3 px-4">Lunch</td>
+                                <td class="py-3 px-4">16 Jul 12:00nn</td>
+                                <td class="py-3 px-4 text-red-500">-₱6,000.00</td>
+                            </tr>
+                            <tr class="odd:bg-gray-50">
+                                <td class="py-3 px-4">Afternoon Snacks</td>
+                                <td class="py-3 px-4">16 Jul 4:00pm</td>
+                                <td class="py-3 px-4 text-red-500">-₱2,000.00</td>
+                            </tr>
+                            <tr class="odd:bg-gray-50">
+                                <td class="py-3 px-4">Performance Cost</td>
+                                <td class="py-3 px-4">16 Jul 12:00nn</td>
+                                <td class="py-3 px-4 text-red-500">-₱5,000.00</td>
+                            </tr>
+                            <tr class="odd:bg-gray-50">
+                                <td class="py-3 px-4">Gift for Youth</td>
+                                <td class="py-3 px-4">16 Jul 5:00pm</td>
+                                <td class="py-3 px-4 text-red-500">-₱3,000.00</td>
+                            </tr>
+                            <tr class="odd:bg-gray-50">
+                                <td class="py-3 px-4">Prizes for Games</td>
+                                <td class="py-3 px-4">16 Jul 5:00pm</td>
+                                <td class="py-3 px-4 text-red-500">-₱2,000.00</td>
+                            </tr>
+                            <tr class="odd:bg-gray-50">
+                                <td class="py-3 px-4">Emergency Funds</td>
+                                <td class="py-3 px-4">16 Jul 9:00am</td>
+                                <td class="py-3 px-4 text-red-500">-₱1,000.00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-gray-200">
+                                <td colspan="2" class="py-3 px-4 font-semibold text-right">Total:</td>
+                                <td class="py-3 px-4 font-semibold text-red-600">₱21,000.00</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -241,40 +381,34 @@
 
 
         <!-- Right-Side Content Section -->
-        <aside class="lg:w-1/3 w-full mt-5 lg:mt-0" data-aos="fade-left" data-aos-duration="2000">
+        <aside class="lg:w-1/3 w-full mt-5 lg:mt-0" data-aos="fade-right" data-aos-duration="2000">
             <div class="bg-white shadow-lg rounded-lg p-6 relative">
                 <div class="bg-white shadow-md rounded-lg w-80 p-4">
-                    <!-- Community Outreach Budget -->
-                    <div class="bg-cyan-500 text-white rounded-lg p-4 text-center mb-4">
-
-                        <!--calendar-->
-
-                        <button id="openModal"
-                            class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none absolute left-12 top-11">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M0 18.125C0 19.1602 0.959821 20 2.14286 20H17.8571C19.0402 20 20 19.1602 20 18.125V7.5H0V18.125ZM14.2857 10.4688C14.2857 10.2109 14.5268 10 14.8214 10H16.6071C16.9018 10 17.1429 10.2109 17.1429 10.4688V12.0312C17.1429 12.2891 16.9018 12.5 16.6071 12.5H14.8214C14.5268 12.5 14.2857 12.2891 14.2857 12.0312V10.4688ZM14.2857 15.4688C14.2857 15.2109 14.5268 15 14.8214 15H16.6071C16.9018 15 17.1429 15.2109 17.1429 15.4688V17.0312C17.1429 17.2891 16.9018 17.5 16.6071 17.5H14.8214C14.5268 17.5 14.2857 17.2891 14.2857 17.0312V15.4688ZM8.57143 10.4688C8.57143 10.2109 8.8125 10 9.10714 10H10.8929C11.1875 10 11.4286 10.2109 11.4286 10.4688V12.0312C11.4286 12.2891 11.1875 12.5 10.8929 12.5H9.10714C8.8125 12.5 8.57143 12.2891 8.57143 12.0312V10.4688ZM8.57143 15.4688C8.57143 15.2109 8.8125 15 9.10714 15H10.8929C11.1875 15 11.4286 15.2109 11.4286 15.4688V17.0312C11.4286 17.2891 11.1875 17.5 10.8929 17.5H9.10714C8.8125 17.5 8.57143 17.2891 8.57143 17.0312V15.4688ZM2.85714 10.4688C2.85714 10.2109 3.09821 10 3.39286 10H5.17857C5.47321 10 5.71429 10.2109 5.71429 10.4688V12.0312C5.71429 12.2891 5.47321 12.5 5.17857 12.5H3.39286C3.09821 12.5 2.85714 12.2891 2.85714 12.0312V10.4688ZM2.85714 15.4688C2.85714 15.2109 3.09821 15 3.39286 15H5.17857C5.47321 15 5.71429 15.2109 5.71429 15.4688V17.0312C5.71429 17.2891 5.47321 17.5 5.17857 17.5H3.39286C3.09821 17.5 2.85714 17.2891 2.85714 17.0312V15.4688ZM17.8571 2.5H15.7143V0.625C15.7143 0.28125 15.3929 0 15 0H13.5714C13.1786 0 12.8571 0.28125 12.8571 0.625V2.5H7.14286V0.625C7.14286 0.28125 6.82143 0 6.42857 0H5C4.60714 0 4.28571 0.28125 4.28571 0.625V2.5H2.14286C0.959821 2.5 0 3.33984 0 4.375V6.25H20V4.375C20 3.33984 19.0402 2.5 17.8571 2.5Z"
-                                    fill="#FDFDFD" />
-                            </svg>
-
-                        </button>
 
 
-                        <h2 class="text-sm font-semibold">Community Outreach</h2>
-                        <p class="text-xs">Total Budget</p>
-                        <p class="text-2xl font-bold">₱22,000.00</p>
+                    <!-- Pie Chart Placeholder -->
+                    <div class="text-center">
+                        <h3 class="text-sm font-semibold text-gray-700 mb-2">Community Outreach </h3>
 
-                        <p class="text-xs">Total Budget Used</p>
-                        <p class="text-2xl font-bold">${{ number_format($totalBudget, 2) }}</p>
+                        <!-- Simulated Pie Chart -->
+                        <canvas id="pieChart" class="mt-4 h-72"></canvas>
 
-                        <p class="text-xs">Total Remaining Budget</p>
-                        <p class="text-2xl font-bold">₱22,000.00</p>
+
+                        <!-- Feedback -->
+                        <div class="mt-4 space-y-2">
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-2xl">😊</span>
+                                <span class="text-sm font-semibold text-gray-700">80%</span>
+                            </div>
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-2xl">😞</span>
+                                <span class="text-sm font-semibold text-gray-700">20%</span>
+                            </div>
+                        </div>
                     </div>
 
-
                     <!-- Barangay Officials -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 mt-5" data-aos="fade-left"
+                    <div class="bg-white shadow-lg rounded-lg p-6 mt-5" data-aos="fade-right"
                         data-aos-duration="2000">
                         <h4 class="text-lg font-semibold">Barangay Officials</h4>
                         <ul class="mt-4 space-y-4">
@@ -309,6 +443,39 @@
     </div>
 
 
-
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [''],
+                datasets: [{
+                    label: 'Community Outreach',
+                    data: [40, 30, 30], // Example data points, adjust as needed
+                    backgroundColor: ['#4CD7F6', '#CDF3FF'],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                }
+            } // Close the options object
+        }); // Close the Chart initialization
+    </script>
+    <script>
+        AOS.init();
+    </script>
 </x-app-layout>

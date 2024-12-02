@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProjectController;
@@ -13,6 +13,8 @@ use App\Http\Controllers\OfficialReportController;
 use App\Http\Controllers\OfficialProjectController;
 use App\Http\Controllers\EditController;
 
+//use App\Http\Controllers\CustomLoginController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,17 +25,31 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('Resident.dashboard');
-    })->name('dashboard');
+    Route::get('/', function () {
+
+    $user = Auth::user();
+// Check user type and redirect accordingly
+    if ($user->user_type === 'resident') {
+    return redirect()->route('dashboard'); // Redirect to resident dashboard
+    } 
+    else {
+    return redirect()->route('Official.OfficialDashboard.index'); // Redirect to official dashboard
+        }
+    });
 });
+
+
+
+Route::get('/dashboard', function () {
+return view('Resident.dashboard');
+})->name('dashboard');
 
 // Resident
 Route::get('/Resident/Event', [EventController::class, 'index'])->name('Resident.Event.index');
 Route::get('/Resident/Project', [ProjectController::class, 'index'])->name('Resident.Project.index');
 
 //official
-
+//Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
 Route::get('/Official/OfficialDashboard', [OfficialDashboardController::class, 'index'])->name('Official.OfficialDashboard.index');
 Route::get('/Official/OfficialAuditTrail', [OfficialAuditTrailController::class, 'index'])->name('Official.OfficialAuditTrail.index');
 Route::get('/Official/OfficialEvent', [OfficialEventController::class, 'index'])->name('Official.OfficialEvent.index');
@@ -42,4 +58,19 @@ Route::get('/Official/OfficialReport', [OfficialReportController::class, 'index'
 Route::get('/Official/OfficialProject', [OfficialProjectController::class, 'index'])->name('Official.OfficialProject.index');
 Route::get('/Official/Edit', [EditController::class, 'index'])->name('Official.Edit.index');
 
+Route::get('/download-liquidation-report', [OfficialReportController::class, 'generateLiquidationReport'])->name('download.liquidation.report');
 
+//Post
+
+Route::get('/liquidation-report', [OfficialReportController::class, 'showLiquidationReport'])->name('liquidation-report.liquidation.report');
+
+
+Route::post('/events', [EventController::class, 'storeEvents'])->name('events.store');
+
+
+///event data
+
+Route::get('/event-data', [OfficialEventController::class, 'getEvents'])->name('event.data');
+
+//expense data
+Route::get('/expenses', [OfficialEventController::class, 'getExpenses']);

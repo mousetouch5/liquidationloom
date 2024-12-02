@@ -1,14 +1,6 @@
 <x-app-layout>
-
-
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-
-
-
     <div class="flex h-full min-h-screen">
         <!-- Sidebar -->
         <aside class="w-1/4 bg-gray-100 shadow-lg h-[100vh]">
@@ -129,17 +121,6 @@
 
 
             </nav>
-            <div class="absolute bottom-4 w-full">
-                <a href="#" class=" px-6 py-3 flex items-center text-gray-600 ">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M16.0014 5.71408C16.0014 5.41876 15.8972 5.13283 15.7097 4.92189L11.6302 0.328126C11.4427 0.117188 11.1885 0 10.9218 0H10.6676V6.00002H16.0014V5.71408ZM23.7937 14.4375L19.8059 9.91878C19.385 9.44534 18.6641 9.77815 18.6641 10.4485V13.5H15.9972V16.5H18.6641V19.5563C18.6641 20.2266 19.385 20.5594 19.8059 20.086L23.7937 15.5625C24.0688 15.2532 24.0688 14.7469 23.7937 14.4375ZM8.00069 15.75V14.25C8.00069 13.8375 8.30072 13.5 8.66742 13.5H16.0014V7.50002H10.3342C9.78418 7.50002 9.33414 6.99377 9.33414 6.37502V0H1.00009C0.445872 0 0 0.501564 0 1.125V22.8751C0 23.4985 0.445872 24.0001 1.00009 24.0001H15.0013C15.5555 24.0001 16.0014 23.4985 16.0014 22.8751V16.5H8.66742C8.30072 16.5 8.00069 16.1625 8.00069 15.75Z"
-                            fill="black" />
-                    </svg>
-                    <span class="ml-4">Log out</span>
-                </a>
-            </div>
         </aside>
         <!-- end side bar -->
 
@@ -154,127 +135,243 @@
             <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
                 <!-- Title -->
                 <div class="p-4 bg-gray-50">
-                    <h2 class="text-xl font-semibold text-gray-700" data-aos="fade-up" data-aos-duration="2000">
-                        Transaction</h2>
+                    <h2 class="text-xl font-semibold text-gray-700">Events</h2>
                 </div>
-                <!-- Expenses Table Section -->
-                <div class="bg-white shadow-md rounded-lg overflow-hidden w-full mt-5" data-aos="fade-up"
-                    data-aos-duration="2000">
-                    <table class="w-full table-auto">
-                        <thead>
-                            <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
-                                <th class="py-3 px-4">Event/Project</th>
-                                <th class="py-3 px-4">Date</th>
-                                <th class="py-3 px-4">Budget</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($events as $event)
-                                <tr class="odd:bg-gray-50">
-                                    <td class="py-3 px-4">{{ $event->eventName }}</td>
-                                    <td class="px-3 py-4">{{ \Carbon\Carbon::parse($event->eventDate)->format('F Y') }}
-                                    <td class="py-3 px-4 text-green-500">{{ $event->budget }}</td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="carousel w-full" data-aos="fade-up" data-aos-duration="2000">
+                    @foreach ($events as $event)
+                        <div id="event-{{ $loop->index }}" class="carousel-item w-full flex flex-col">
+                            <img src="{{ asset('storage/' . $event->eventImage) }}" alt="{{ $event->eventName }}"
+                                class="rounded-lg w-full mb-4 h-72 object-cover">
+                            <div class="px-4">
+                                <h3 class="text-xl font-semibold">{{ $event->eventName }}</h3>
+                                <p class="mt-4 text-sm text-gray-500">
+                                    {{ $event->eventDescription }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- DaisyUI Carousel Controls -->
+                <div class="flex justify-center w-full mt-4">
+                    @foreach ($events as $event)
+                        <a href="#event-{{ $loop->index }}" class="btn btn-xs mx-1">{{ $loop->iteration }}</a>
+                    @endforeach
+                </div>
+
+                <select id="event-selector" class="select select-bordered w-full max-w-xs">
+                    <option disabled selected value="">Show Break Down</option>
+                    @foreach ($events as $event)
+                        <option value="{{ $event->id }}">{{ $event->eventName }}</option>
+                    @endforeach
+                </select>
+
+                <x-events.event-edit-button />
+
+
+
+
+
+
+
+                <!-- Expenses Table -->
+                @foreach ($expenses as $expenseGroup)
+                    <div class="expense-group bg-white shadow-md rounded-lg overflow-hidden w-full mt-5"
+                        data-event-id="{{ $expenseGroup['id'] }}" data-aos="fade-left" data-aos-duration="2000"
+                        id="expense-group-{{ $expenseGroup['id'] }}" style="display: none;">
+                        <!-- Hidden by default -->
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
+                                    <th class="py-3 px-4">Expenses</th>
+                                    <th class="py-3 px-4">Date</th>
+                                    <th class="py-3 px-4">Amount</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                        <!-- Add a new row for inputs and file verification icon -->
-                        <tfoot class="mt-5">
-                            <tr class="odd:bg-gray-50">
-                                <td class="py-3 px-4">
-                                    <label for="eventProject"
-                                        class="block text-sm font-medium text-gray-700">Event/Project</label>
-                                    <select id="eventProject" class="w-full p-2 border border-gray-300 rounded-lg">
-                                        <option value="community_outreach">Community Outreach</option>
-                                        <option value="lunch">Lunch</option>
-                                        <option value="afternoon_snacks">Afternoon Snacks</option>
-                                        <option value="performance_cost">Performance Cost</option>
-                                        <option value="gift_for_youth">Gift for Youth</option>
-                                        <option value="prizes_for_games">Prizes for Games</option>
-                                        <option value="emergency_funds">Emergency Funds</option>
-                                    </select>
-                                </td>
-                                <td class="py-3 px-4">
-                                    <label for="eventDate"
-                                        class="block text-sm font-medium text-gray-700">Date</label>
-                                    <input type="date" id="eventDate"
-                                        class="w-full p-2 border border-gray-300 rounded-lg">
-                                </td>
-                                <td class="py-3 px-4">
-                                    <label for="budgetAmount"
-                                        class="block text-sm font-medium text-gray-700">Budget</label>
-                                    <input type="number" id="budgetAmount" step="0.01"
-                                        class="w-full p-2 border border-gray-300 rounded-lg" placeholder="₱0.00">
-                                </td>
-                            </tr>
-
-
-
-                            <!-- Row for the buttons -->
-                            <tr>
-                                <td colspan="3" class="py-3 px-4 text-center flex justify-center space-x-4">
-                                    <!-- Verify Button -->
-                                    <button
-                                        class="flex items-center justify-center bg-cyan-500 text-white rounded-lg p-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16">
-                                            <path
-                                                d="M7.293 4.293a1 1 0 0 1 1.414 0L12 7.586l3.293-3.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0L8 6.707l-2.707 2.707a1 1 0 0 1-1.414-1.414l3-3z" />
-                                            <path
-                                                d="M14 4.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8.5a1 1 0 0 1 .707.293l2.5 2.5A1 1 0 0 1 14 4.5z" />
-                                        </svg>
-                                        <span class="ml-2">Verify File</span>
-                                    </button>
-
-                                    <!-- Submit Button -->
-                                    <button type="submit" class="bg-cyan-500 text-white rounded-lg p-2">
-                                        Submit
-                                    </button>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach ($expenseGroup['items'] as $expense)
+                                    <tr class="{{ $loop->odd ? 'odd:bg-gray-50' : '' }}">
+                                        <td class="py-3 px-4">{{ $expense['name'] }}</td>
+                                        <td class="py-3 px-4">{{ $expense['date'] }}</td>
+                                        <td class="py-3 px-4 text-red-500">
+                                            -₱{{ number_format($expense['amount'], 2) }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-gray-200">
+                                    <td colspan="2" class="py-3 px-4 font-semibold text-right">Total:</td>
+                                    <td class="py-3 px-4 font-semibold text-red-600">
+                                        ₱{{ number_format($expenseGroup['total'], 2) }}
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                @endforeach
             </main>
         </div>
 
 
 
 
+
+        <script>
+            // JavaScript for Dropdown Filtering
+            document.getElementById('event-selector').addEventListener('change', function() {
+                const selectedEventId = this.value; // Get selected event ID
+                const expenseGroups = document.querySelectorAll('.expense-group');
+
+                // Show/Hide Expense Groups Based on Selection
+                expenseGroups.forEach(group => {
+                    if (group.getAttribute('data-event-id') === selectedEventId) {
+                        group.style.display = 'block'; // Show matched group
+                    } else {
+                        group.style.display = 'none'; // Hide other groups
+                    }
+                });
+            });
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script>
+            let slideIndex = 0;
+
+            function showSlides() {
+                const slides = document.querySelectorAll('.slider section');
+                if (slides.length === 0) return; // No slides to show
+
+                const offset = -slideIndex * 100; // Each slide takes up 100% of the width
+                document.querySelector('.slider').style.transform = `translateX(${offset}%)`;
+            }
+
+            function moveSlide(n) {
+                const slides = document.querySelectorAll('.slider section');
+
+                slideIndex += n;
+
+                if (slideIndex >= slides.length) {
+                    slideIndex = 0; // Loop back to the first slide
+                } else if (slideIndex < 0) {
+                    slideIndex = slides.length - 1; // Loop to the last slide
+                }
+
+                showSlides();
+            }
+
+            // Initialize the slider on page load
+            document.addEventListener('DOMContentLoaded', () => {
+                showSlides();
+            });
+        </script>
+
+        <style>
+            .slider-container {
+                position: relative;
+                max-width: 600px;
+                /* Adjust as needed */
+                margin: auto;
+                overflow: hidden;
+            }
+
+            .slider {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+                /* Smooth transition */
+            }
+
+            section {
+                min-width: 100%;
+                /* Each section takes full width */
+            }
+
+            .prev,
+            .next {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: rgba(255, 255, 255, 0.8);
+                border: none;
+                cursor: pointer;
+            }
+
+            .prev {
+                left: 10px;
+            }
+
+            .next {
+                right: 10px;
+            }
+        </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- Right-Side Content Section -->
-        <aside class="lg:w-1/3 w-full mt-5 lg:mt-0" data-aos="fade-left" data-aos-duration="2000">
+        <aside class="lg:w-1/3 w-full mt-5 lg:mt-0" data-aos="fade-right" data-aos-duration="2000">
             <div class="bg-white shadow-lg rounded-lg p-6 relative">
                 <div class="bg-white shadow-md rounded-lg w-80 p-4">
-                    <!-- Community Outreach Budget -->
-                    <div class="bg-cyan-500 text-white rounded-lg p-4 text-center mb-4">
-
-                        <!--calendar-->
-
-                        <button id="openModal"
-                            class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none absolute left-12 top-11">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M0 18.125C0 19.1602 0.959821 20 2.14286 20H17.8571C19.0402 20 20 19.1602 20 18.125V7.5H0V18.125ZM14.2857 10.4688C14.2857 10.2109 14.5268 10 14.8214 10H16.6071C16.9018 10 17.1429 10.2109 17.1429 10.4688V12.0312C17.1429 12.2891 16.9018 12.5 16.6071 12.5H14.8214C14.5268 12.5 14.2857 12.2891 14.2857 12.0312V10.4688ZM14.2857 15.4688C14.2857 15.2109 14.5268 15 14.8214 15H16.6071C16.9018 15 17.1429 15.2109 17.1429 15.4688V17.0312C17.1429 17.2891 16.9018 17.5 16.6071 17.5H14.8214C14.5268 17.5 14.2857 17.2891 14.2857 17.0312V15.4688ZM8.57143 10.4688C8.57143 10.2109 8.8125 10 9.10714 10H10.8929C11.1875 10 11.4286 10.2109 11.4286 10.4688V12.0312C11.4286 12.2891 11.1875 12.5 10.8929 12.5H9.10714C8.8125 12.5 8.57143 12.2891 8.57143 12.0312V10.4688ZM8.57143 15.4688C8.57143 15.2109 8.8125 15 9.10714 15H10.8929C11.1875 15 11.4286 15.2109 11.4286 15.4688V17.0312C11.4286 17.2891 11.1875 17.5 10.8929 17.5H9.10714C8.8125 17.5 8.57143 17.2891 8.57143 17.0312V15.4688ZM2.85714 10.4688C2.85714 10.2109 3.09821 10 3.39286 10H5.17857C5.47321 10 5.71429 10.2109 5.71429 10.4688V12.0312C5.71429 12.2891 5.47321 12.5 5.17857 12.5H3.39286C3.09821 12.5 2.85714 12.2891 2.85714 12.0312V10.4688ZM2.85714 15.4688C2.85714 15.2109 3.09821 15 3.39286 15H5.17857C5.47321 15 5.71429 15.2109 5.71429 15.4688V17.0312C5.71429 17.2891 5.47321 17.5 5.17857 17.5H3.39286C3.09821 17.5 2.85714 17.2891 2.85714 17.0312V15.4688ZM17.8571 2.5H15.7143V0.625C15.7143 0.28125 15.3929 0 15 0H13.5714C13.1786 0 12.8571 0.28125 12.8571 0.625V2.5H7.14286V0.625C7.14286 0.28125 6.82143 0 6.42857 0H5C4.60714 0 4.28571 0.28125 4.28571 0.625V2.5H2.14286C0.959821 2.5 0 3.33984 0 4.375V6.25H20V4.375C20 3.33984 19.0402 2.5 17.8571 2.5Z"
-                                    fill="#FDFDFD" />
-                            </svg>
-
-                        </button>
 
 
-                        <h2 class="text-sm font-semibold">Community Outreach</h2>
-                        <p class="text-xs">Total Budget</p>
-                        <p class="text-2xl font-bold">₱22,000.00</p>
+                    <!-- Pie Chart Placeholder -->
+                    <div class="text-center">
+                        <h3 class="text-sm font-semibold text-gray-700 mb-2">Community Outreach </h3>
 
-                        <p class="text-xs">Total Budget Used</p>
-                        <p class="text-2xl font-bold">${{ number_format($totalBudget, 2) }}</p>
+                        <!-- Simulated Pie Chart -->
+                        <canvas id="pieChart" class="mt-4 h-72"></canvas>
 
-                        <p class="text-xs">Total Remaining Budget</p>
-                        <p class="text-2xl font-bold">₱22,000.00</p>
+
+                        <!-- Feedback -->
+                        <div class="mt-4 space-y-2">
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-2xl">😊</span>
+                                <span class="text-sm font-semibold text-gray-700">80%</span>
+                            </div>
+                            <div class="flex items-center justify-center space-x-2">
+                                <span class="text-2xl">😞</span>
+                                <span class="text-sm font-semibold text-gray-700">20%</span>
+                            </div>
+                        </div>
                     </div>
 
-
                     <!-- Barangay Officials -->
-                    <div class="bg-white shadow-lg rounded-lg p-6 mt-5" data-aos="fade-left"
+                    <div class="bg-white shadow-lg rounded-lg p-6 mt-5" data-aos="fade-right"
                         data-aos-duration="2000">
                         <h4 class="text-lg font-semibold">Barangay Officials</h4>
                         <ul class="mt-4 space-y-4">
@@ -309,6 +406,39 @@
     </div>
 
 
-
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [''],
+                datasets: [{
+                    label: 'Community Outreach',
+                    data: [40, 30, 30], // Example data points, adjust as needed
+                    backgroundColor: ['#4CD7F6', '#CDF3FF'],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                }
+            } // Close the options object
+        }); // Close the Chart initialization
+    </script>
+    <script>
+        AOS.init();
+    </script>
 </x-app-layout>

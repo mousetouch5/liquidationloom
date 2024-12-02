@@ -1,14 +1,123 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use App\Models\Expense;
+use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log; // Import Log facade
 
 class EventController extends Controller
 {
     // Display a listing of events
     public function index()
     {
-        return view('Resident.Event'); // This will load the 'events.index' view
+        // Log the retrieval of events
+        Log::info('Retrieving all events.');
+
+        // Retrieve all events from the database
+        $events = Event::all();
+
+        // Pass the events to the view for display
+        return view('Resident.Event', compact('events')); // Assuming your view is 'Resident.Event'
     }
+
+
+
+
+
+
+
+
+
+
+
+    public function storeEvents(Request $request)
+{
+    // Log the incoming request data
+    Log::info('Storing a new event', ['data' => $request->all()]);
+
+    // Validate the incoming request data
+    $validated = $request->validate([
+        'eventName' => 'required|string|max:255',
+        'eventDescription' => 'required|string',
+        'eventDate' => 'required|date',
+        'eventImage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'budget' => 'required|numeric',
+        'organizer' => 'nullable|string|max:255',
+        'eventLocation' => 'nullable|string|max:255',
+        'eventTime' => 'required|date_format:H:i',
+        'eventSpent' => 'required|numeric',
+        'eventType' => 'required|in:Workshop,Conference,Seminar,Community Outreach',
+    ]);
+
+    // Log the validated data
+    Log::info('Validated event data', ['validated_data' => $validated]);
+
+    // Initialize image path variable
+    $imagePath = null;
+
+    // Handle the image upload if there is one
+    if ($request->hasFile('eventImage')) {
+        // Get the uploaded file
+        $file = $request->file('eventImage');
+
+        // Define a custom filename (optional)
+        $filename = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+
+        // Move the file to the public storage path
+        $file->move(public_path('storage/event_images'), $filename);
+
+        // Set the image path for database storage
+        $imagePath = 'event_images/' . $filename;
+
+        // Log the uploaded image path
+        Log::info('Event image uploaded', ['image_path' => $imagePath]);
+    } else {
+        Log::info('No event image uploaded.');
+    }
+
+    // Create the new event in the database
+    $event = Event::create([
+        'eventName' => $validated['eventName'],
+        'eventDescription' => $validated['eventDescription'],
+        'eventDate' => $validated['eventDate'],
+        'eventImage' => $imagePath,
+        'budget' => $validated['budget'],
+        'organizer' => $validated['organizer'],
+        'eventLocation' => $validated['eventLocation'],
+        'eventType' => $validated['eventType'],
+        'eventSpent' => $validated['eventSpent'],
+        'eventTime' => $validated['eventTime'],
+    ]);
+
+
+        $expenses = $request->input('expenses', []);
+        $expenseAmounts = $request->input('expense_amount', []);
+        $expenseDates = $request->input('expense_date', []);
+        $expenseTimes = $request->input('expense_time', []);
+
+      foreach ($expenses as $index => $description) {
+        if ($description && isset($expenseAmounts[$index]) && isset($expenseDates[$index]) && isset($expenseTimes[$index])) {
+            // Create expense records
+            Expense::create([
+                'event_id' => $event->id,
+                'expense_description' => $description,
+                'expense_amount' => $expenseAmounts[$index],
+                'expense_date' => $expenseDates[$index],
+                'expense_time' => $expenseTimes[$index],
+            ]);
+        }
+    }
+
+
+
+    // Log the successful creation of the event
+    Log::info('Event created successfully', ['event_id' => $event->id]);
+
+    // Redirect back with a success message
+    return redirect()->route('Official.OfficialEvent.index')->with('success', 'Event created successfully!');
+}
+
+
+
+
 }
