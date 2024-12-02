@@ -14,10 +14,10 @@ class OfficialDashboardController extends Controller
         // Check the user_type and redirect accordingly
         if ($user->user_type === 'resident') {
             // Redirect to the resident dashboard or another page for residents
-            return redirect()->route('Resident.Event.index'); // Assuming you have a route for residents
+            return redirect()->route('resident.Event.index'); // Assuming you have a route for residents
         }
 
 
-        return view('Official.OfficialDashboard'); // This will load the 'events.index' view
+        return view('official.OfficialDashboard'); // This will load the 'events.index' view
     }
 }

@@ -8,6 +8,6 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        return view('Resident.Project'); // This will load the 'events.index' view
+        return view('resident.Project'); // This will load the 'events.index' view
     }
 }

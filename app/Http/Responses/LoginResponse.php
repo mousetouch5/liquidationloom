@@ -35,10 +35,10 @@ class LoginResponse implements LoginResponseContract, Responsable
         if ($userType === 'official') {
             return route('Official.OfficialDashboard.index'); // Change this to your official dashboard route
         } elseif ($userType === 'resident') {
-            return route('Resident.dashboard'); // Change this to your resident dashboard route
+            return route('resident.dashboard'); // Change this to your resident dashboard route
         }
 
-        return route('Resident.dashboard'); // Fallback route for other user types
+        return route('resident.dashboard'); // Fallback route for other user types
     }
 
 

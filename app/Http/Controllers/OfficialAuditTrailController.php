@@ -8,7 +8,7 @@ class OfficialAuditTrailController extends Controller
 {
     public function index()
     {
-        return view('Official.OfficialAuditTrail'); // This will load the 'events.index' view
+        return view('official.OfficialAuditTrail'); // This will load the 'events.index' view
     }
 }
 

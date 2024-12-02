@@ -16,6 +16,6 @@ public function index()
     $totalBudget = Event::sum('budget');
 
     // Pass both the events and totalBudget to the view
-    return view('Official.OfficialTransaction', compact('events', 'totalBudget'));
+    return view('official.OfficialTransaction', compact('events', 'totalBudget'));
 }
 }

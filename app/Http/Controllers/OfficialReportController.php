@@ -15,7 +15,7 @@ class OfficialReportController extends Controller
         $events = Event::with('expenses')->get();
      //   dd($events);
         // Pass the events (with expenses) to the view
-        return view('Official.OfficialReport', compact('events'));
+        return view('official.OfficialReport', compact('events'));
     }
 
 
