@@ -68,6 +68,8 @@ Route::get('/liquidation-report', [OfficialReportController::class, 'showLiquida
 Route::post('/events', [EventController::class, 'storeEvents'])->name('events.store');
 
 
+//Route::post('/events/store', [OfficialEventController::class, 'store'])->name('events.store'); test routes ni boss pwede mani gamiton 
+
 ///event data
 
 Route::get('/event-data', [OfficialEventController::class, 'getEvents'])->name('event.data');

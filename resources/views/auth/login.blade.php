@@ -68,10 +68,17 @@
 
 
         </div>
-        <p class="text-gray-600 text-sm">
-            Already have an account?
-            <a href="javascript:void(0);" id="loginLink" class="text-blue-500 hover:underline">Login Here</a>.
-        </p>
+         <!-- Links for switching between login and register -->
+    <p class="text-gray-600 text-sm" id="loginPrompt">
+        Don't Have an account?
+        <a href="javascript:void(0);" id="loginLink" class="text-blue-500 hover:underline">Login Here</a>.
+    </p>
+
+    <!-- Alternate link for creating an account -->
+    <p class="text-gray-600 text-sm hidden" id="registerPrompt">
+        Don't have an account? 
+        <a href="javascript:void(0);" id="registerLink" class="text-blue-500 hover:underline">Create an Account</a>.
+    </p>
     </div>
 </body>
 <!-- script for offbutton residentbutton  hide -->
@@ -102,7 +109,28 @@
         residentButton.classList.add('hidden');
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginPrompt = document.getElementById('loginPrompt');
+        const registerPrompt = document.getElementById('registerPrompt');
+        const loginLink = document.getElementById('loginLink');
+        const registerLink = document.getElementById('registerLink');
 
+        // When "Login Here" is clicked
+        loginLink.addEventListener('click', function() {
+            // Hide login prompt and show register prompt
+            loginPrompt.classList.add('hidden');
+            registerPrompt.classList.remove('hidden');
+        });
+
+        // When "Create an Account" is clicked
+        registerLink.addEventListener('click', function() {
+            // Hide register prompt and show login prompt
+            registerPrompt.classList.add('hidden');
+            loginPrompt.classList.remove('hidden');
+        });
+    });
+</script>
 
 
 

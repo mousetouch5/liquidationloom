@@ -17,7 +17,7 @@ class EventController extends Controller
         $events = Event::all();
 
         // Pass the events to the view for display
-        return view('resident.Event', compact('events')); // Assuming your view is 'Resident.Event'
+        return view('Resident.Event', compact('events')); // Assuming your view is 'Resident.Event'
     }
 
 
@@ -114,7 +114,7 @@ class EventController extends Controller
     Log::info('Event created successfully', ['event_id' => $event->id]);
 
     // Redirect back with a success message
-    return redirect()->route('official.OfficialEvent.index')->with('success', 'Event created successfully!');
+    return redirect()->route('Official.OfficialEvent.index')->with('success', 'Event created successfully!');
 }
 
 

@@ -97,6 +97,8 @@
 
 
             </nav>
+
+            <!--
             <div class="absolute bottom-4 w-full">
                 <a href="#" class=" px-6 py-3 flex items-center text-gray-600 ">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,6 +107,8 @@
                     <span class="ml-4">Log out</span>
                 </a>
                 </div>
+
+            -->
         </aside>
             <!-- end side bar -->
 
@@ -132,7 +136,7 @@
                 <!-- Events Section -->
                 <section>
                     <div class="flex justify-between items-center" 
-                    data-aos="fade-up"
+                    data-aos="zoom-in"
                             data-aos-duration="2000">
                         <h2 class="text-lg font-semibold">Projects</h2>
                         <div class="flex space-x-4">
@@ -142,11 +146,11 @@
                         </div>
                     </div>
                 
-                    <div class="grid grid-cols-3 gap-4 mt-4" 
-                    data-aos="fade-in"
-                            data-aos-duration="2000">
+                    <div class="grid grid-cols-3 gap-4 mt-4">
+                    
                         <!-- Event Cards -->
-                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent">
+                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent"  data-aos="zoom-in"
+                        data-aos-duration="2000">
                             <img src="{{ asset('logo/card1.png') }}" alt="Event" class="rounded-lg">
                             <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
                             <p class="text-sm text-gray-500">
@@ -159,7 +163,8 @@
                         </div>
                 
                         <!-- Event Cards -->
-                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="ongoing">
+                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="ongoing"  data-aos="zoom-in"
+                        data-aos-duration="2000">
                             <img src="{{ asset('logo/card2.png') }}" alt="Event" class="rounded-lg">
                             <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
                             <p class="text-sm text-gray-500">
@@ -172,7 +177,8 @@
                         </div>
                 
                         <!-- Event Cards -->
-                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="upcoming">
+                        <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="upcoming"  data-aos="zoom-in"
+                        data-aos-duration="2000">
                             <img src="{{ asset('logo/card3.png') }}" alt="Event" class="rounded-lg">
                             <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
                             <p class="text-sm text-gray-500">
