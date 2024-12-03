@@ -25,14 +25,20 @@
                 @enderror
             </div>
 
-            <!-- Event Date -->
+            <!-- Event Start Date -->
+            <!-- Event Start Date -->
             <div class="mb-4">
-                <label for="event_date" class="block text-sm font-semibold text-gray-700">Event Date:</label>
-                <input type="date" id="event_date" name="eventDate"
+                <label for="event_start_date" class="block text-sm font-semibold text-gray-700">Event Start
+                    Date:</label>
+                <input type="date" id="event_start_date" name="eventDate"
                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
-                @error('eventDate')
-                    <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
-                @enderror
+            </div>
+
+            <!-- Event End Date -->
+            <div class="mb-4">
+                <label for="event_end_date" class="block text-sm font-semibold text-gray-700">Event End Date:</label>
+                <input type="date" id="event_end_date" name="eventEndDate"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
 
             <!-- Event Time -->
@@ -44,7 +50,6 @@
                     <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                 @enderror
             </div>
-
 
             <!-- Event Type -->
             <div class="mb-4">
@@ -62,8 +67,6 @@
                 @enderror
             </div>
 
-
-
             <div class="mb-4">
                 <label for="event_image" class="block text-sm font-semibold text-gray-700">Event Image:</label>
                 <input type="file" id="event_image" name="eventImage"
@@ -72,7 +75,6 @@
                     <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                 @enderror
             </div>
-
 
             <!-- Event Location -->
             <div class="mb-4">
@@ -94,7 +96,6 @@
                 @enderror
             </div>
 
-
             <!-- Event Budget and Expenses -->
             <div class="mb-6">
                 <h3 class="text-lg font-semibold text-gray-700">Event Budget:</h3>
@@ -109,19 +110,14 @@
                     </div>
 
                     <div class="w-full ml-2">
-                        <label for="event_spent" class="block text-sm font-semibold text-gray-700">Event
-                            Spent:</label>
-                        <input type="text" id="event_spent" name="eventSpent" placeholder="Enter Total Spent"
+                        <input type="hidden" id="event_spent" name="eventSpent" value="3000"
+                            placeholder="Enter Total Spent"
                             class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        <span id="event_spent_error" class="text-red-500 text-xs mt-1 hidden">Error: Spent amount is
-                            required.</span>
                     </div>
                 </div>
             </div>
 
             <!-- Event Image -->
-
-
             <div id="expense-container" class="mt-4">
                 <h4 class="text-md font-semibold text-gray-700">Expenses:</h4>
                 <div class="expense-item flex justify-between mt-2">
@@ -129,12 +125,10 @@
                         class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2">
                     <input type="text" name="expense_amount[]" placeholder="Price"
                         class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
-                    <input type="date" name="expense_date[]"
-                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2">
-                    <!-- Add expense time -->
+                    <select name="expense_date[]"
+                        class="expense-date-dropdown mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2"></select>
                     <input type="time" name="expense_time[]"
                         class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
-
                 </div>
             </div>
 
@@ -142,7 +136,6 @@
                 class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add More</button>
 
             <script>
-                // Function to handle adding more expense fields
                 function addExpense() {
                     const expenseContainer = document.getElementById('expense-container');
                     const newExpenseItem = document.createElement('div');
@@ -153,22 +146,68 @@
                 class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2'>
             <input type='text' name='expense_amount[]' placeholder='Price'
                 class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2'>
-            <input type='date' name='expense_date[]' 
-                class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2'>
-            <input type='time' name='expense_time[]' 
+            <select name="expense_date[]"
+                class="expense-date-dropdown mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2"></select>
+            <input type='time' name='expense_time[]'
                 class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2'>
         `;
 
                     expenseContainer.appendChild(newExpenseItem);
+
+                    // Populate the newly added dropdown with dates
+                    const newDropdown = newExpenseItem.querySelector('.expense-date-dropdown');
+                    populateDropdown(newDropdown, dateOptions);
                 }
+
+
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const startDateInput = document.getElementById('event_start_date');
+                    const endDateInput = document.getElementById('event_end_date');
+                    let dateOptions = [];
+
+                    function populateDateDropdowns() {
+                        const startDate = new Date(startDateInput.value);
+                        const endDate = new Date(endDateInput.value);
+
+                        if (isNaN(startDate) || isNaN(endDate) || startDate > endDate) {
+                            return; // Do nothing if dates are invalid or start date is after end date
+                        }
+
+                        dateOptions = [];
+                        let currentDate = new Date(startDate);
+
+                        while (currentDate <= endDate) {
+                            dateOptions.push(currentDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+                            currentDate.setDate(currentDate.getDate() + 1);
+                        }
+
+                        document.querySelectorAll('.expense-date-dropdown').forEach(dropdown => {
+                            populateDropdown(dropdown, dateOptions);
+                        });
+                    }
+
+                    function populateDropdown(dropdown, options) {
+                        dropdown.innerHTML = ''; // Clear existing options
+                        options.forEach(date => {
+                            const option = document.createElement('option');
+                            option.value = date;
+                            option.textContent = date;
+                            dropdown.appendChild(option);
+                        });
+                    }
+
+
+
+                    startDateInput.addEventListener('change', populateDateDropdowns);
+                    endDateInput.addEventListener('change', populateDateDropdowns);
+                });
             </script>
 
-
-
             <!-- Submit Button -->
-            <div class="flex justify-end mt-6">
-                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600">Save and
-                    Submit</button>
+            <div class="flex justify-center mt-8">
+                <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-full">Save Event</button>
             </div>
         </form>
     </div>

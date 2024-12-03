@@ -263,13 +263,13 @@
 
                         <h2 class="text-sm font-semibold">Community Outreach</h2>
                         <p class="text-xs">Total Budget</p>
-                        <p class="text-2xl font-bold">₱22,000.00</p>
+                        <p class="text-2xl font-bold">₱{{ number_format($totalBudget, 2) }}</p>
 
                         <p class="text-xs">Total Budget Used</p>
-                        <p class="text-2xl font-bold">${{ number_format($totalBudget, 2) }}</p>
+                        <p class="text-2xl font-bold">${{ number_format($bb, 2) }}</p>
 
                         <p class="text-xs">Total Remaining Budget</p>
-                        <p class="text-2xl font-bold">₱22,000.00</p>
+                        <p class="text-2xl font-bold">₱{{ number_format($horse_shit, 2) }}</p>
                     </div>
 
 

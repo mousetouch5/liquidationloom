@@ -12,6 +12,7 @@ use App\Http\Controllers\OfficialTransactionController;
 use App\Http\Controllers\OfficialReportController;
 use App\Http\Controllers\OfficialProjectController;
 use App\Http\Controllers\EditController;
+use App\Http\Controllers\DashboardController;
 
 //use App\Http\Controllers\CustomLoginController;
 
@@ -40,9 +41,7 @@ Route::middleware([
 
 
 
-Route::get('/dashboard', function () {
-return view('Resident.dashboard');
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Resident
 Route::get('/Resident/Event', [EventController::class, 'index'])->name('Resident.Event.index');
@@ -58,7 +57,7 @@ Route::get('/Official/OfficialReport', [OfficialReportController::class, 'index'
 Route::get('/Official/OfficialProject', [OfficialProjectController::class, 'index'])->name('Official.OfficialProject.index');
 Route::get('/Official/Edit', [EditController::class, 'index'])->name('Official.Edit.index');
 
-Route::get('/download-liquidation-report', [OfficialReportController::class, 'generateLiquidationReport'])->name('download.liquidation.report');
+Route::get('/generate-liquidation-report/{event}', [OfficialReportController::class, 'generateLiquidationReport'])->name('download.liquidation.report');
 
 //Post
 
@@ -76,3 +75,6 @@ Route::get('/event-data', [OfficialEventController::class, 'getEvents'])->name('
 
 //expense data
 Route::get('/expenses', [OfficialEventController::class, 'getExpenses']);
+
+
+Route::get('/print-event/{event}', [EventController::class, 'print'])->name('events.print');

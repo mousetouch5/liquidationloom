@@ -27,7 +27,6 @@ class Event extends Model
     protected $casts = [
         'eventDate' => 'date', // Ensure eventDate is cast to a date format
         'budget' => 'decimal:2', // Ensure budget is cast to a decimal with 2 places
-        'eventSpent' => 'decimal:2',
     ];
 
     // Example of an accessor for formatted budget

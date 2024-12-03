@@ -63,13 +63,38 @@ class OfficialReportController extends Controller
     }
 
 
+public function generateLiquidationReport(Event $event)
+{
+    // Initialize variables for summary calculations
+    $total_event_budget = $event->budget;
+    $total_expense = $event->expenses->sum('expense_amount');
+    $total_refunded = max(0, $total_expense - $total_event_budget);
+    $total_to_be_reimbursed = max(0, $total_event_budget - $total_expense);
+
+    // Get the current date to include in the report
+    $date_today = \Carbon\Carbon::now()->format('F d, Y');
+
+    // Generate the PDF using the correct variable name
+    $pdf = PDF::loadView('report.liquidation_report', [
+        'event' => $event, // Pass the singular event
+        'total_event_budget' => $total_event_budget,
+        'total_expense' => $total_expense,
+        'total_refunded' => $total_refunded,
+        'total_to_be_reimbursed' => $total_to_be_reimbursed,
+        'date_today' => $date_today,
+    ]);
+
+    // Return the PDF for download
+    return $pdf->download('liquidation_report.pdf');
+}
 
 
-    public function generateLiquidationReport()
+
+
+
+/*
+    public function generateLiquidationReport(Event $event)
     {
-    // Fetch events with their related expenses
-    $events = Event::with('expenses')->get(); 
-
     // Initialize variables for summary calculations
     $total_event_budget = 0;
     $total_expense = 0;
@@ -111,6 +136,7 @@ class OfficialReportController extends Controller
     // Return the PDF file for download
     return $pdf->download('liquidation_report.pdf');
 }
+*/
 
 
 

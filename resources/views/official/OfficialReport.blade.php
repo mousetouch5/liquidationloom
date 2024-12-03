@@ -192,8 +192,9 @@
                                                 title="Download" data-event-id="{{ $event->id }}">download
                                             </button>
                                             <button
-                                                class="material-icons text-gray-500 hover:text-green-500 cursor-pointer"
-                                                title="Print">print</button>
+                                                class="material-icons text-gray-500 hover:text-green-500 cursor-pointer print-btn"
+                                                title="Print" data-event-id="{{ $event->id }}">print
+                                            </button>
                                             <button
                                                 class="material-icons text-gray-500 hover:text-red-500 cursor-pointer"
                                                 title="Delete">delete</button>
@@ -212,11 +213,20 @@
                 document.querySelectorAll('.download-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const eventId = this.getAttribute('data-event-id');
-                        // You can append the event ID as a query parameter if you need to filter
-                        window.location.href = `/download-liquidation-report?event_id=${eventId}`;
+                        // Redirect to the backend route to generate the PDF
+                        window.location.href = `/generate-liquidation-report/${eventId}`;
+                    });
+                });
+
+                document.querySelectorAll('.print-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const eventId = this.getAttribute('data-event-id');
+                        window.location.href = `/print-event/${eventId}`;
                     });
                 });
             </script>
+
+
         </div>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 

@@ -15,7 +15,10 @@ public function index()
     // Calculate the sum of the 'eventbudget' column
     $totalBudget = Event::sum('budget');
 
+    $bb = Expense::sum('expense_amount');
+
+    $horse_shit =  $totalBudget - $bb;
     // Pass both the events and totalBudget to the view
-    return view('official.OfficialTransaction', compact('events', 'totalBudget'));
+    return view('official.OfficialTransaction', compact('horse_shit','events','bb', 'totalBudget'));
 }
 }

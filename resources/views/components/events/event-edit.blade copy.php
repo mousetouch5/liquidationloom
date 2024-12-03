@@ -45,6 +45,7 @@
                 @enderror
             </div>
 
+
             <!-- Event Type -->
             <div class="mb-4">
                 <label for="event_type" class="block text-sm font-semibold text-gray-700">Event Type:</label>
@@ -60,6 +61,18 @@
                     <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                 @enderror
             </div>
+
+
+
+            <div class="mb-4">
+                <label for="event_image" class="block text-sm font-semibold text-gray-700">Event Image:</label>
+                <input type="file" id="event_image" name="eventImage"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                @error('eventImage')
+                    <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                @enderror
+            </div>
+
 
             <!-- Event Location -->
             <div class="mb-4">
@@ -82,7 +95,6 @@
             </div>
 
 
-
             <!-- Event Budget and Expenses -->
             <div class="mb-6">
                 <h3 class="text-lg font-semibold text-gray-700">Event Budget:</h3>
@@ -97,25 +109,59 @@
                     </div>
 
                     <div class="w-full ml-2">
-                        <label for="event_spent" class="block text-sm font-semibold text-gray-700">Event
-                            Spent:</label>
-                        <input type="text" id="event_spent" name="eventSpent" placeholder="Enter Total Spent"
+
+                        <input type="hidden" id="event_spent" name="eventSpent" value="3000"
+                            placeholder="Enter Total Spent"
                             class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        <span id="event_spent_error" class="text-red-500 text-xs mt-1 hidden">Error: Spent amount is
-                            required.</span>
                     </div>
                 </div>
             </div>
 
             <!-- Event Image -->
-            <div class="mb-4">
-                <label for="event_image" class="block text-sm font-semibold text-gray-700">Event Image:</label>
-                <input type="file" id="event_image" name="eventImage"
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
-                @error('eventImage')
-                    <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
-                @enderror
+
+
+            <div id="expense-container" class="mt-4">
+                <h4 class="text-md font-semibold text-gray-700">Expenses:</h4>
+                <div class="expense-item flex justify-between mt-2">
+                    <input type="text" name="expenses[]" placeholder="Expense Description"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2">
+                    <input type="text" name="expense_amount[]" placeholder="Price"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
+                    <input type="date" name="expense_date[]"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2">
+                    <!-- Add expense time -->
+                    <input type="time" name="expense_time[]"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
+
+                </div>
             </div>
+
+            <button type="button" id="add-expense-button" onclick="addExpense()"
+                class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add More</button>
+
+            <script>
+                // Function to handle adding more expense fields
+                function addExpense() {
+                    const expenseContainer = document.getElementById('expense-container');
+                    const newExpenseItem = document.createElement('div');
+                    newExpenseItem.className = 'expense-item flex justify-between mt-2';
+
+                    newExpenseItem.innerHTML = `
+            <input type='text' name='expenses[]' placeholder='Expense Description'
+                class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2'>
+            <input type='text' name='expense_amount[]' placeholder='Price'
+                class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2'>
+            <input type='date' name='expense_date[]' 
+                class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2'>
+            <input type='time' name='expense_time[]' 
+                class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2'>
+        `;
+
+                    expenseContainer.appendChild(newExpenseItem);
+                }
+            </script>
+
+
 
             <!-- Submit Button -->
             <div class="flex justify-end mt-6">

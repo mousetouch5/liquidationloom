@@ -21,6 +21,19 @@ class EventController extends Controller
     }
 
 
+public function print(Event $event) {
+    // Initialize variables for summary calculations
+    $total_event_budget = $event->budget;
+    $total_expense = $event->expenses->sum('expense_amount');
+    $total_refunded = max(0, $total_expense - $total_event_budget);
+    $total_to_be_reimbursed = max(0, $total_event_budget - $total_expense);
+
+    // Get the current date to include in the report
+    $date_today = \Carbon\Carbon::now()->format('F d, Y');
+
+    // Pass all necessary data to the view
+    return view('events.print', compact('event', 'total_event_budget', 'total_expense', 'total_refunded', 'total_to_be_reimbursed', 'date_today'));
+}
 
 
 
