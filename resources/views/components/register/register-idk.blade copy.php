@@ -1,10 +1,12 @@
 <dialog id="my_modal_4" class="modal">
     <div class="modal-box w-full max-w-4xl">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="my_modal_4.close()">✕</button>
-        <form id="signup_form" method="POST" action="{{ route('register') }}" class="grid grid-cols-1 gap-6 p-6">
-            @csrf <!-- This directive adds the CSRF token -->
-            <input type="hidden" name="usertype" value="official">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="closeModal()">✕</button>
+        <form id="signup_form" action="{{ route('register') }}" method="POST" class="grid grid-cols-1 gap-6 p-6">
+            @csrf
             <!-- Form Fields -->
+
+            <input type="hidden" name="usertype" value="Official">
             <div class="space-y-4">
                 <!-- Row 1 -->
                 <div class="grid grid-cols-3 gap-6">
@@ -48,19 +50,23 @@
                     </div>
                 </div>
 
+
                 <div class="grid grid-cols-1 gap-6">
-                    <div class="mt-4">
-                        <x-label for="password" value="{{ __('Password') }}" />
-                        <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                            autocomplete="new-password" />
+                    <div>
+                        <label for="password" class="block text-sm font-semibold">Password</label>
+                        <input type="password" id="password" name="password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
 
-                    <div class="mt-4">
-                        <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                        <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                    <div>
+                        <label for="confirm_password" class="block text-sm font-semibold">Confirm
+                            Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
+
+
 
                 <!-- Row 3 -->
                 <div class="grid grid-cols-3 gap-6">
@@ -88,43 +94,106 @@
                     <div>
                         <label for="brgy_city_zipcode" class="block text-sm font-semibold">Barangay, City,
                             Zip Code</label>
-                        <input type="text" id="brgy_city_zipcode" name="brgy_city_zipcode"
+                        <input type="text" id="brgy_city_zipcode" name="city"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div>
-                        <label for="city" class="block text-sm font-semibold">City</label>
-                        <input type="text" id="city" name="city"
+                        <label for="brgy_city_zipcode" class="block text-sm font-semibold">City</label>
+                        <input type="text" id="brgy_city_zipcode" name="city"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
 
                     <div>
-                        <label for="zipcode" class="block text-sm font-semibold">Zip Code</label>
-                        <input type="text" id="zipcode" name="zipcode"
+                        <label for="brgy_city_zipcode" class="block text-sm font-semibold">Zip
+                            Code</label>
+                        <input type="text" id="brgy_city_zipcode" name="brgy_city_zipcode"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
+
+
+                    <div></div> <!-- Empty space for alignment -->
                 </div>
+
+
 
                 <!-- Row 6: Choose File (ID Verification) -->
                 <div class="grid grid-cols-3 gap-6">
                     <div>
-                        <label for="choose_file" class="block text-sm font-semibold">Proof of ID Verification</label>
+                        <label for="choose_file" class="block text-sm font-semibold">Choose Profile</label>
                         <input type="file" id="choose_file" name="choose_file"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
-                    <div>
-                        <label for="choose_file" class="block text-sm font-semibold">Choose File</label>
-                        <input type="file" id="choose_file" name="choose_file"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                    </div>
+
+                    <div></div> <!-- Empty space for alignment -->
                 </div>
             </div>
 
             <!-- Modal Footer -->
-            <div class="flex justify-center mt-4">
+            <div class="flex justify-center mt-4 ">
+                <!-- HTML Button -->
                 <button type="submit" id="signUpButton"
-                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 w-80">Sign
-                    Up</button>
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 w-80">Sign Up</button>
             </div>
+
+
         </form>
     </div>
 </dialog>
+
+
+
+<!-- Include SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+<script>
+    function submitForm(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+        const signupForm = document.getElementById('signup_form');
+        const formData = new FormData(signupForm);
+
+        fetch("{{ route('register') }}", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json"
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Register Successful',
+                        text: 'Redirecting to your homepage...',
+                        icon: 'success',
+                        timer: 3000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = data.redirect_url;
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Registration Failed',
+                        text: data.message || 'Something went wrong!',
+                        icon: 'error',
+                        confirmButtonText: 'Try Again'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                Swal.fire({
+                    title: 'Error',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+    }
+
+    document.getElementById('signUpButton').addEventListener('click', submitForm);
+
+    // Attach the submitForm function to the button click with event
+    document.getElementById('signUpButton').addEventListener('click', submitForm);
+</script>

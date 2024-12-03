@@ -62,6 +62,7 @@
             <x-login.fucking-login />
             <x-register.register-idk2 />
             <x-register.register-idk />
+            <x-validation-errors class="mb-4" />
 
 
 
@@ -102,19 +103,7 @@
     });
 </script>
 
-<!-- Script to control the modal -->
-<script>
-    const my_modal_3 = document.getElementById('my_modal_3');
 
-    // Handling form submission (optional)
-    document.getElementById('signup_form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form submission (for now)
-
-
-        // Close modal after submission (optional)
-        my_modal_3.close();
-    });
-</script>
 
 
 </html>

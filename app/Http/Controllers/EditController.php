@@ -8,6 +8,6 @@ class EditController extends Controller
 {
     public function index()
     {
-        return view('Official.Edit'); // This will load the 'events.index' view
+        return view('official.Edit'); // This will load the 'events.index' view
     }
 }

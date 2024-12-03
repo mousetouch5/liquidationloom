@@ -1,9 +1,9 @@
-<dialog id="my_modal_4" class="modal">
+<dialog id="my_modal_3" class="modal">
     <div class="modal-box w-full max-w-4xl">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="my_modal_4.close()">✕</button>
         <form id="signup_form" method="POST" action="{{ route('register') }}" class="grid grid-cols-1 gap-6 p-6">
             @csrf <!-- This directive adds the CSRF token -->
-            <input type="hidden" name="usertype" value="official">
+            <input type="hidden" name="usertype" value="resident">
             <!-- Form Fields -->
             <div class="space-y-4">
                 <!-- Row 1 -->
@@ -105,18 +105,7 @@
                 </div>
 
                 <!-- Row 6: Choose File (ID Verification) -->
-                <div class="grid grid-cols-3 gap-6">
-                    <div>
-                        <label for="choose_file" class="block text-sm font-semibold">Proof of ID Verification</label>
-                        <input type="file" id="choose_file" name="choose_file"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label for="choose_file" class="block text-sm font-semibold">Choose File</label>
-                        <input type="file" id="choose_file" name="choose_file"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                    </div>
-                </div>
+
             </div>
 
             <!-- Modal Footer -->

@@ -20,11 +20,23 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('user_type', ['official', 'resident']); // Add user_type column
+            $table->enum('user_type', ['official', 'resident']); // User type column
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
+
+            // Additional columns
+            $table->string('first_name')->nullable();
+            $table->string('middle_name')->nullable(); // Middle name can be optional
+            $table->string('last_name')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('brgy_id')->default('1');
+            $table->string('lot_number')->nullable();
+            $table->string('block_number')->nullable();
+            $table->string('purok')->nullable();
+            $table->string('city')->default('Bacolod');
+            $table->string('brgy_city_zipcode')->default('1');
         });
 
         // Seed the users table with default data
@@ -34,6 +46,16 @@ return new class extends Migration
                 'email' => 'admin@example.com',
                 'password' => Hash::make('password'), // Default password
                 'user_type' => 'official',
+                'first_name' => 'Admin',
+                'middle_name' => null,
+                'last_name' => 'Official',
+                'birthdate' => '1980-01-01',
+                'brgy_id' => '1',
+                'lot_number' => '123',
+                'block_number' => 'A',
+                'purok' => '1',
+                'city' => 'Admin City',
+                'brgy_city_zipcode' => '1000',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -42,6 +64,16 @@ return new class extends Migration
                 'email' => 'resident.john@example.com',
                 'password' => Hash::make('password'), // Default password
                 'user_type' => 'resident',
+                'first_name' => 'John',
+                'middle_name' => 'M',
+                'last_name' => 'Doe',
+                'birthdate' => '1990-06-15',
+                'brgy_id' => '2',
+                'lot_number' => '456',
+                'block_number' => 'B',
+                'purok' => '2',
+                'city' => 'Resident City',
+                'brgy_city_zipcode' => '2000',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -50,6 +82,16 @@ return new class extends Migration
                 'email' => 'resident.jane@example.com',
                 'password' => Hash::make('password'), // Default password
                 'user_type' => 'resident',
+                'first_name' => 'Jane',
+                'middle_name' => 'A',
+                'last_name' => 'Smith',
+                'birthdate' => '1992-03-10',
+                'brgy_id' => '3',
+                'lot_number' => '789',
+                'block_number' => 'C',
+                'purok' => '3',
+                'city' => 'Resident Town',
+                'brgy_city_zipcode' => '3000',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

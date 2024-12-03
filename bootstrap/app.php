@@ -12,8 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
 ->withMiddleware(function (Middleware $middleware) {
-    $middleware->trustProxies('*', \Illuminate\Http\Request::HEADER_X_FORWARDED_ALL);
-})
+    $middleware->append(App\Http\Middleware\TrustProxies::class);
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
