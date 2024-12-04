@@ -73,8 +73,10 @@
             <div class="flex flex-col lg:flex-row lg:space-x-6">
                 <!-- Content Section -->
                 <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
-                    <!-- Events Section -->
+            
                     <section>
+
+
                         <div class="flex justify-between items-center" 
                         data-aos="zoom-in"
                                 data-aos-duration="2000">
@@ -86,50 +88,175 @@
                             </div>
                         </div>
                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- GRID SECTION OF EVENT CARDS -->
                         <div class="grid grid-cols-3 gap-4 mt-4">
-                        
-                            <!-- Event Cards -->
-                            <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent"  data-aos="zoom-in"
-                            data-aos-duration="3000">
-                                <img src="{{ asset('logo/card1.png') }}" alt="Event" class="rounded-lg">
-                                <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-                                <p class="text-sm text-gray-500">
-                                    <!-- Event Date and Time -->
-                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                        <!-- SVG path here -->
-                                    </svg>
-                                    16 Jul 2024, 8:30 AM
-                                </p>
+                           <!-- Event Card  with modal function -->
+                        <div id="eventCard" class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent" 
+                        data-aos="zoom-in" data-aos-duration="3000">
+                        <img src="{{ asset('logo/card1.png') }}" alt="Event" class="rounded-lg">
+                        <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
+                        <p class="text-sm text-gray-500">
+                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
+                                <!-- SVG path here -->
+                            </svg>
+                            16 Jul 2024, 8:30 AM
+                        </p>
+                        </div>
+
+                        <!-- Main Modal -->
+                        <dialog id="my_modal_1" class="modal">
+                        <div class="modal-box">
+                            <h3 class="text-lg font-bold">Event Details</h3>
+                            <div class="space-y-4">
+                             
+                                <!-- Readonly Input Fields with Sample Data -->
+                                <div>
+                                    <label for="eventDate" class="block text-sm font-medium text-gray-700">Date</label>
+                                    <input type="date" id="eventDate" class="input input-bordered w-full" value="2024-07-16" readonly>
+                                </div>
+                                <div>
+                                    <label for="eventTime" class="block text-sm font-medium text-gray-700">Time</label>
+                                    <input type="time" id="eventTime" class="input input-bordered w-full" value="08:30" readonly>
+                                </div>
+                                <div>
+                                    <label for="eventType" class="block text-sm font-medium text-gray-700">Type</label>
+                                    <input type="text" id="eventType" class="input input-bordered w-full" value="Community Outreach" readonly>
+                                </div>
+                                <div>
+                                    <label for="eventDescription" class="block text-sm font-medium text-gray-700">Description</label>
+                                    <textarea id="eventDescription" class="textarea textarea-bordered w-full" readonly>Engaging with the community to provide support and build connections.</textarea>
+                                </div>
+                                <div>
+                                    <label for="eventLocation" class="block text-sm font-medium text-gray-700">Location</label>
+                                    <input type="text" id="eventLocation" class="input input-bordered w-full" value="Downtown Community Hall" readonly>
+                                </div>
+                                <div>
+                                    <label for="eventOrganizer" class="block text-sm font-medium text-gray-700">Organizer</label>
+                                    <input type="text" id="eventOrganizer" class="input input-bordered w-full" value="City Council" readonly>
+                                </div>
+                                <!-- Button for Budget Breakdown -->
+                                <button type="button" class="btn btn-primary w-full mt-4" onclick="budgetModal.showModal()">See Budget Breakdown</button>
+                                   <!-- Image -->
+                                   <div>
+                                    <img src="{{ asset('logo/card1.png') }}" alt="Event Image" class="rounded-lg w-full h-40 object-cover">
+                                </div>
                             </div>
-                    
-                            <!-- Event Cards -->
-                            <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="ongoing"  data-aos="zoom-in"
-                            data-aos-duration="3000">
-                                <img src="{{ asset('logo/card2.png') }}" alt="Event" class="rounded-lg">
-                                <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-                                <p class="text-sm text-gray-500">
-                                    <!-- Event Date and Time -->
-                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                        <!-- SVG path here -->
-                                    </svg>
-                                    16 Jul 2024, 8:30 AM
-                                </p>
+
+                            <div class="modal-action">
+                                <form method="dialog">
+                                    <button class="btn">Close</button>
+                                </form>
                             </div>
-                    
-                            <!-- Event Cards -->
-                            <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="upcoming"  data-aos="zoom-in"
-                            data-aos-duration="3000">
-                                <img src="{{ asset('logo/card3.png') }}" alt="Event" class="rounded-lg">
-                                <h3 class="mt-4 text-md font-semibold">Community Outreach</h3>
-                                <p class="text-sm text-gray-500">
-                                    <!-- Event Date and Time -->
-                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                        <!-- SVG path here -->
-                                    </svg>
-                                    16 Jul 2024, 8:30 AM
-                                </p>
+                        </div>
+                        </dialog>
+
+
+
+                        <!-- Budget Breakdown Modal -->
+                        <dialog id="budgetModal" class="modal">
+                        <div class="modal-box">
+                            <h3 class="text-lg font-bold">Budget Breakdown</h3>
+                            <div class="space-y-4">
+                            <div>
+                                <label for="eventName" class="block text-sm font-medium text-gray-700">Event</label>
+                                <input type="text" id="eventName" class="input input-bordered w-full" value="Community Outreach" readonly>
                             </div>
+                            <div>
+                                <label for="totalBudget" class="block text-sm font-medium text-gray-700">Total Budget</label>
+                                <input type="text" id="totalBudget" class="input input-bordered w-full" value="$1,100" readonly>
+                            </div>
+                            <div>
+                                <label for="additionalExpenses" class="block text-sm font-medium text-gray-700">Additional Expenses</label>
+                                <input type="text" id="additionalExpenses" class="input input-bordered w-full" value="$50" readonly>
+                            </div>
+                            <div>
+                                <label for="totalSpent" class="block text-sm font-medium text-gray-700">Total Spent</label>
+                                <input type="text" id="totalSpent" class="input input-bordered w-full" value="$1,100" readonly>
+                            </div>
+                        </div>
+                            
+
+                            <div class="modal-action">
+                                <form method="dialog">
+                                    <button class="btn">Close</button>
+                                </form>
+                            </div>
+                        </div>
+                        </dialog>
+
+                        <script>
+                        // Reference to the modals
+                        const eventCard = document.getElementById('eventCard');
+                        const modal = document.getElementById('my_modal_1');
+                        const budgetModal = document.getElementById('budgetModal');
+
+                        // Show main modal when card is clicked
+                        eventCard.addEventListener('click', () => {
+                            modal.showModal();
+                        });
+
+                        // Optional: Close modals when clicking outside the modal-box
+                        [modal, budgetModal].forEach(modalElement => {
+                            modalElement.addEventListener('click', (e) => {
+                                if (e.target === modalElement) {
+                                    modalElement.close();
+                                }
+                            });
+                        });
+                        </script>
+
+                      <!--end modal event cards -->  
                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <!-- button group recent , incoming , upcoming  javascript function -->
                         </div>
                     </section>
                     
@@ -316,15 +443,63 @@
              <canvas id="pieChart" class="mt-4 h-32"></canvas> <!-- Pie chart -->
                  <!-- 🦆 Emoji -->
 
-                 <div class="mt-4 space-y-2">
-                     <div class="flex items-center justify-center space-x-2">
-                         <span class="text-2xl">😊</span>
-                         <span class="text-sm font-semibold text-gray-700">80%</span>
-                     </div>
-                     <div class="flex items-center justify-center space-x-2">
-                         <span class="text-2xl">😞</span>
-                         <span class="text-sm font-semibold text-gray-700">20%</span>
-                     </div>
+                 <div class="flex flex-col items-center space-y-4">
+                    <!-- Like Section -->
+                    <div class="flex items-center space-x-2">
+                      <!-- Percentage on the left -->
+                      <span class="text-sm font-semibold text-gray-700">80%</span>
+                      <!-- Circle with Like SVG centered inside -->
+                      <div class="relative">
+                        <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="20.5" cy="20.5" r="20.5" fill="#CDF3FF" />
+                        </svg>
+                        <!-- Like SVG -->
+                        <svg
+                          width="21"
+                          height="20"
+                          viewBox="0 0 21 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                        >
+                          <path
+                            d="M5 0H16V13L9 20L7.75 18.75C7.63333 18.6333 7.5375 18.475 7.4625 18.275C7.3875 18.075 7.35 17.8833 7.35 17.7V17.35L8.45 13H2C1.46667 13 1 12.8 0.6 12.4C0.2 12 0 11.5333 0 11V9C0 8.88333 0.0166667 8.75833 0.05 8.625C0.0833333 8.49167 0.116667 8.36667 0.15 8.25L3.15 1.2C3.3 0.866667 3.55 0.583333 3.9 0.35C4.25 0.116667 4.61667 0 5 0ZM14 2H5L2 9V11H11L9.65 16.5L14 12.15V2ZM16 13V11H19V2H16V0H21V13H16Z"
+                            fill="#1C1B1F"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  
+                    <!-- Unlike Section -->
+                    <div class="flex items-center space-x-2">
+                      <!-- Percentage on the left -->
+                      <span class="text-sm font-semibold text-gray-700">20%</span>
+                      <!-- Circle with Unlike SVG centered inside -->
+                      <div class="relative">
+                        <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="20.5" cy="20.5" r="20.5" fill="#CDF3FF" />
+                        </svg>
+                        <!-- Unlike SVG -->
+                        <svg
+                          width="21"
+                          height="20"
+                          viewBox="0 0 21 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                        >
+                          <path
+                            d="M5 0H16V13L9 20L7.75 18.75C7.63333 18.6333 7.5375 18.475 7.4625 18.275C7.3875 18.075 7.35 17.8833 7.35 17.7V17.35L8.45 13H2C1.46667 13 1 12.8 0.6 12.4C0.2 12 0 11.5333 0 11V9C0 8.88333 0.0166667 8.75833 0.05 8.625C0.0833333 8.49167 0.116667 8.36667 0.15 8.25L3.15 1.2C3.3 0.866667 3.55 0.583333 3.9 0.35C4.25 0.116667 4.61667 0 5 0ZM14 2H5L2 9V11H11L9.65 16.5L14 12.15V2ZM16 13V11H19V2H16V0H21V13H16Z"
+                            fill="#1C1B1F"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                    
+                      
             
 
 
@@ -343,7 +518,7 @@
                                     <!-- Button to Open the Modal Survey -->
                                     <button class="btn bg-cyan-500 w-full mt-5"
                                    
-                                             onclick="Survey.showModal()">Answer Question</button>
+                                             onclick="Survey.showModal()">Answer Survey</button>
 
                                     <!-- Modal Structure with Survey Questions -->
                                     <dialog id="Survey" class="modal">
