@@ -4,7 +4,7 @@ use App\Models\Expense;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log; // Import Log facade
-
+use Carbon\Carbon;
 class EventController extends Controller
 {
     // Display a listing of events
@@ -15,9 +15,23 @@ class EventController extends Controller
 
         // Retrieve all events from the database
         $events = Event::all();
-
+        $expenses = Expense::all()
+        ->groupBy('event_id')
+        ->map(function ($group) {
+            return [
+                'id' => $group->first()->event_id, // Get the event_id
+                'items' => $group->map(function ($expense) {
+                    return [
+                        'name' => $expense->expense_description,
+                        'date' => Carbon::parse($expense->expense_date)->format('d M h:ia'), // Convert date to Carbon and format
+                        'amount' => $expense->expense_amount,
+                    ];
+                }),
+                'total' => $group->sum('expense_amount'), // Calculate the total for the group
+            ];
+        });
         // Pass the events to the view for display
-        return view('Resident.Event', compact('events')); // Assuming your view is 'Resident.Event'
+        return view('Resident.Event', compact('events', 'expenses')); // Assuming your view is 'Resident.Event'
     }
 
 
