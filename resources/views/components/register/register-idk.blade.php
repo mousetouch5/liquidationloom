@@ -86,8 +86,8 @@
                 <!-- Row 4 -->
                 <div class="grid grid-cols-3 gap-6">
                     <div>
-                        <label for="brgy_city_zipcode" class="block text-sm font-semibold">Barangay, City,
-                            Zip Code</label>
+                        <label for="brgy_city_zipcode" class="block text-sm font-semibold">Barangay
+                            </label>
                         <input type="text" id="brgy_city_zipcode" name="brgy_city_zipcode"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
