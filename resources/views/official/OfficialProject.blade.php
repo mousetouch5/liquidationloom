@@ -248,12 +248,6 @@
                                     </div>
                                     <button type="button" class="btn btn-primary w-full mt-4"
                                         onclick="openBudgetModal()">Budget Breakdown</button>
-                                    <!--
-                                            <button type="button"
-                                        class="btn btn-primary w-full mt-4"
-                                        onclick="openBudgetModal('{{ $event->id }}', '{{ $event->eventName }}', '{{ $event->expense_amount }}', '{{ $event->expense_description }}')">See
-                                        Budget Breakdown</button>
-                                    -->
 
 
                                     <!-- Image -->
