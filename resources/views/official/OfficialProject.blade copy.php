@@ -174,22 +174,21 @@
 
 
 
+
+
+
+
+
+
+
+
                     <!-- GRID SECTION OF EVENT CARDS -->
                     <div class="grid grid-cols-3 gap-4 mt-4">
-                        <!-- Event Card with modal function -->
+                        <!-- Event Card  with modal function -->
                         @foreach ($events as $event)
-                            <div id="eventCard_{{ $event->id }}"
-                                class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent"
-                                data-aos="zoom-in" data-aos-duration="3000"
-                                onclick="openEventModal('{{ $event->eventName }}',
-                                 '{{ $event->expense_amount }}', 
-                                 '{{ $event->expense_description }}', 
-                                 '{{ $event->eventDate }}', '{{ $event->eventTime }}', 
-                                 '{{ $event->eventType }}', '{{ $event->eventDescription }}', 
-                                 '{{ $event->eventLocation }}', 
-                                '{{ $event->organizer }}', 
-                                '{{ asset('storage/' . $event->eventImage) }}','{{ $event->expense_amount }}',
-                             {{ $event->expense_description }} )">
+                            <div id="eventCard" class="bg-white shadow-lg rounded-lg p-4 event-card"
+                                data-category="recent" data-aos="zoom-in" data-aos-duration="3000"
+                                onclick="openEventModal('{{ $event->eventName }}', '{{ $event->eventDate }}', '{{ $event->eventTime }}', '{{ $event->eventType }}', '{{ $event->eventDescription }}', '{{ $event->eventLocation }}', '{{ $event->eventOrganizer }}', '{{ asset('storage/' . $event->eventImage) }}')">
                                 <img src="{{ asset('storage/' . $event->eventImage) }}" alt="Event"
                                     class="rounded-lg">
                                 <h3 class="mt-4 text-md font-semibold">{{ $event->eventName }}</h3>
@@ -198,41 +197,41 @@
                                         xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
                                         <!-- SVG path here -->
                                     </svg>
-                                    {{ \Carbon\Carbon::parse($event->eventDate)->format('d M Y') }},
-                                    {{ \Carbon\Carbon::parse($event->eventTime)->format('h:i A') }},
-
+                                    16 Jul 2024, 8:30 AM
                                 </p>
                             </div>
                         @endforeach
+
 
                         <!-- Main Modal -->
                         <dialog id="my_modal_1" class="modal">
                             <div class="modal-box">
                                 <h3 class="text-lg font-bold">Event Details</h3>
                                 <div class="space-y-4">
+
                                     <!-- Readonly Input Fields with Sample Data -->
                                     <div>
                                         <label for="eventDate"
                                             class="block text-sm font-medium text-gray-700">Date</label>
                                         <input type="date" id="eventDate" class="input input-bordered w-full"
-                                            readonly>
+                                            value="2024-07-16" readonly>
                                     </div>
                                     <div>
                                         <label for="eventTime"
                                             class="block text-sm font-medium text-gray-700">Time</label>
                                         <input type="time" id="eventTime" class="input input-bordered w-full"
-                                            readonly>
+                                            value="08:30" readonly>
                                     </div>
                                     <div>
                                         <label for="eventType"
                                             class="block text-sm font-medium text-gray-700">Type</label>
                                         <input type="text" id="eventType" class="input input-bordered w-full"
-                                            readonly>
+                                            value="Community Outreach" readonly>
                                     </div>
                                     <div>
                                         <label for="eventDescription"
                                             class="block text-sm font-medium text-gray-700">Description</label>
-                                        <textarea id="eventDescription" class="textarea textarea-bordered w-full" readonly></textarea>
+                                        <textarea id="eventDescription" class="textarea textarea-bordered w-full" readonly>Engaging with the community to provide support and build connections.</textarea>
                                     </div>
                                     <div>
                                         <label for="eventLocation"
@@ -244,21 +243,14 @@
                                         <label for="eventOrganizer"
                                             class="block text-sm font-medium text-gray-700">Organizer</label>
                                         <input type="text" id="eventOrganizer" class="input input-bordered w-full"
-                                            readonly>
+                                            value="City Council" readonly>
                                     </div>
+                                    <!-- Button for Budget Breakdown -->
                                     <button type="button" class="btn btn-primary w-full mt-4"
-                                        onclick="openBudgetModal()">Budget Breakdown</button>
-                                    <!--
-                                            <button type="button"
-                                        class="btn btn-primary w-full mt-4"
-                                        onclick="openBudgetModal('{{ $event->id }}', '{{ $event->eventName }}', '{{ $event->expense_amount }}', '{{ $event->expense_description }}')">See
-                                        Budget Breakdown</button>
-                                    -->
-
-
+                                        onclick="budgetModal.showModal()">See Budget Breakdown</button>
                                     <!-- Image -->
                                     <div>
-                                        <img id="eventImage" src="" alt="Event Image"
+                                        <img src="{{ asset('logo/card1.png') }}" alt="Event Image"
                                             class="rounded-lg w-full h-40 object-cover">
                                     </div>
                                 </div>
@@ -271,55 +263,39 @@
                             </div>
                         </dialog>
 
+
+
                         <!-- Budget Breakdown Modal -->
                         <dialog id="budgetModal" class="modal">
                             <div class="modal-box">
                                 <h3 class="text-lg font-bold">Budget Breakdown</h3>
                                 <div class="space-y-4">
-                                    <!-- Event Name -->
                                     <div>
                                         <label for="eventName"
                                             class="block text-sm font-medium text-gray-700">Event</label>
                                         <input type="text" id="eventName" class="input input-bordered w-full"
-                                            readonly>
+                                            value="Community Outreach" readonly>
                                     </div>
-
-                                    <!-- Budget Table -->
-                                    <div>
-                                        <h4 class="text-md font-semibold">Expenses</h4>
-                                        <table class="table table-zebra w-full">
-                                            <thead>
-                                                <tr>
-                                                    <th>Expense Description</th>
-                                                    <th>Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="expenseTableBody">
-                                                <!-- Expense rows will be inserted dynamically -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <!-- Budget Summary -->
                                     <div>
                                         <label for="totalBudget" class="block text-sm font-medium text-gray-700">Total
                                             Budget</label>
                                         <input type="text" id="totalBudget" class="input input-bordered w-full"
-                                            readonly>
+                                            value="$1,100" readonly>
                                     </div>
                                     <div>
                                         <label for="additionalExpenses"
                                             class="block text-sm font-medium text-gray-700">Additional Expenses</label>
                                         <input type="text" id="additionalExpenses"
-                                            class="input input-bordered w-full" readonly>
+                                            class="input input-bordered w-full" value="$50" readonly>
                                     </div>
                                     <div>
                                         <label for="totalSpent" class="block text-sm font-medium text-gray-700">Total
                                             Spent</label>
                                         <input type="text" id="totalSpent" class="input input-bordered w-full"
-                                            readonly>
+                                            value="$1,100" readonly>
                                     </div>
                                 </div>
+
 
                                 <div class="modal-action">
                                     <form method="dialog">
@@ -329,69 +305,18 @@
                             </div>
                         </dialog>
 
-                    </div>
-
-                    <!-- Your HTML content here -->
-
-                    <script>
-                        // Your JavaScript functions (openEventModal, openBudgetModal, etc.)
-                        let currentEventData = {};
-
-                        function openEventModal(eventName, expenseAmount, expenseDescription, eventDate, eventTime, eventType,
-                            eventDescription, eventLocation, eventOrganizer, eventImage, expenseDescription, expenseAmount) {
-                            // Store the event data in the global object
-                            currentEventData = {
-                                eventName: eventName,
-                                expenseAmount: expenseAmount,
-                                expenseDescription: expenseDescription,
-                                eventDate: eventDate,
-                                eventTime: eventTime,
-                                eventType: eventType,
-                                eventDescription: eventDescription,
-                                eventLocation: eventLocation,
-                                eventOrganizer: eventOrganizer,
-                                eventImage: eventImage,
-                                expenseDescription: expenseDescription,
-                                expenseAmount: expenseAmount,
-                            };
-
-                            // Populate Modal 1 fields with event data
-                            document.getElementById('eventDate').value = eventDate;
-                            document.getElementById('eventTime').value = eventTime;
-                            document.getElementById('eventType').value = eventType;
-                            document.getElementById('eventDescription').value = eventDescription;
-                            document.getElementById('eventLocation').value = eventLocation;
-                            document.getElementById('eventOrganizer').value = eventOrganizer;
-                            document.getElementById('eventImage').src = eventImage;
-
-                            // Open Modal 1
-                            document.getElementById('my_modal_1').showModal();
-                        }
-
-                        function openBudgetModal() {
-                            const eventData = currentEventData;
-
-                            // Populate Modal 2 fields with event data
-                            document.getElementById('eventName').value = eventData.eventName;
-                            const expenseTableBody = document.getElementById('expenseTableBody');
-                            expenseTableBody.innerHTML = ''; // Clear any previous rows
-
-                            // Insert new row for the current expense data
-                            const row = document.createElement('tr');
-                            row.innerHTML = `<td>${eventData.expenseDescription}</td><td>${eventData.expenseAmount}</td>`;
-                            expenseTableBody.appendChild(row);
-
-                            // Populate budget summary data (example)
-                            document.getElementById('totalBudget').value = eventData.expenseAmount; // Just an example
-
-                            // Open Modal 2
-                            document.getElementById('budgetModal').showModal();
-                        }
-
-                        document.addEventListener('DOMContentLoaded', function() {
+                        <script>
+                            // Reference to the modals
+                            const eventCard = document.getElementById('eventCard');
                             const modal = document.getElementById('my_modal_1');
                             const budgetModal = document.getElementById('budgetModal');
 
+                            // Show main modal when card is clicked
+                            eventCard.addEventListener('click', () => {
+                                modal.showModal();
+                            });
+
+                            // Optional: Close modals when clicking outside the modal-box
                             [modal, budgetModal].forEach(modalElement => {
                                 modalElement.addEventListener('click', (e) => {
                                     if (e.target === modalElement) {
@@ -399,8 +324,9 @@
                                     }
                                 });
                             });
-                        });
-                    </script>
+                        </script>
+
+                        <!--end modal event cards -->
 
 
 
@@ -426,61 +352,159 @@
 
 
 
-                    <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col" data-aos="fade-in"
-                        data-aos-duration="2000">
-                        <img src="{{ asset('logo/card4.jfif') }}" alt="Barangay Clean-Up Drive"
-                            class="rounded-lg w-full mb-4 h-72">
-                        <div>
-                            <h3 class="text-xl font-semibold">Barangay Clean-Up Drive Nets Big Haul</h3>
-                            <p class="mt-4 text-sm text-gray-500">
-                                Barangay Pahanocoy held a successful clean-up drive last weekend, collecting several
-                                truckloads of garbage and recyclables. Residents are encouraged to continue responsible
-                                waste disposal habits to keep the barangay clean.
-                            </p>
-                        </div>
-                    </section>
 
 
 
 
-                    <!-- Expenses Table -->
-                    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Expenses</h2>
-                        <table class="min-w-full">
-                            <thead>
-                                <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
-                                    <th class="py-3 px-4">Expenses</th>
-                                    <th class="py-3 px-4">Date</th>
-                                    <th class="py-3 px-4">Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b">
-                                    <td class="py-2 text-gray-700">Toys</td>
-                                    <td class="py-2 text-gray-700">5/5/2020</td>
-                                    <td class="py-2 text-red-500">₱12,000.00</td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="py-2 text-gray-700">Food Item</td>
-                                    <td class="py-2 text-gray-700">₱5,000.00</td>
-                                    <td class="py-2 text-red-500">5/5/2020</td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="py-2 text-gray-700">Packaging Materials</td>
-                                    <td class="py-2 text-gray-700">5/5/2020</td>
-                                    <td class="py-2 text-red-500">₱4,000.00</td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="py-2 text-gray-700">Logistics and Transportation</td>
-                                    <td class="py-2 text-gray-700">5/5/2020</td>
-                                    <td class="py-2 text-red-500">₱10,000.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="flex justify-between mt-4">
-                            <span class="font-semibold text-lg text-red-500">Total: ₱19,000.00</span>
-                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </div>
+                </section>
+
+
+
+                <script>
+                    // Function to open the modal and populate it with event data
+                    function openEventModal(eventName, eventDate, eventTime, eventType, eventDescription, eventLocation, eventOrganizer,
+                        eventImage) {
+                        // Update modal fields with the event data
+                        document.getElementById('eventDate').value = eventDate;
+                        document.getElementById('eventTime').value = eventTime;
+                        document.getElementById('eventType').value = eventType;
+                        document.getElementById('eventDescription').value = eventDescription;
+                        document.getElementById('eventLocation').value = eventLocation;
+                        document.getElementById('eventOrganizer').value = eventOrganizer;
+                        document.getElementById('eventImage').src = eventImage;
+
+                        // Open the modal
+                        document.getElementById('my_modal_1').showModal();
+                    }
+                </script>
+
+
+
+                <script>
+                    // JavaScript to handle the event category toggle
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const buttons = document.querySelectorAll("button");
+                        const eventCards = document.querySelectorAll(".event-card");
+
+                        // Function to filter event cards based on category
+                        function filterEvents(category) {
+                            eventCards.forEach(card => {
+                                if (category === "all" || card.getAttribute("data-category") === category) {
+                                    card.classList.remove("hidden");
+                                } else {
+                                    card.classList.add("hidden");
+                                }
+                            });
+                        }
+
+                        // Event listener for button clicks
+                        buttons.forEach(button => {
+                            button.addEventListener("click", () => {
+                                // Reset all buttons' styles
+                                buttons.forEach(btn => btn.classList.remove("bg-blue-100"));
+                                button.classList.add("bg-blue-100");
+
+                                // Determine which category to filter by
+                                if (button.id === "recent-events") {
+                                    filterEvents("recent");
+                                } else if (button.id === "ongoing-events") {
+                                    filterEvents("ongoing");
+                                } else if (button.id === "upcoming-events") {
+                                    filterEvents("upcoming");
+                                }
+                            });
+                        });
+
+                        // Initial load, show all events
+                        filterEvents("all");
+                    });
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col" data-aos="fade-in"
+                    data-aos-duration="2000">
+                    <img src="{{ asset('logo/card4.jfif') }}" alt="Barangay Clean-Up Drive"
+                        class="rounded-lg w-full mb-4 h-72">
+                    <div>
+                        <h3 class="text-xl font-semibold">Barangay Clean-Up Drive Nets Big Haul</h3>
+                        <p class="mt-4 text-sm text-gray-500">
+                            Barangay Pahanocoy held a successful clean-up drive last weekend, collecting several
+                            truckloads of garbage and recyclables. Residents are encouraged to continue responsible
+                            waste disposal habits to keep the barangay clean.
+                        </p>
+                    </div>
+                </section>
+
+
+
+
+                <!-- Expenses Table -->
+                <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Expenses</h2>
+                    <table class="min-w-full">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
+                                <th class="py-3 px-4">Expenses</th>
+                                <th class="py-3 px-4">Date</th>
+                                <th class="py-3 px-4">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="py-2 text-gray-700">Toys</td>
+                                <td class="py-2 text-gray-700">5/5/2020</td>
+                                <td class="py-2 text-red-500">₱12,000.00</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-2 text-gray-700">Food Item</td>
+                                <td class="py-2 text-gray-700">₱5,000.00</td>
+                                <td class="py-2 text-red-500">5/5/2020</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-2 text-gray-700">Packaging Materials</td>
+                                <td class="py-2 text-gray-700">5/5/2020</td>
+                                <td class="py-2 text-red-500">₱4,000.00</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-2 text-gray-700">Logistics and Transportation</td>
+                                <td class="py-2 text-gray-700">5/5/2020</td>
+                                <td class="py-2 text-red-500">₱10,000.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="flex justify-between mt-4">
+                        <span class="font-semibold text-lg text-red-500">Total: ₱19,000.00</span>
+                    </div>
+                </div>
 
             </main>
 

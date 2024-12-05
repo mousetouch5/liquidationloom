@@ -174,6 +174,7 @@
 
 
 
+
                     <!-- GRID SECTION OF EVENT CARDS -->
                     <div class="grid grid-cols-3 gap-4 mt-4">
                         <!-- Event Card with modal function -->
@@ -181,15 +182,7 @@
                             <div id="eventCard_{{ $event->id }}"
                                 class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent"
                                 data-aos="zoom-in" data-aos-duration="3000"
-                                onclick="openEventModal('{{ $event->eventName }}',
-                                 '{{ $event->expense_amount }}', 
-                                 '{{ $event->expense_description }}', 
-                                 '{{ $event->eventDate }}', '{{ $event->eventTime }}', 
-                                 '{{ $event->eventType }}', '{{ $event->eventDescription }}', 
-                                 '{{ $event->eventLocation }}', 
-                                '{{ $event->organizer }}', 
-                                '{{ asset('storage/' . $event->eventImage) }}','{{ $event->expense_amount }}',
-                             {{ $event->expense_description }} )">
+                                onclick="openEventModal('{{ $event->eventName }}',{{ $event->expense_amount }},{{ $event->expense_description }}, '{{ $event->eventDate }}', '{{ $event->eventTime }}', '{{ $event->eventType }}', '{{ $event->eventDescription }}', '{{ $event->eventLocation }}', '{{ $event->organizer }}', '{{ asset('storage/' . $event->eventImage) }}')">
                                 <img src="{{ asset('storage/' . $event->eventImage) }}" alt="Event"
                                     class="rounded-lg">
                                 <h3 class="mt-4 text-md font-semibold">{{ $event->eventName }}</h3>
@@ -199,8 +192,7 @@
                                         <!-- SVG path here -->
                                     </svg>
                                     {{ \Carbon\Carbon::parse($event->eventDate)->format('d M Y') }},
-                                    {{ \Carbon\Carbon::parse($event->eventTime)->format('h:i A') }},
-
+                                    {{ \Carbon\Carbon::parse($event->eventTime)->format('h:i A') }}
                                 </p>
                             </div>
                         @endforeach
@@ -246,16 +238,9 @@
                                         <input type="text" id="eventOrganizer" class="input input-bordered w-full"
                                             readonly>
                                     </div>
+                                    <!-- Button for Budget Breakdown -->
                                     <button type="button" class="btn btn-primary w-full mt-4"
-                                        onclick="openBudgetModal()">Budget Breakdown</button>
-                                    <!--
-                                            <button type="button"
-                                        class="btn btn-primary w-full mt-4"
-                                        onclick="openBudgetModal('{{ $event->id }}', '{{ $event->eventName }}', '{{ $event->expense_amount }}', '{{ $event->expense_description }}')">See
-                                        Budget Breakdown</button>
-                                    -->
-
-
+                                        onclick="budgetModal.showModal()">See Budget Breakdown</button>
                                     <!-- Image -->
                                     <div>
                                         <img id="eventImage" src="" alt="Event Image"
@@ -331,31 +316,11 @@
 
                     </div>
 
-                    <!-- Your HTML content here -->
-
                     <script>
-                        // Your JavaScript functions (openEventModal, openBudgetModal, etc.)
-                        let currentEventData = {};
-
-                        function openEventModal(eventName, expenseAmount, expenseDescription, eventDate, eventTime, eventType,
-                            eventDescription, eventLocation, eventOrganizer, eventImage, expenseDescription, expenseAmount) {
-                            // Store the event data in the global object
-                            currentEventData = {
-                                eventName: eventName,
-                                expenseAmount: expenseAmount,
-                                expenseDescription: expenseDescription,
-                                eventDate: eventDate,
-                                eventTime: eventTime,
-                                eventType: eventType,
-                                eventDescription: eventDescription,
-                                eventLocation: eventLocation,
-                                eventOrganizer: eventOrganizer,
-                                eventImage: eventImage,
-                                expenseDescription: expenseDescription,
-                                expenseAmount: expenseAmount,
-                            };
-
-                            // Populate Modal 1 fields with event data
+                        // Function to open the modal and populate it with event data
+                        function openEventModal(eventName, eventDate, eventTime, eventType, eventDescription, eventLocation, eventOrganizer,
+                            eventImage) {
+                            // Update modal fields with the event data
                             document.getElementById('eventDate').value = eventDate;
                             document.getElementById('eventTime').value = eventTime;
                             document.getElementById('eventType').value = eventType;
@@ -364,30 +329,11 @@
                             document.getElementById('eventOrganizer').value = eventOrganizer;
                             document.getElementById('eventImage').src = eventImage;
 
-                            // Open Modal 1
+                            // Open the modal
                             document.getElementById('my_modal_1').showModal();
                         }
 
-                        function openBudgetModal() {
-                            const eventData = currentEventData;
-
-                            // Populate Modal 2 fields with event data
-                            document.getElementById('eventName').value = eventData.eventName;
-                            const expenseTableBody = document.getElementById('expenseTableBody');
-                            expenseTableBody.innerHTML = ''; // Clear any previous rows
-
-                            // Insert new row for the current expense data
-                            const row = document.createElement('tr');
-                            row.innerHTML = `<td>${eventData.expenseDescription}</td><td>${eventData.expenseAmount}</td>`;
-                            expenseTableBody.appendChild(row);
-
-                            // Populate budget summary data (example)
-                            document.getElementById('totalBudget').value = eventData.expenseAmount; // Just an example
-
-                            // Open Modal 2
-                            document.getElementById('budgetModal').showModal();
-                        }
-
+                        // Optional: Close modals when clicking outside the modal-box
                         document.addEventListener('DOMContentLoaded', function() {
                             const modal = document.getElementById('my_modal_1');
                             const budgetModal = document.getElementById('budgetModal');
@@ -400,9 +346,86 @@
                                 });
                             });
                         });
+
+                        function openBudgetModal(eventId, expenseAmount) {
+                            // Example: Fetch additional data if needed using eventId
+                            // For now, we'll just use the passed expenseAmount
+
+                            // Clear previous entries
+                            const expenseTableBody = document.getElementById('expenseTableBody');
+                            expenseTableBody.innerHTML = '';
+
+                            // Create a new row with the expense amount
+                            const row = document.createElement('tr');
+                            row.innerHTML = `<td>Sample Expense</td><td>${expenseAmount}</td>`;
+                            expenseTableBody.appendChild(row);
+
+                            // Show the modal
+                            document.getElementById('budgetModal').showModal();
+                        }
+
+                        function closeModal() {
+                            document.getElementById('budgetModal').close();
+                        }
+
+
+                        function getEventById(eventId) {
+                            // Replace this with actual logic to fetch data from your backend or database
+                            return {
+                                id: eventId,
+                                name: 'Sample Event',
+                                totalBudget: 5000,
+                                additionalExpenses: 500,
+                                totalSpent: 4500,
+                                expenses: [{
+                                        description: 'Venue Rental',
+                                        amount: 1000
+                                    },
+                                    {
+                                        description: 'Food and Drinks',
+                                        amount: 1500
+                                    },
+                                    {
+                                        description: 'Entertainment',
+                                        amount: 1000
+                                    },
+                                    {
+                                        description: 'Miscellaneous',
+                                        amount: 1000
+                                    }
+                                ]
+                            };
+                        }
+
+                        // Function to open the Budget Modal and populate it with event data including expenses
+                        function openBudgetModal(eventId) {
+                            // Example event data (replace with actual data from your backend)
+                            const event = getEventById(eventId); // Fetch event details dynamically
+
+                            // Populate the modal with event details
+                            document.getElementById('eventName').value = event.name;
+                            document.getElementById('totalBudget').value = event.totalBudget;
+                            document.getElementById('additionalExpenses').value = event.additionalExpenses;
+                            document.getElementById('totalSpent').value = event.totalSpent;
+
+                            // Clear previous expense rows
+                            const expenseTableBody = document.getElementById('expenseTableBody');
+                            expenseTableBody.innerHTML = '';
+
+                            // Insert new expense rows dynamically
+                            event.expenses.forEach(expense => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+            <td>${expense.description}</td>
+            <td>${expense.amount}</td>
+        `;
+                                expenseTableBody.appendChild(row);
+                            });
+
+                            // Open the modal
+                            document.getElementById('budgetModal').showModal();
+                        }
                     </script>
-
-
 
 
 
