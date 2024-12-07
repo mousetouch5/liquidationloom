@@ -20,106 +20,142 @@
 
 
 
-        <!-- Grid event section -->
-        <div class="flex flex-col lg:flex-row lg:space-x-6 w-full">
-            <!-- Content Section -->
-            <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
-                <!-- Title -->
-                <div class="p-4 bg-gray-50">
-                    <h2 class="text-xl font-semibold text-gray-700" data-aos="fade-up" data-aos-duration="2000">
-                        Transaction</h2>
+            <!-- Grid event section -->
+            <div class="flex flex-col lg:flex-row lg:space-x-6 w-full">
+                <!-- Content Section -->
+                <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
+                    <!-- Title -->
+                    <div class="p-4 bg-gray-50">
+                        <h2 class="text-xl font-semibold text-gray-700" data-aos="fade-up" data-aos-duration="2000">
+                            Transaction</h2>
+                    </div>
+                    <!-- Expenses Table Section -->
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden w-full mt-5" data-aos="fade-up" data-aos-duration="2000">
+
+
+                        <!-- Add Button -->
+                        <div class="flex justify-end p-4">
+                            <button onclick="toggleModal()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                                Add
+                            </button>
+                        </div>
+            
+
+            <table class="w-full table-auto">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
+                        <th class="py-3 px-4">Authorized Official</th>
+                        <th class="py-3 px-4">Item</th>
+                        <th class="py-3 px-4">Date</th>
+                        <th class="py-3 px-4">Budget Given</th>
+                        <th class="py-3 px-4">Money Spent</th>
+                        <th class="py-3 px-4">Received By</th>
+                        <th class="py-3 px-4">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($events as $event)
+                        <tr class="odd:bg-gray-50">
+                            <td class="py-3 px-4">Johnny Sins</td>
+                            <td class="py-3 px-4">Meow</td>
+                            <td class="py-3 px-4">{{ \Carbon\Carbon::parse($event->eventDate)->format('F Y') }}</td>
+                            <td class="py-3 px-4 text-green-500">{{ $event->budget }}</td>
+                            <td class="py-3 px-4 text-red-500">10000</td>
+                            <td class="py-3 px-4">Danny D</td>
+                            <td class="py-3 px-4 flex space-x-2">
+                                <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">
+                                    Print
+                                </button>
+                                <button class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">
+                                    Download
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <!-- Footer -->
+            <div class="p-4">
+                <!-- Horizontal Line -->
+                <hr class="border-gray-300 my-4">
+                <!-- Print All Transactions Button -->
+                <div class="flex justify-end">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        Print All Transactions
+                    </button>
                 </div>
-                <!-- Expenses Table Section -->
-                <div class="bg-white shadow-md rounded-lg overflow-hidden w-full mt-5" data-aos="fade-up"
-                    data-aos-duration="2000">
-                    <table class="w-full table-auto">
-                        <thead>
-                            <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
-                                <th class="py-3 px-4">Event/Project</th>
-                                <th class="py-3 px-4">Date</th>
-                                <th class="py-3 px-4">Budget</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($events as $event)
-                                <tr class="odd:bg-gray-50">
-                                    <td class="py-3 px-4">{{ $event->eventName }}</td>
-                                    <td class="px-3 py-4">{{ \Carbon\Carbon::parse($event->eventDate)->format('F Y') }}
-                                    <td class="py-3 px-4 text-green-500">{{ $event->budget }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                        <!-- Add a new row for inputs and file verification icon -->
-                        <tfoot class="mt-5">
-                            <tr class="odd:bg-gray-50">
-                                <td class="py-3 px-4">
-                                    <label for="eventProject"
-                                        class="block text-sm font-medium text-gray-700">Event/Project</label>
-                                    <select id="eventProject" class="w-full p-2 border border-gray-300 rounded-lg">
-                                        <option value="community_outreach">Community Outreach</option>
-                                        <option value="lunch">Lunch</option>
-                                        <option value="afternoon_snacks">Afternoon Snacks</option>
-                                        <option value="performance_cost">Performance Cost</option>
-                                        <option value="gift_for_youth">Gift for Youth</option>
-                                        <option value="prizes_for_games">Prizes for Games</option>
-                                        <option value="emergency_funds">Emergency Funds</option>
-                                    </select>
-                                </td>
-                                <td class="py-3 px-4">
-                                    <label for="eventDate"
-                                        class="block text-sm font-medium text-gray-700">Date</label>
-                                    <input type="date" id="eventDate"
-                                        class="w-full p-2 border border-gray-300 rounded-lg">
-                                </td>
-                                <td class="py-3 px-4">
-                                    <label for="budgetAmount"
-                                        class="block text-sm font-medium text-gray-700">Budget</label>
-                                    <input type="number" id="budgetAmount" step="0.01"
-                                        class="w-full p-2 border border-gray-300 rounded-lg" placeholder="₱0.00">
-                                </td>
-                            </tr>
-
-
-
-                            <!-- Row for the buttons -->
-                            <tr>
-                                <td colspan="3" class="py-3 px-4 text-center flex justify-center space-x-4">
-                                    <!-- Verify Button -->
-                                    <button
-                                        class="flex items-center justify-center bg-cyan-500 text-white rounded-lg p-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            fill="currentColor" class="bi bi-file-earmark-check" viewBox="0 0 16 16">
-                                            <path
-                                                d="M7.293 4.293a1 1 0 0 1 1.414 0L12 7.586l3.293-3.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0L8 6.707l-2.707 2.707a1 1 0 0 1-1.414-1.414l3-3z" />
-                                            <path
-                                                d="M14 4.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8.5a1 1 0 0 1 .707.293l2.5 2.5A1 1 0 0 1 14 4.5z" />
-                                        </svg>
-                                        <span class="ml-2">Verify File</span>
-                                    </button>
-
-                                    <!-- Submit Button -->
-                                    <button type="submit" class="bg-cyan-500 text-white rounded-lg p-2">
-                                        Submit
-                                    </button>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </main>
+            </div>
         </div>
+    </main>
+</div>
 
 
 
+                                
+                    <!-- Modal -->
+                    <div id="addModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
+                        <div class="bg-white rounded-lg shadow-lg w-1/2">
+                            <!-- Modal Header -->
+                            <div class="flex justify-between items-center bg-gray-200 px-4 py-2 rounded-t-lg">
+                                <h3 class="text-lg font-semibold text-gray-700">Transaction Reports</h3>
+                                <button onclick="toggleModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+                            </div>
+                            <!-- Modal Body -->
+                            <div class="p-6 space-y-4">
+                                <form id="addTransactionForm">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700  ">Authorized Official</label>
+                                        <input type="text" name="authorizedOfficial" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mt-2">Item</label>
+                                        <input type="text" name="item" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700  mt-2">Date</label>
+                                        <input type="date" name="date" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700  mt-2">Budget Given</label>
+                                        <input type="number" name="budget" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700  mt-2">Money Spent</label>
+                                        <input type="number" name="moneySpent" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700  mt-2">Received By</label>
+                                        <input type="text" name="receivedBy" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Modal Footer -->
+                            <div class="flex justify-end space-x-2 bg-gray-200 px-4 py-2 rounded-b-lg">
+                                <button onclick="toggleModal()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</button>
+                                <button type="submit" form="addTransactionForm" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Submit</button>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Right-Side Content Section -->
+                    <!-- Script -->
+                    <script>
+                        function toggleModal() {
+                            const modal = document.getElementById('addModal');
+                            modal.classList.toggle('hidden');
+                        }
+                    </script>
+
+      <!-- Right-Side Content Section -->
+<!-- 
+
+  
         <aside class="lg:w-1/3 w-full mt-5 lg:mt-0" data-aos="fade-left" data-aos-duration="2000">
             <div class="bg-white shadow-lg rounded-lg p-6 relative">
                 <div class="bg-white shadow-md rounded-lg w-80 p-4">
-                    <!-- Community Outreach Budget -->
+       
                     <div class="bg-cyan-500 text-white rounded-lg p-4 text-center mb-4">
 
-                        <!--calendar-->
+                    
 
                         <button id="openModal"
                             class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none absolute left-12 top-11">
@@ -145,7 +181,6 @@
                     </div>
 
 
-                    <!-- Barangay Officials -->
                     <div class="bg-white shadow-lg rounded-lg p-6 mt-5" data-aos="fade-left"
                         data-aos-duration="2000">
                         <h4 class="text-lg font-semibold">Barangay Officials</h4>
@@ -177,6 +212,12 @@
                         </ul>
                     </div>
         </aside>
+
+    -->
+
+
+
+
     </div>
     </div>
 

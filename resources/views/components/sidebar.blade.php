@@ -113,6 +113,20 @@
         </svg>
         <span class="ml-4">Audit Trail</span>
     </a>
+
+
+        <a
+        href="{{ route('Official.OfficialActivityLog.index') }}"
+        class="flex items-center px-6 py-3 text-gray-600 hover:bg-blue-100">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm.5-13h-1v6l5.25 3.15.5-.87-4.75-2.78V7z"
+                fill="black" />
+        </svg>
+        <span class="ml-4">Activity Log</span>
+    </a>
+
     </nav>
 
 </aside>

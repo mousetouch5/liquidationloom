@@ -13,6 +13,7 @@ use App\Http\Controllers\OfficialReportController;
 use App\Http\Controllers\OfficialProjectController;
 use App\Http\Controllers\EditController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OfficialActivityLogController;
 
 //use App\Http\Controllers\CustomLoginController;
 
@@ -40,7 +41,7 @@ Route::middleware([
 });
 
 
-
+Route::get('/OfficialActivityLog', [OfficialActivityLogController::class, 'index'])->name('Official.OfficialActivityLog.index');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Resident
