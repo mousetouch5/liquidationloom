@@ -7,6 +7,18 @@
 
             <!-- Event Name -->
             <div class="mb-4">
+                <label for="event_status" class="block text-sm font-semibold text-gray-700">Event Status:</label>
+                <select id="event_status" name="eventStatus"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <option value="ongoing">Ongoing</option>
+                    <option value="done">Done</option>
+                </select>
+                @error('eventStatus')
+                    <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <label for="event_name" class="block text-sm font-semibold text-gray-700">Event Name:</label>
                 <input type="text" id="event_name" name="eventName" placeholder="Enter Event Name"
                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
@@ -14,6 +26,7 @@
                     <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                 @enderror
             </div>
+
 
             <!-- Event Description -->
             <div class="mb-4">
@@ -25,7 +38,6 @@
                 @enderror
             </div>
 
-            <!-- Event Start Date -->
             <!-- Event Start Date -->
             <div class="mb-4">
                 <label for="event_start_date" class="block text-sm font-semibold text-gray-700">Event Start
@@ -132,61 +144,44 @@
                 </div>
             </div>
 
-            <button type="button" id="add-expense-button" onclick="addExpense()"
-                class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add More</button>
-
+            <button type="button" id="add-expense-button"
+                onclick="addExpense(document.getElementById('event_start_date').value, document.getElementById('event_end_date').value)"
+                class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                Add More
+            </button>
             <script>
-                function addExpense() {
-                    const expenseContainer = document.getElementById('expense-container');
-                    const newExpenseItem = document.createElement('div');
-                    newExpenseItem.className = 'expense-item flex justify-between mt-2';
-
-                    newExpenseItem.innerHTML = `
-            <input type='text' name='expenses[]' placeholder='Expense Description'
-                class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2'>
-            <input type='text' name='expense_amount[]' placeholder='Price'
-                class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2'>
-            <select name="expense_date[]"
-                class="expense-date-dropdown mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2"></select>
-            <input type='time' name='expense_time[]'
-                class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2'>
-        `;
-
-                    expenseContainer.appendChild(newExpenseItem);
-
-                    // Populate the newly added dropdown with dates
-                    const newDropdown = newExpenseItem.querySelector('.expense-date-dropdown');
-                    populateDropdown(newDropdown, dateOptions);
-                }
-
-
+                // Initialize dateOptions outside the DOMContentLoaded listener so it's accessible
+                let dateOptions = [];
 
                 document.addEventListener('DOMContentLoaded', function() {
                     const startDateInput = document.getElementById('event_start_date');
                     const endDateInput = document.getElementById('event_end_date');
-                    let dateOptions = [];
 
                     function populateDateDropdowns() {
                         const startDate = new Date(startDateInput.value);
                         const endDate = new Date(endDateInput.value);
 
+                        // Exit if dates are invalid or the start date is after the end date
                         if (isNaN(startDate) || isNaN(endDate) || startDate > endDate) {
-                            return; // Do nothing if dates are invalid or start date is after end date
+                            return;
                         }
 
-                        dateOptions = [];
+                        dateOptions = []; // Reset dateOptions array
                         let currentDate = new Date(startDate);
 
+                        // Generate all dates between startDate and endDate
                         while (currentDate <= endDate) {
-                            dateOptions.push(currentDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
-                            currentDate.setDate(currentDate.getDate() + 1);
+                            dateOptions.push(currentDate.toISOString().split('T')[0]); // Format date as YYYY-MM-DD
+                            currentDate.setDate(currentDate.getDate() + 1); // Increment the date by one day
                         }
 
+                        // Populate the dropdowns with the generated date options
                         document.querySelectorAll('.expense-date-dropdown').forEach(dropdown => {
                             populateDropdown(dropdown, dateOptions);
                         });
                     }
 
+                    // Populate dropdown with date options
                     function populateDropdown(dropdown, options) {
                         dropdown.innerHTML = ''; // Clear existing options
                         options.forEach(date => {
@@ -197,12 +192,69 @@
                         });
                     }
 
-
-
+                    // Event listeners for changes in the start or end date input fields
                     startDateInput.addEventListener('change', populateDateDropdowns);
                     endDateInput.addEventListener('change', populateDateDropdowns);
                 });
+
+                // Function to add a new expense input field with a dropdown
+                function addExpense(startDate, endDate) {
+                    const expenseContainer = document.getElementById('expense-container');
+                    const newExpenseItem = document.createElement('div');
+                    newExpenseItem.className = 'expense-item flex justify-between mt-2';
+
+                    newExpenseItem.innerHTML = `
+        <input type='text' name='expenses[]' placeholder='Expense Description'
+            class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2'>
+        <input type='text' name='expense_amount[]' placeholder='Price'
+            class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2'>
+        <select name="expense_date[]"
+            class="expense-date-dropdown mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 mr-2"></select>
+        <input type='time' name='expense_time[]'
+            class='mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2'>
+    `;
+
+                    expenseContainer.appendChild(newExpenseItem);
+
+                    // Populate the newly added dropdown with dates
+                    const newDropdown = newExpenseItem.querySelector('.expense-date-dropdown');
+                    const dateOptions = generateDateOptions(startDate, endDate); // Generate date options
+                    populateDropdown(newDropdown, dateOptions);
+                }
+
+                // Helper function to generate date options based on the range
+                function generateDateOptions(startDate, endDate) {
+                    const options = [];
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+
+                    if (isNaN(start) || isNaN(end) || start > end) {
+                        return options; // Return empty array if dates are invalid
+                    }
+
+                    let currentDate = new Date(start);
+                    while (currentDate <= end) {
+                        options.push(currentDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+                        currentDate.setDate(currentDate.getDate() + 1); // Increment by one day
+                    }
+
+                    return options;
+                }
+
+                // Helper function to populate a dropdown with options
+                function populateDropdown(dropdown, options) {
+                    dropdown.innerHTML = ''; // Clear existing options
+                    options.forEach(date => {
+                        const option = document.createElement('option');
+                        option.value = date;
+                        option.textContent = date;
+                        dropdown.appendChild(option);
+                    });
+                }
             </script>
+
+
+
 
             <!-- Submit Button -->
             <div class="flex justify-center mt-8">

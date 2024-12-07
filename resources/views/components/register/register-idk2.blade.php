@@ -41,25 +41,27 @@
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
 
-                  <!--  <div>
+                    <!--  <div>
                         <label for="brgy_id" class="block text-sm font-semibold">Barangay ID</label>
                         <input type="text" id="brgy_id" name="brgy_id"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                    </div> 
+                    </div>
                 -->
                 </div>
 
                 <div class="grid grid-cols-1 gap-6">
                     <div class="mt-4">
                         <x-label for="password" value="{{ __('Password') }}" />
-                        <x-input id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" type="password" name="password" required
-                            autocomplete="new-password" />
+                        <x-input id="password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            type="password" name="password" required autocomplete="new-password" />
                     </div>
 
                     <div class="mt-4">
                         <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                        <x-input id="password_confirmation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                        <x-input id="password_confirmation"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            type="password" name="password_confirmation" required autocomplete="new-password" />
                     </div>
                 </div>
 
@@ -84,10 +86,6 @@
                     </div>
                 </div>
 
-
-
-            
-                <!-- Row 4 
                 <div class="grid grid-cols-3 gap-6">
                     <div>
                         <label for="brgy_city_zipcode" class="block text-sm font-semibold">Barangay, City,
@@ -107,7 +105,7 @@
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
                 </div>
-                -->
+
 
 
 

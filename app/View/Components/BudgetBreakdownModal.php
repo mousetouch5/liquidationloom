@@ -8,21 +8,16 @@ use Illuminate\View\Component;
 
 class BudgetBreakdownModal extends Component
 {
-    public $event;
+//public $events;
 
-    /**
-     * Create a new component instance.
-     */
-    public function __construct($event)
-    {
-        $this->event = $event;
-    }
+public function __construct()
+{
+    //$this->events = $events; // Use $events consistently
+}
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
-    {
-        return view('components.budget-breakdown-modal');
-    }
+public function render(): View|Closure|string
+{
+    return view('components.budget-breakdown-modal');
+}
+
 }

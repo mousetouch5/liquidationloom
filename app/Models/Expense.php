@@ -16,6 +16,7 @@ class Expense extends Model
 
     public function event()
     {
-        return $this->belongsTo(Event::class, 'event_id');
+        return $this->belongsTo(Event::class, 'event_id'
+);
     }
 }

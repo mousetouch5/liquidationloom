@@ -32,7 +32,7 @@ public function index()
 
     //dd($expenses); // This will dump the expenses along with their related event details
     
-    return view('Official.OfficialEvent', compact('events','expenses'));
+    return view('official.OfficialEvent', compact('events','expenses'));
 }
 
     public function getEvents(Request $request)
@@ -72,6 +72,7 @@ public function index()
             'eventTime' => 'required|date_format:H:i',
             'eventSpent' => 'required|numeric',
             'eventType' => 'required|in:Workshop,Conference,Seminar,Community Outreach',
+            'eventStatus' => 'required|string|max:255',
         ]);
     
         // Log the validated data
@@ -112,6 +113,7 @@ public function index()
             'eventType' => $validated['eventType'],
             'eventSpent' => $validated['eventSpent'],
             'eventTime' => $validated['eventTime'],
+            'eventStatus' =>$validated['eventStatus'],
         ]);
     
     

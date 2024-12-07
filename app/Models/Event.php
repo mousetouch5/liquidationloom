@@ -21,7 +21,8 @@ class Event extends Model
         'budget',
         'organizer',
         'eventLocation',
-        'eventType'
+        'eventType',
+        'eventStatus',
     ];
 
     protected $casts = [
