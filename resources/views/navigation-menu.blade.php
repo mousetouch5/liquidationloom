@@ -47,7 +47,7 @@
                     <!-- button modal calendar -->
                     <button id="openModal"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none"
-                        style="position: absolute; left: 85%;">
+                        style="position: absolute; left: 83%;">
                         <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path

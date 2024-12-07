@@ -542,65 +542,7 @@
 
 
 
-         <div class="bg-white shadow-lg rounded-lg p-6 relative"> <!-- added 'relative' to allow absolute positioning of the emoji -->
-             <h4 class="text-lg font-semibold">Community Outreach</h4>
-             <canvas id="pieChart" class="mt-4 h-32"></canvas> <!-- Pie chart -->
-                 <!-- 🦆 Emoji -->
-
-                 <div class="flex flex-col items-center space-y-4">
-                    <!-- Like Section -->
-                    <div class="flex items-center space-x-2">
-                      <!-- Percentage on the left -->
-                      <span class="text-sm font-semibold text-gray-700">80%</span>
-                      <!-- Circle with Like SVG centered inside -->
-                      <div class="relative">
-                        <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="20.5" cy="20.5" r="20.5" fill="#CDF3FF" />
-                        </svg>
-                        <!-- Like SVG -->
-                        <svg
-                          width="21"
-                          height="20"
-                          viewBox="0 0 21 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                        >
-                          <path
-                            d="M5 0H16V13L9 20L7.75 18.75C7.63333 18.6333 7.5375 18.475 7.4625 18.275C7.3875 18.075 7.35 17.8833 7.35 17.7V17.35L8.45 13H2C1.46667 13 1 12.8 0.6 12.4C0.2 12 0 11.5333 0 11V9C0 8.88333 0.0166667 8.75833 0.05 8.625C0.0833333 8.49167 0.116667 8.36667 0.15 8.25L3.15 1.2C3.3 0.866667 3.55 0.583333 3.9 0.35C4.25 0.116667 4.61667 0 5 0ZM14 2H5L2 9V11H11L9.65 16.5L14 12.15V2ZM16 13V11H19V2H16V0H21V13H16Z"
-                            fill="#1C1B1F"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  
-                    <!-- Unlike Section -->
-                    <div class="flex items-center space-x-2">
-                      <!-- Percentage on the left -->
-                      <span class="text-sm font-semibold text-gray-700">20%</span>
-                      <!-- Circle with Unlike SVG centered inside -->
-                      <div class="relative">
-                        <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="20.5" cy="20.5" r="20.5" fill="#CDF3FF" />
-                        </svg>
-                        <!-- Unlike SVG -->
-                        <svg
-                          width="21"
-                          height="20"
-                          viewBox="0 0 21 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                        >
-                          <path
-                            d="M5 0H16V13L9 20L7.75 18.75C7.63333 18.6333 7.5375 18.475 7.4625 18.275C7.3875 18.075 7.35 17.8833 7.35 17.7V17.35L8.45 13H2C1.46667 13 1 12.8 0.6 12.4C0.2 12 0 11.5333 0 11V9C0 8.88333 0.0166667 8.75833 0.05 8.625C0.0833333 8.49167 0.116667 8.36667 0.15 8.25L3.15 1.2C3.3 0.866667 3.55 0.583333 3.9 0.35C4.25 0.116667 4.61667 0 5 0ZM14 2H5L2 9V11H11L9.65 16.5L14 12.15V2ZM16 13V11H19V2H16V0H21V13H16Z"
-                            fill="#1C1B1F"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  
+         <x-community-outreach />
                   
                     
                       

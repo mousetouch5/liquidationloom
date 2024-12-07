@@ -99,7 +99,6 @@
                                         Projects</button>
                                 </div>
                             </div>
-<<<<<<< HEAD
                         
 
 
@@ -340,42 +339,6 @@
 
 
                         <!-- button group -->
-=======
-
-                            <div class="grid grid-cols-3 gap-4 mt-4">
-
-                                <!-- Event Cards -->
-
-                                @foreach ($events as $event)
-                                    <div id="eventCard_{{ $event->id }}"
-                                        class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent"
-                                        data-aos="zoom-in" data-aos-duration="3000">
-                                        <img src="{{ asset('storage/' . $event->eventImage) }}" alt="Event"
-                                            class="rounded-lg">
-                                        <h3 class="mt-4 text-md font-semibold">{{ $event->eventName }}</h3>
-                                        <p class="text-sm text-gray-500">
-                                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                                <!-- SVG path here -->
-                                            </svg>
-                                            {{ \Carbon\Carbon::parse($event->eventDate)->format('d M Y') }},
-                                            {{ \Carbon\Carbon::parse($event->eventTime)->format('h:i A') }},
-
-                                        </p>
-                                    </div>
-                                @endforeach
-
-                            </div>
-                        </section>
-
-                        <select id="event-selector" class="select select-bordered w-full max-w-xs">
-                            <option disabled selected value="">Show Break Down</option>
-                            @foreach ($events as $event)
-                                <option value="{{ $event->id }}">{{ $event->eventName }}</option>
-                            @endforeach
-                        </select>
-
->>>>>>> 10117ddd9c28309d2faf5912f4e2cdd1e6376383
                         <script>
                             // JavaScript to handle the event category toggle
                             document.addEventListener("DOMContentLoaded", function() {
@@ -550,21 +513,7 @@
 
 
 
-                        <div class="bg-white shadow-lg rounded-lg p-6 relative">
-                            <!-- added 'relative' to allow absolute positioning of the emoji -->
-                            <h4 class="text-lg font-semibold">Community Outreach</h4>
-                            <canvas id="pieChart" class="mt-4 h-32"></canvas> <!-- Pie chart -->
-                            <!-- 🦆 Emoji -->
-
-                            <div class="mt-4 space-y-2">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <span class="text-2xl">😊</span>
-                                    <span class="text-sm font-semibold text-gray-700">80%</span>
-                                </div>
-                                <div class="flex items-center justify-center space-x-2">
-                                    <span class="text-2xl">😞</span>
-                                    <span class="text-sm font-semibold text-gray-700">20%</span>
-                                </div>
+                        <x-community-outreach />
 
 
 
@@ -576,7 +525,7 @@
 
                                 <!--survey boss -->
                                 <!-- Button to Open the Modal Survey -->
-                                <button class="btn bg-cyan-500 w-full mt-5" onclick="Survey.showModal()">Answer
+                                <button class="btn bg-cyan-500 w-full mb-5" onclick="Survey.showModal()">Answer
                                     Question</button>
 
                                 <!-- Modal Structure with Survey Questions -->

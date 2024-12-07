@@ -77,7 +77,7 @@
     <!-- Alternate link for creating an account -->
     <p class="text-gray-600 text-sm hidden" id="registerPrompt">
         Don't have an account? 
-        <a href="javascript:void(0);" id="registerLink" class="text-blue-500 hover:underline">Create an Account</a>.
+        <a href="{{ route('login') }}" id="registerLink" class="text-blue-500 hover:underline">Create an Account</a>.
     </p>
     </div>
 </body>
