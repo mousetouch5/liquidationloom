@@ -75,7 +75,15 @@
             </a>
 
 
-
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <a href="{{ route('Official.OfficialTransaction.index') }}"
                 class="flex items-center px-6 py-3 text-gray-600 hover:bg-blue-100">

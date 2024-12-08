@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id(); // Auto-incrementing primary key
             $table->string('eventName'); // Event Name
             $table->text('eventDescription'); // Event Description
-            $table->date('eventDate'); // Event Date
+            $table->date('eventStartDate');
+            $table->date('eventEndDate'); // Event Date
             $table->time('eventTime');
             $table->string('eventImage')->nullable(); // Event Image (nullable if not provided)
             $table->decimal('budget', 10, 2);

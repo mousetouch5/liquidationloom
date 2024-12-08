@@ -14,7 +14,8 @@ class Event extends Model
     protected $fillable = [
         'eventName',
         'eventDescription',
-        'eventDate',
+        'eventStartDate',
+        'eventEndDate',
         'eventImage',
         'eventSpent',
         'eventTime',
@@ -26,7 +27,8 @@ class Event extends Model
     ];
 
     protected $casts = [
-        'eventDate' => 'date', // Ensure eventDate is cast to a date format
+        'eventStartDate' => 'date',
+        'eventEndDate' =>'date', // Ensure eventDate is cast to a date format
         'budget' => 'decimal:2', // Ensure budget is cast to a decimal with 2 places
     ];
 

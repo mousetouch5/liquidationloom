@@ -42,7 +42,7 @@
             <div class="mb-4">
                 <label for="event_start_date" class="block text-sm font-semibold text-gray-700">Event Start
                     Date:</label>
-                <input type="date" id="event_start_date" name="eventDate"
+                <input type="date" id="event_start_date" name="eventStartDate"
                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
 

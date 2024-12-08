@@ -57,6 +57,7 @@ public function print(Event $event) {
 
 
 
+
     public function storeEvents(Request $request)
 {
     // Log the incoming request data
@@ -66,7 +67,8 @@ public function print(Event $event) {
     $validated = $request->validate([
         'eventName' => 'required|string|max:255',
         'eventDescription' => 'required|string',
-        'eventDate' => 'required|date',
+        'eventStartDate' => 'required|date',
+        'eventEndDate' =>'required|date|after_or_equal:eventStartDate',
         'eventImage' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'budget' => 'required|numeric',
         'organizer' => 'nullable|string|max:255',
@@ -106,7 +108,8 @@ public function print(Event $event) {
     $event = Event::create([
         'eventName' => $validated['eventName'],
         'eventDescription' => $validated['eventDescription'],
-        'eventDate' => $validated['eventDate'],
+        'eventStartDate' => $validated['eventStartDate'],
+        'eventEndDate' => $validated['eventEndDate'],
         'eventImage' => $imagePath,
         'budget' => $validated['budget'],
         'organizer' => $validated['organizer'],

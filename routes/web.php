@@ -94,3 +94,8 @@ Route::get('/expenses', [OfficialEventController::class, 'getExpenses']);
 
 
 Route::get('/print-event/{event}', [EventController::class, 'print'])->name('events.print');
+
+Route::get('/events/print', [OfficialReportController::class, 'print'])->name('events.print');
+
+// Route to handle the form submission (POST request)
+Route::post('/events/print', [OfficialReportController::class, 'print'])->name('events.print.post');

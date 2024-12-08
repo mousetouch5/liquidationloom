@@ -89,6 +89,41 @@ public function generateLiquidationReport(Event $event)
 }
 
 
+public function print(Request $request)
+{
+    // Validate the incoming request data
+    $request->validate([
+        'startMonth' => 'required|date_format:Y-m',
+        'endMonth' => 'required|date_format:Y-m|after_or_equal:startMonth',
+    ]);
+
+    // Original inputs
+    $startMonth = $request->input('startMonth');
+    $endMonth = $request->input('endMonth');
+
+    // Convert months to full dates
+    $startDate = $startMonth . '-01';
+    $endDate = $endMonth . '-31';
+
+    // Fetch events where the event's date range overlaps with the selected date range
+    $events = Event::where(function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('eventStartDate', [$startDate, $endDate])
+                  ->orWhereBetween('eventEndDate', [$startDate, $endDate])
+                  ->orWhere(function ($query) use ($startDate, $endDate) {
+                      $query->where('eventStartDate', '<=', $startDate)
+                            ->where('eventEndDate', '>=', $endDate);
+                  });
+        })
+        ->with('expenses') // Load related expenses
+        ->get();
+
+    // Pass all variables to the view
+    return view('events.print1', compact('events', 'startMonth', 'endMonth', 'startDate', 'endDate'));
+}
+
+
+
+
 
 
 
