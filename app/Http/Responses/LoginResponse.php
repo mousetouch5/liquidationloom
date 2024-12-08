@@ -1,8 +1,5 @@
 <?php
 
-// app/Http/Responses/LoginResponse.php
-
-// app/Http/Responses/LoginResponse.php
 namespace App\Http\Responses;
 
 use Illuminate\Http\Request;
@@ -35,10 +32,13 @@ class LoginResponse implements LoginResponseContract, Responsable
         if ($userType === 'official') {
             return route('Official.OfficialDashboard.index'); // Change this to your official dashboard route
         } elseif ($userType === 'resident') {
-            return route('resident.dashboard'); // Change this to your resident dashboard route
+            return route('login'); // Change this to your resident dashboard route
+        }
+        elseif ($userType === 'admin') {
+            return route('superadmin.dashboard'); // Change this to your resident dashboard route
         }
 
-        return route('resident.dashboard'); // Fallback route for other user types
+        return route('Resident.dashboard'); // Fallback route for other user types
     }
 
 

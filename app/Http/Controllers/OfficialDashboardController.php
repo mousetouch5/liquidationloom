@@ -16,8 +16,8 @@ public function index()
     $events = Event::with('expenses')->get(); // Get all events
     $user = Auth::user();
 
-    // Check the user_type and redirect accordingly
-    if ($user->user_type === 'resident') {
+    // Check if user is authenticated
+    if ($user && $user->user_type === 'resident') {
         return redirect()->route('resident.Event.index');
     }
 

@@ -42,6 +42,9 @@ class User extends Authenticatable
         'purok',
         'city',
         'brgy_city_zipcode',
+        'is_approved',
+        'id_picture_path',
+        'position'
 
     ];
 

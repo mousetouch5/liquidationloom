@@ -18,6 +18,12 @@ use App\Http\Controllers\OfficialActivityLogController;
 //use App\Http\Controllers\CustomLoginController;
 
 
+use App\Http\Controllers\SuperAdminLoginDashboard;
+
+
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -34,11 +40,20 @@ Route::middleware([
     if ($user->user_type === 'resident') {
     return redirect()->route('dashboard'); // Redirect to resident dashboard
     } 
+    else if ($user->user_type === 'admin') {
+    return redirect()->route('superadmin.dashboard'); // Redirect to resident dashboard
+    } 
     else {
     return redirect()->route('Official.OfficialDashboard.index'); // Redirect to official dashboard
         }
     });
 });
+
+
+Route::get('superadmin/dashboard', [SuperAdminLoginDashboard::class, 'index'])->name('superadmin.dashboard');
+Route::get('pending-approvals', [SuperAdminLoginDashboard::class, 'listPendingApprovals'])->name('superadmin.pendingApprovals');
+Route::post('/approve-user/{id}', [SuperAdminLoginDashboard::class, 'approveUser']);
+Route::post('/reject-user/{id}', [SuperAdminLoginDashboard::class, 'rejectUser']);
 
 
 Route::get('/OfficialActivityLog', [OfficialActivityLogController::class, 'index'])->name('Official.OfficialActivityLog.index');

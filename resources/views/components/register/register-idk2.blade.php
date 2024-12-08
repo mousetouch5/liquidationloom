@@ -4,6 +4,7 @@
         <form id="signup_form" method="POST" action="{{ route('register') }}" class="grid grid-cols-1 gap-6 p-6">
             @csrf <!-- This directive adds the CSRF token -->
             <input type="hidden" name="usertype" value="resident">
+            <input type="hidden" name="brgy_id" value="doesntmatter">
             <!-- Form Fields -->
             <div class="space-y-4">
                 <!-- Row 1 -->

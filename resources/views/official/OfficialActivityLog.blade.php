@@ -9,7 +9,7 @@
 
     <div class="flex h-screen items-center justify-center bg-gray-50">
         <x-sidebar class="custom-sidebar-class" />
-            </aside>
+        </aside>
 
 
 
@@ -23,53 +23,55 @@
                 </div>
 
 
-              
-              <!-- New Table Section -->
-<div class="p-4" data-aos="fade-up" data-aos-duration="2000">
-    
-    <!-- Table -->
-    <div class="bg-white shadow-md rounded-md overflow-hidden">
-        <table class="table-auto w-full">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-4 py-2 text-left">ID</th>
-                    <th class="px-4 py-2 text-left">User</th>
-                    <th class="px-4 py-2 text-left">Timestamp</th>
-                   
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="px-4 py-2">1</td>
-                    <td class="px-4 py-2">John Doe</td>
-                    <td class="px-4 py-2">2024-12-07 10:30:45</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
-<!-- Scripts -->
-<script>
-    // Toggle Add Event Modal
-    function toggleAddModal() {
-        const modal = document.getElementById('addEventModal');
-        modal.classList.toggle('hidden');
-    }
+                <!-- New Table Section -->
+                <div class="p-4" data-aos="fade-up" data-aos-duration="2000">
 
-    // Attach event listener to Print buttons
-    document.querySelectorAll('.print-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const eventId = this.getAttribute('data-event-id');
-            // Redirect to backend route for printing event
-            window.location.href = `/print-event/${eventId}`;
-        });
-    });
-</script>
+                    <!-- Table -->
+                    <div class="bg-white shadow-md rounded-md overflow-hidden">
+                        <table class="table-auto w-full">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">ID</th>
+                                    <th class="px-4 py-2 text-left">Events</th>
+                                    <th class="px-4 py-2 text-left">Timestamp</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($events as $event)
+                                    <tr>
+                                        <td class="px-4 py-2">{{ $event->id }}</td>
+                                        <td class="px-4 py-2">{{ $event->eventName }}</td>
+                                        <td class="px-4 py-2">{{ $event->created_at }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Scripts -->
+                <script>
+                    // Toggle Add Event Modal
+                    function toggleAddModal() {
+                        const modal = document.getElementById('addEventModal');
+                        modal.classList.toggle('hidden');
+                    }
+
+                    // Attach event listener to Print buttons
+                    document.querySelectorAll('.print-btn').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const eventId = this.getAttribute('data-event-id');
+                            // Redirect to backend route for printing event
+                            window.location.href = `/print-event/${eventId}`;
+                        });
+                    });
+                </script>
 
 
 
-        </div>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            </div>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </x-app-layout>

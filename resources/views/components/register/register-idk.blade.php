@@ -1,7 +1,8 @@
 <dialog id="my_modal_4" class="modal">
     <div class="modal-box w-full max-w-4xl">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="my_modal_4.close()">✕</button>
-        <form id="signup_form" method="POST" action="{{ route('register') }}" class="grid grid-cols-1 gap-6 p-6">
+        <form id="signup_form" method="POST" action="{{ route('register') }}" class="grid grid-cols-1 gap-6 p-6"
+            enctype="multipart/form-data">
             @csrf <!-- This directive adds the CSRF token -->
             <input type="hidden" name="usertype" value="official">
             <!-- Form Fields -->
@@ -27,6 +28,22 @@
                     </div>
                 </div>
 
+                <div class="grid grid-cols-3 gap-6">
+                    <div>
+                        <label for="position" class="block text-sm font-semibold">Position</label>
+                        <select id="position" name="position"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="" disabled selected>Select Position</option>
+                            <option value="Baranggay Chair Man">Baranggay ChairMan</option>
+                            <option value="Mayor">Mayor</option>
+                            <option value="Clerk">Clerk</option>
+                            <option value="Baranggay Manager">Baranggay Manager</option>
+                            <option value="Baranggay Tambay">Baranggay Tambay</option>
+                        </select>
+                    </div>
+                </div>
+
+
                 <!-- Row 2 -->
                 <div class="grid grid-cols-3 gap-6">
                     <div>
@@ -51,14 +68,16 @@
                 <div class="grid grid-cols-1 gap-6">
                     <div class="mt-4">
                         <x-label for="password" value="{{ __('Password') }}" />
-                        <x-input id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" type="password" name="password" required
-                            autocomplete="new-password" />
+                        <x-input id="password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            type="password" name="password" required autocomplete="new-password" />
                     </div>
 
                     <div class="mt-4">
                         <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                        <x-input id="password_confirmation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                        <x-input id="password_confirmation"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            type="password" name="password_confirmation" required autocomplete="new-password" />
                     </div>
                 </div>
 
@@ -87,7 +106,7 @@
                 <div class="grid grid-cols-3 gap-6">
                     <div>
                         <label for="brgy_city_zipcode" class="block text-sm font-semibold">Barangay
-                            </label>
+                        </label>
                         <input type="text" id="brgy_city_zipcode" name="brgy_city_zipcode"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     </div>
@@ -107,14 +126,20 @@
                 <!-- Row 6: Choose File (ID Verification) -->
                 <div class="grid grid-cols-3 gap-6">
                     <div>
-                        <label for="choose_file" class="block text-sm font-semibold">Proof of ID Verification</label>
-                        <input type="file" id="choose_file" name="choose_file"
+                        <label for="profile_picture" class="block text-sm font-semibold">Profile Picture</label>
+                        <input type="file" id="profile_picture" name="profile_picture"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        @error('profile_picture')
+                            <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div>
-                        <label for="choose_file" class="block text-sm font-semibold">Choose File</label>
-                        <input type="file" id="choose_file" name="choose_file"
+                        <label for="id_picture" class="block text-sm font-semibold">ID Picture</label>
+                        <input type="file" id="id_picture" name="id_picture"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        @error('id_picture')
+                            <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>
