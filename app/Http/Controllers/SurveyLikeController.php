@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
+use App\Models\SurveyResponse;
 
 use Illuminate\Support\Facades\DB;
 
@@ -138,6 +139,47 @@ public function getSurveyData()
     return response()->json($formattedData);
 }
 
+
+
+
+public function store(Request $request)
+{
+    // Assuming the user is authenticated
+    $user = Auth::user(); 
+
+    // Check if the user has already submitted a survey
+    $existingSurvey = SurveyResponse::where('user_id', $user->id)->first();
+
+    if ($existingSurvey) {
+        return response()->json([
+            'message' => 'You have already submitted the survey.',
+            'survey' => $existingSurvey
+        ], 400);  // Return a 400 Bad Request status if the survey is already submitted
+    }
+
+    // Validate the incoming data
+    $validated = $request->validate([
+        'participation' => 'required|in:never,rarely,sometimes,often,always',
+        'event_types' => 'nullable|array',
+        'event_info' => 'nullable|array',
+        'impact' => 'nullable|array',
+    ]);
+
+    // Create a new survey record with user association
+    $survey = SurveyResponse::create([
+        'user_id' => $user->id, // Associate the user with the survey
+        'participation' => $validated['participation'],
+        'event_types' => $validated['event_types'] ?? [],
+        'event_info' => $validated['event_info'] ?? [],
+        'impact' => $validated['impact'] ?? [],
+    ]);
+
+    // Return a response
+    return response()->json([
+        'message' => 'Survey submitted successfully',
+        'survey' => $survey
+    ]);
+}
 
 
 

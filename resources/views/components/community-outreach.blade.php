@@ -58,3 +58,60 @@
             alert('Failed to load survey data. Please try again later.');
         });
 </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Fetch survey data from the server
+    fetch('/survey-data') // Replace '/survey-data' with the actual API endpoint
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch survey data');
+            }
+            return response.json(); // Parse JSON response
+        })
+        .then(data => {
+            // Extract labels (event names) and data (like percentages)
+            const labels = data.map(item => item.event_name);
+            const likesData = data.map(item => item.likes_percentage);
+
+            // Create the chart
+            var ctx = document.getElementById('pieChart').getContext('2d');
+            var pieChart = new Chart(ctx, {
+                type: 'pie', // Pie chart type
+                data: {
+                    labels: labels, // Event names as labels
+                    datasets: [{
+                        label: 'Likes Percentage',
+                        data: likesData, // Like percentages as data points
+                        backgroundColor: ['#4CD7F6', '#CDF3FF',
+                            '#5B93FF'
+                        ], // Colors for each segment
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top' // Position of the legend
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    var label = tooltipItem.label || '';
+                                    var value = tooltipItem.raw || 0;
+                                    return label + ': ' + value + '%'; // Tooltip with label and value
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error.message); // Log any errors to the console
+            alert('Failed to load survey data. Please try again later.');
+        });
+</script>

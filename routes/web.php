@@ -22,7 +22,7 @@ use App\Http\Controllers\SuperAdminLoginDashboard;
 
 
 
-
+use App\Http\Controller\TransactionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -63,11 +63,11 @@ Route::post('/delete-user/{userId}', [SuperAdminLoginDashboard::class, 'deleteUs
 Route::put('/events/{id}/status', [EventController::class, 'updateStatus']);
 
 
-
+Route::post('/transactions',[OfficialTransactionController::class, 'store'])->name('transactions.store');
 
 
 Route::get('/survey-data', [SurveyLikeController::class, 'getSurveyData']);
-
+Route::get('/fetch-officials', [OfficialTransactionController::class, 'fetchOfficials'])->name('fetchOfficials');
 
 Route::get('/OfficialActivityLog', [OfficialActivityLogController::class, 'index'])->name('Official.OfficialActivityLog.index');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -89,11 +89,20 @@ Route::get('/Official/Edit', [EditController::class, 'index'])->name('Official.E
 Route::get('/generate-liquidation-report/{event}', [OfficialReportController::class, 'generateLiquidationReport'])->name('download.liquidation.report');
 
 //Post
+Route::get('/transactions/print-all', [OfficialTransactionController::class, 'printAll'])->name('transactions.printAll');
+Route::get('/transactions/{transaction}/print', [OfficialTransactionController::class, 'print'])->name('transactions.print');
+Route::get('/transactions/{transaction}/download', [OfficialTransactionController::class, 'downloadPDF'])->name('transactions.download');
 
 Route::get('/liquidation-report', [OfficialReportController::class, 'showLiquidationReport'])->name('liquidation-report.liquidation.report');
 
 
 Route::post('/events', [EventController::class, 'storeEvents'])->name('events.store');
+
+
+
+
+Route::get('/barangay/officials', [DashboardController::class, 'getOfficials']);
+
 
 
 //Route::post('/events/store', [OfficialEventController::class, 'store'])->name('events.store'); test routes ni boss pwede mani gamiton 
@@ -115,3 +124,7 @@ Route::post('/events/print', [OfficialReportController::class, 'print'])->name('
 
 Route::post('/store-like-unlike', [SurveyLikeController::class, 'storeLikeUnlike']);
 Route::get('/survey-count', [SurveyLikeController::class, 'getSurveyCounts']);
+
+
+
+Route::post('/submit-survey', [SurveyLikeController::class, 'store']);
