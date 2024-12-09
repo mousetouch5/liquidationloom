@@ -22,7 +22,7 @@
                 listItem.classList.add('flex', 'items-center', 'space-x-4');
 
                 const img = document.createElement('img');
-                img.src = official.profile_picture ? '' + official.profile_picture :
+                img.src = official.profile_photo_path ? official.profile_photo_path :
                     'https://via.placeholder.com/40';
                 img.alt = 'Official';
                 img.classList.add('w-10', 'h-10', 'rounded-full');
