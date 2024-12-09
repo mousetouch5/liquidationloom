@@ -17,7 +17,7 @@ use App\Http\Controllers\OfficialActivityLogController;
 
 //use App\Http\Controllers\CustomLoginController;
 
-
+use App\Http\Controllers\SurveyLikeController;
 use App\Http\Controllers\SuperAdminLoginDashboard;
 
 
@@ -50,10 +50,23 @@ Route::middleware([
 });
 
 
+Route::get('/users', [SuperAdminLoginDashboard::class, 'listofAllUsers']);
 Route::get('superadmin/dashboard', [SuperAdminLoginDashboard::class, 'index'])->name('superadmin.dashboard');
 Route::get('pending-approvals', [SuperAdminLoginDashboard::class, 'listPendingApprovals'])->name('superadmin.pendingApprovals');
 Route::post('/approve-user/{id}', [SuperAdminLoginDashboard::class, 'approveUser']);
 Route::post('/reject-user/{id}', [SuperAdminLoginDashboard::class, 'rejectUser']);
+Route::post('/change-password/{userId}', [SuperAdminLoginDashboard::class, 'changePassword'])->name('users.changePassword');
+
+// For deleting a user
+Route::post('/delete-user/{userId}', [SuperAdminLoginDashboard::class, 'deleteUser'])->name('users.delete');
+
+Route::put('/events/{id}/status', [EventController::class, 'updateStatus']);
+
+
+
+
+
+Route::get('/survey-data', [SurveyLikeController::class, 'getSurveyData']);
 
 
 Route::get('/OfficialActivityLog', [OfficialActivityLogController::class, 'index'])->name('Official.OfficialActivityLog.index');
@@ -99,3 +112,6 @@ Route::get('/events/print', [OfficialReportController::class, 'print'])->name('e
 
 // Route to handle the form submission (POST request)
 Route::post('/events/print', [OfficialReportController::class, 'print'])->name('events.print.post');
+
+Route::post('/store-like-unlike', [SurveyLikeController::class, 'storeLikeUnlike']);
+Route::get('/survey-count', [SurveyLikeController::class, 'getSurveyCounts']);

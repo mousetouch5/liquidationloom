@@ -30,7 +30,7 @@
                                 } elseif ($event->eventStatus === 'ongoing') {
                                     $category = 'ongoing';
                                 } elseif ($event->eventStatus === 'ongoing') {
-                                    $category = 'upcoming';
+                                    $category = 'ongoing';
                                 } else {
                                     $category = 'other'; // Catch-all for unexpected statuses
                                 }
@@ -40,6 +40,7 @@
                                 data-category="{{ $category }}" {{-- 'recent', 'ongoing', or 'upcoming' --}} data-aos="zoom-in"
                                 data-aos-duration="3000"
                                 onclick="openEventModal('{{ $event->eventName }}',
+                                '{{ $event->id }}',
                                '{{ $event->eventDate }}', 
                                 '{{ $event->eventTime }}', 
                                 '{{ $event->eventType }}', 
@@ -51,7 +52,7 @@
                                      {{ $event->expenses->isNotEmpty() ? json_encode($event->expenses) : 'null' }},
 
             
-        )">
+                                    )">
 
                                 <img src="{{ asset('storage/' . $event->eventImage) }}" alt="Event"
                                     class="rounded-lg w-full h-48 object-cover">
@@ -80,10 +81,12 @@
                             let currentEventData = {};
 
                             // Function to open Event Modal and populate data
-                            function openEventModal(eventName, eventDate, eventTime, eventType, eventDescription, eventLocation, eventOrganizer,
+                            function openEventModal(eventName, eventId, eventDate, eventTime, eventType, eventDescription, eventLocation,
+                                eventOrganizer,
                                 eventImage, eventBudget, expenseAmount, expenseDescription) {
                                 // Store the event data in the global object
                                 currentEventData = {
+                                    eventId,
                                     eventBudget,
                                     eventBudget,
                                     eventName: eventName,
@@ -116,7 +119,52 @@
 
                                 // Open Modal 1
                                 document.getElementById('my_modal_1').showModal();
+                                fetchSurveyCounts();
                             }
+
+
+                            // Function to Fetch Survey Counts
+                            function fetchSurveyCounts() {
+                                const eventId = currentEventData.eventId;
+
+                                if (!eventId) {
+                                    console.error("Event ID is missing!");
+                                    return;
+                                }
+
+                                $.ajax({
+                                    url: '/survey-count',
+                                    method: 'GET',
+                                    data: {
+                                        event_id: eventId
+                                    },
+                                    success: function(response) {
+                                        console.log("Survey Counts:", response);
+                                        $('#likeCount').text(response.likeCount);
+                                        $('#unlikeCount').text(response.unlikeCount);
+                                        $('#surveyCount').text(response.totalCount);
+                                    },
+                                    error: function() {
+                                        alert('Failed to fetch survey counts. Please try again.');
+                                    }
+                                });
+                            }
+
+                            // Close Modal on Outside Click
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const modal = document.getElementById('my_modal_1');
+                                const budgetModal = document.getElementById('budgetModal');
+
+                                [modal, budgetModal].forEach(modalElement => {
+                                    modalElement.addEventListener('click', (e) => {
+                                        if (e.target === modalElement) {
+                                            modalElement.close();
+                                        }
+                                    });
+                                });
+                            });
+
+
 
                             // Function to open Budget Modal and populate data
                             // Function to open Budget Modal and populate data
@@ -169,6 +217,9 @@
                                 });
                             });
                         </script>
+
+
+
 
 
 

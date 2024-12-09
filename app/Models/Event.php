@@ -38,9 +38,18 @@ class Event extends Model
         return '$' . number_format($this->budget, 2);
     }
 
+    public function likes(){
+    return $this->hasMany(SurveyLike::class, 'event_id');
+    }
+       
     public function expenses()
     {
         return $this->hasMany(Expense::class, 'event_id'); // Correct relationship
+    }
+
+    public function surveys()
+    {
+        return $this->hasMany(SurveyLike::class, 'event_id');
     }
 
 }

@@ -1,4 +1,5 @@
     <!-- Budget Breakdown Modal -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <dialog id="budgetModal" class="modal">
         <div class="modal-box">
             <h3 class="text-lg font-bold">Budget Breakdown</h3>
@@ -37,6 +38,9 @@
                 <div class="modal-action">
                     <form method="dialog">
                         <button class="btn">Close</button>
+                        <button id="markAsDoneBtn" class="btn btn-success hidden" onclick="markEventAsDone()">
+                            Mark as Done
+                        </button>
                     </form>
                 </div>
             </div>
@@ -44,3 +48,43 @@
 
     </dialog>
     </div>
+
+
+    <script>
+        function markEventAsDone() {
+            // Assuming the event ID is stored somewhere, such as in a global variable or hidden input
+
+            const eventId = currentEventData.eventId;
+            console.log(eventId);
+            if (!eventId) {
+                alert("Event ID is missing. Cannot update status.");
+                return;
+            }
+
+            // PUT Request to update event status to 'done'
+            fetch(`/events/${eventId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content') // CSRF for Laravel
+                    },
+                    body: JSON.stringify({
+                        status: 'done'
+                    }) // Update payload
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Event status has been updated to 'done'.");
+                        document.getElementById('markAsDoneBtn').disabled = true; // Disable button after success
+                    } else {
+                        console.log("Failed to update status: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error updating event status:", error);
+                    alert("An error occurred while updating the event status.");
+                });
+        }
+    </script>

@@ -67,7 +67,9 @@
                                 data-category="{{ $category }}" {{-- 'recent', 'ongoing', or 'upcoming' --}} data-aos="zoom-in"
                                 data-aos-duration="3000"
                                 onclick="openEventModal('{{ $event->eventName }}',
-                               '{{ $event->eventDate }}', 
+                                '{{ $event->id }}',
+                               '{{ $event->eventStartDate }}',
+                               '{{ $event->eventStatus }}', 
                                 '{{ $event->eventTime }}', 
                                 '{{ $event->eventType }}', 
                                  '{{ $event->eventDescription }}', 
@@ -85,7 +87,7 @@
                                 <div>
                                     <h3 class="text-md font-semibold text-left">{{ $event->eventName }}</h3>
                                     <p class="text-sm text-gray-500 text-left">
-                                        {{ \Carbon\Carbon::parse($event->eventDate)->format('d M Y') }},
+                                        {{ \Carbon\Carbon::parse($event->eventStartDate)->format('d M Y') }},
                                         {{ \Carbon\Carbon::parse($event->eventTime)->format('h:i A') }},
                                     </p>
 
@@ -94,8 +96,7 @@
                         @endforeach
 
                         <x-event-modal />
-
-                        <x-budget-breakdown-modal />
+                        <x-budget-breakdown />
 
                         <!-- Your HTML content here -->
 
@@ -105,16 +106,20 @@
                             let currentEventData = {};
 
                             // Function to open Event Modal and populate data
-                            function openEventModal(eventName, eventDate, eventTime, eventType, eventDescription, eventLocation, eventOrganizer,
+                            function openEventModal(eventName, eventId, eventStartDate, eventStatus, eventTime, eventType, eventDescription,
+                                eventLocation,
+                                eventOrganizer,
                                 eventImage, eventBudget, expenseAmount, expenseDescription) {
                                 // Store the event data in the global object
                                 currentEventData = {
+                                    eventStatus,
+                                    eventId,
                                     eventBudget,
                                     eventBudget,
                                     eventName: eventName,
                                     expenseAmount: expenseAmount,
                                     expenseDescription: expenseDescription,
-                                    eventDate: eventDate,
+                                    eventStartDate: eventDate,
                                     eventTime: eventTime,
                                     eventType: eventType,
                                     eventDescription: eventDescription,
@@ -127,7 +132,7 @@
 
                                 // Populate Modal 1 fields with event data
                                 // Format the eventDate to match the input field format (YYYY-MM-DD)
-                                const formattedDate = eventDate.split(" ")[0];
+                                const formattedDate = eventStartDate.split(" ")[0];
 
                                 // Set the formatted date into the input field
                                 document.getElementById('eventDate').value = formattedDate;
@@ -141,6 +146,34 @@
 
                                 // Open Modal 1
                                 document.getElementById('my_modal_1').showModal();
+                                fetchSurveyCounts();
+                            }
+
+
+                            function fetchSurveyCounts() {
+                                const eventId = currentEventData.eventId;
+
+                                if (!eventId) {
+                                    console.error("Event ID is missing!");
+                                    return;
+                                }
+
+                                $.ajax({
+                                    url: '/survey-count',
+                                    method: 'GET',
+                                    data: {
+                                        event_id: eventId
+                                    },
+                                    success: function(response) {
+                                        console.log("Survey Counts:", response);
+                                        $('#likeCount').text(response.likeCount);
+                                        $('#unlikeCount').text(response.unlikeCount);
+                                        $('#surveyCount').text(response.totalCount);
+                                    },
+                                    error: function() {
+                                        alert('Failed to fetch survey counts. Please try again.');
+                                    }
+                                });
                             }
 
                             // Function to open Budget Modal and populate data
@@ -168,6 +201,13 @@
                                     totalExpense += amount;
                                 });
 
+                                const markAsDoneBtn = document.getElementById('markAsDoneBtn');
+                                if (eventData.eventStatus === 'done') {
+                                    markAsDoneBtn.classList.add('hidden'); // Hide button
+                                } else {
+                                    markAsDoneBtn.classList.remove('hidden'); // Show button
+                                }
+
                                 // Populate budget summary data
                                 document.getElementById('eventName').value = eventData.eventName;
                                 document.getElementById('totalBudget').value = eventData.eventBudget; // Total budget
@@ -176,6 +216,33 @@
 
                                 // Open Modal 2
                                 document.getElementById('budgetModal').showModal();
+                            }
+
+
+                            function fetchSurveyCounts() {
+                                const eventId = currentEventData.eventId;
+
+                                if (!eventId) {
+                                    console.error("Event ID is missing!");
+                                    return;
+                                }
+
+                                $.ajax({
+                                    url: '/survey-count',
+                                    method: 'GET',
+                                    data: {
+                                        event_id: eventId
+                                    },
+                                    success: function(response) {
+                                        console.log("Survey Counts:", response);
+                                        $('#likeCount').text(response.likeCount);
+                                        $('#unlikeCount').text(response.unlikeCount);
+                                        $('#surveyCount').text(response.totalCount);
+                                    },
+                                    error: function() {
+                                        alert('Failed to fetch survey counts. Please try again.');
+                                    }
+                                });
                             }
 
 

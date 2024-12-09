@@ -124,28 +124,162 @@
                                         Projects</button>
                                 </div>
                             </div>
-
                             <div class="grid grid-cols-3 gap-4 mt-4">
+                                <!-- Event Card with modal function -->
                                 @foreach ($events as $event)
-                                    <div class="bg-white shadow-lg rounded-lg p-4 event-card" data-category="recent"
-                                        data-aos="zoom-in" data-aos-duration="3000">
+                                    @php
+                                        // Explicitly define category based on eventStatus
+                                        if ($event->eventStatus === 'done') {
+                                            $category = 'recent';
+                                        } elseif ($event->eventStatus === 'ongoing') {
+                                            $category = 'ongoing';
+                                        } elseif ($event->eventStatus === 'ongoing') {
+                                            $category = 'upcoming';
+                                        } else {
+                                            $category = 'other'; // Catch-all for unexpected statuses
+                                        }
+                                    @endphp
+
+                                    <div id="eventCard_{{ $event->id }}"
+                                        class="bg-white shadow-lg rounded-lg p-4 event-card"
+                                        data-category="{{ $category }}" {{-- 'recent', 'ongoing', or 'upcoming' --}} data-aos="zoom-in"
+                                        data-aos-duration="3000"
+                                        onclick="openEventModal('{{ $event->eventName }}',
+                                        '{{ $event->id }}',
+                                   '{{ $event->eventStartDate }}', 
+                                '{{ $event->eventTime }}', 
+                                '{{ $event->eventType }}', 
+                                 '{{ $event->eventDescription }}', 
+                                  '{{ $event->eventLocation }}', 
+                                  '{{ $event->organizer }}', 
+                                         '{{ asset('storage/' . $event->eventImage) }}',
+                                             '{{ $event->budget }}', 
+                                     {{ $event->expenses->isNotEmpty() ? json_encode($event->expenses) : 'null' }},
+
+            
+        )">
+
                                         <img src="{{ asset('storage/' . $event->eventImage) }}" alt="Event"
-                                            class="rounded-lg">
-                                        <h3 class="mt-4 text-md font-semibold">{{ $event->eventName }}</h3>
-                                        <p class="text-sm text-gray-500">
-                                            <!-- Event Date and Time -->
-                                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg" class="inline-block ml-2">
-                                                <!-- SVG path here -->
-                                            </svg>
-                                            {{ $event->eventDate }}
-                                        </p>
+                                            class="rounded-lg w-full h-48 object-cover">
+                                        <div>
+                                            <h3 class="text-md font-semibold text-left">{{ $event->eventName }}</h3>
+                                            <p class="text-sm text-gray-500 text-left">
+                                                {{ \Carbon\Carbon::parse($event->eventStartDate)->format('d M Y') }},
+                                                {{ \Carbon\Carbon::parse($event->eventTime)->format('h:i A') }},
+                                            </p>
+
+                                        </div>
                                     </div>
                                 @endforeach
-
+                                <x-event-modal2 />
+                                <x-budget-breakdown-modal />
 
                             </div>
                         </section>
+
+
+
+
+
+                        <script>
+                            // Global object to store the event data
+                            let currentEventData = {};
+
+                            function openEventModal(eventName, eventId, eventDate, eventTime, eventType, eventDescription, eventLocation,
+                                eventOrganizer,
+                                eventImage, eventBudget, expenseAmount, expenseDescription) {
+                                // Store the event data in the global object
+                                currentEventData = {
+                                    eventId,
+                                    eventBudget,
+                                    eventBudget,
+                                    eventName: eventName,
+                                    expenseAmount: expenseAmount,
+                                    expenseDescription: expenseDescription,
+                                    eventDate: eventDate,
+                                    eventTime: eventTime,
+                                    eventType: eventType,
+                                    eventDescription: eventDescription,
+                                    eventLocation: eventLocation,
+                                    eventOrganizer: eventOrganizer,
+                                    eventImage: eventImage,
+                                };
+
+                                console.log("Current Event Data:", currentEventData);
+
+                                // Populate Modal 1 fields with event data
+                                // Format the eventDate to match the input field format (YYYY-MM-DD)
+                                const formattedDate = eventDate.split(" ")[0];
+
+                                // Set the formatted date into the input field
+                                document.getElementById('eventDate').value = formattedDate;
+
+                                document.getElementById('eventTime').value = eventTime;
+                                document.getElementById('eventType').value = eventType;
+                                document.getElementById('eventDescription').value = eventDescription;
+                                document.getElementById('eventLocation').value = eventLocation;
+                                document.getElementById('eventOrganizer').value = eventOrganizer;
+                                document.getElementById('eventImage').src = eventImage;
+
+                                // Open Modal 1
+                                document.getElementById('my_modal_1').showModal();
+                            }
+
+                            function openBudgetModal() {
+                                const eventData = currentEventData;
+
+                                // Check if expenseAmount is an array or a single value
+                                let expenses = Array.isArray(eventData.expenseAmount) ? eventData.expenseAmount : [eventData.expenseAmount];
+
+                                const expenseTableBody = document.getElementById('expenseTableBody');
+                                expenseTableBody.innerHTML = ''; // Clear any previous rows
+
+                                let totalExpense = 0; // Initialize total expenses
+
+                                // Populate table rows and calculate total expenses
+                                expenses.forEach((expense) => {
+                                    const amount = parseFloat(expense.expense_amount) || 0;
+                                    const description = expense.expense_description || 'No Description';
+
+                                    const row = document.createElement('tr');
+                                    row.innerHTML = `<td>${description}</td><td>${amount.toFixed(2)}</td>`;
+                                    expenseTableBody.appendChild(row);
+
+                                    // Add to the total expense
+                                    totalExpense += amount;
+                                });
+
+                                // Populate budget summary data
+                                document.getElementById('eventName').value = eventData.eventName;
+                                document.getElementById('totalBudget').value = eventData.eventBudget; // Total budget
+                                //  document.getElementById('additionalExpenses').value = 0; // Placeholder for additional expenses
+                                document.getElementById('totalSpent').value = totalExpense.toFixed(2); // Example calculation
+
+                                // Open Modal 2
+                                document.getElementById('budgetModal').showModal();
+                            }
+
+                            // Close modals when clicking outside
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const modal = document.getElementById('my_modal_1');
+                                const budgetModal = document.getElementById('budgetModal');
+
+                                [modal, budgetModal].forEach(modalElement => {
+                                    modalElement.addEventListener('click', (e) => {
+                                        if (e.target === modalElement) {
+                                            modalElement.close();
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+
+
+
+
+
+
+
 
                         <script>
                             // JavaScript to handle the event category toggle
@@ -192,78 +326,79 @@
 
 
 
-                        <!-- closing event section -- >
+                        <section>
 
 
 
 
 
+                            <!-- Highlight Section image-->
+                            <div class="carousel w-full relative" data-aos="fade-up" data-aos-duration="2000"
+                                id="carousel">
+                                @foreach ($events as $item)
+                                    <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col"data-aos="fade-in"
+                                        data-aos-duration="2000">
+                                        <img src="{{ asset('storage/' . $item->eventImage) }}"
+                                            alt="Barangay Clean-Up Drive" class="rounded-lg w-full mb-4 h-72">
+                                        <div>
+                                            <h3 class="text-xl font-semibold">{{ $item->eventName }}</h3>
+                                            <p class="mt-4 text-sm text-gray-500">{{ $item->eventDescription }}
+                                            </p>
+                                        </div>
+                                    </section>
+                                @endforeach
+
+                            </div>
 
 
+                            <script>
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    const slides = document.querySelectorAll('.carousel-item');
+                                    const nextButton = document.getElementById('next-btn');
+                                    const prevButton = document.getElementById('prev-btn');
+                                    let currentIndex = 0;
+                                    const slideInterval = 3000; // 3 seconds
 
-              <!- Highlight Section image-->
-                        <div class="carousel w-full relative" data-aos="fade-up" data-aos-duration="2000"
-                            id="carousel">
-                            @foreach ($events as $item)
-                                <section class="bg-white shadow-lg rounded-lg p-6 flex flex-col"data-aos="fade-in"
-                                    data-aos-duration="2000">
-                                    <img src="{{ asset('storage/' . $item->eventImage) }}" alt="Barangay Clean-Up Drive"
-                                        class="rounded-lg w-full mb-4 h-72">
-                                    <div>
-                                        <h3 class="text-xl font-semibold">{{ $item->eventName }}</h3>
-                                        <p class="mt-4 text-sm text-gray-500">{{ $item->eventDescription }}
-                                        </p>
-                                    </div>
-                                </section>
-                            @endforeach
+                                    const showSlide = (index) => {
+                                        slides.forEach((slide, i) => {
+                                            slide.classList.toggle('hidden', i !== index);
+                                        });
+                                    };
 
-                        </div>
+                                    const nextSlide = () => {
+                                        currentIndex = (currentIndex + 1) % slides.length;
+                                        showSlide(currentIndex);
+                                    };
 
+                                    const prevSlide = () => {
+                                        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                                        showSlide(currentIndex);
+                                    };
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', () => {
-                                const slides = document.querySelectorAll('.carousel-item');
-                                const nextButton = document.getElementById('next-btn');
-                                const prevButton = document.getElementById('prev-btn');
-                                let currentIndex = 0;
-                                const slideInterval = 3000; // 3 seconds
+                                    // Auto-slide
+                                    let autoSlideInterval = setInterval(nextSlide, slideInterval);
 
-                                const showSlide = (index) => {
-                                    slides.forEach((slide, i) => {
-                                        slide.classList.toggle('hidden', i !== index);
+                                    // Next/Prev Button Click Handlers
+                                    nextButton.addEventListener('click', () => {
+                                        nextSlide();
+                                        clearInterval(autoSlideInterval);
+                                        autoSlideInterval = setInterval(nextSlide, slideInterval);
                                     });
-                                };
 
-                                const nextSlide = () => {
-                                    currentIndex = (currentIndex + 1) % slides.length;
+                                    prevButton.addEventListener('click', () => {
+                                        prevSlide();
+                                        clearInterval(autoSlideInterval);
+                                        autoSlideInterval = setInterval(nextSlide, slideInterval);
+                                    });
+
+                                    // Initialize first slide
                                     showSlide(currentIndex);
-                                };
-
-                                const prevSlide = () => {
-                                    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-                                    showSlide(currentIndex);
-                                };
-
-                                // Auto-slide
-                                let autoSlideInterval = setInterval(nextSlide, slideInterval);
-
-                                // Next/Prev Button Click Handlers
-                                nextButton.addEventListener('click', () => {
-                                    nextSlide();
-                                    clearInterval(autoSlideInterval);
-                                    autoSlideInterval = setInterval(nextSlide, slideInterval);
                                 });
+                            </script>
 
-                                prevButton.addEventListener('click', () => {
-                                    prevSlide();
-                                    clearInterval(autoSlideInterval);
-                                    autoSlideInterval = setInterval(nextSlide, slideInterval);
-                                });
 
-                                // Initialize first slide
-                                showSlide(currentIndex);
-                            });
-                        </script>
+
+                            <section />
 
 
 
@@ -272,77 +407,75 @@
 
 
 
+                            <script>
+                                let slideIndex = 0;
 
+                                function showSlides() {
+                                    const slides = document.querySelectorAll('.slider section');
+                                    if (slides.length === 0) return; // No slides to show
 
-                        <script>
-                            let slideIndex = 0;
-
-                            function showSlides() {
-                                const slides = document.querySelectorAll('.slider section');
-                                if (slides.length === 0) return; // No slides to show
-
-                                const offset = -slideIndex * 100; // Each slide takes up 100% of the width
-                                document.querySelector('.slider').style.transform = `translateX(${offset}%)`;
-                            }
-
-                            function moveSlide(n) {
-                                const slides = document.querySelectorAll('.slider section');
-
-                                slideIndex += n;
-
-                                if (slideIndex >= slides.length) {
-                                    slideIndex = 0; // Loop back to the first slide
-                                } else if (slideIndex < 0) {
-                                    slideIndex = slides.length - 1; // Loop to the last slide
+                                    const offset = -slideIndex * 100; // Each slide takes up 100% of the width
+                                    document.querySelector('.slider').style.transform = `translateX(${offset}%)`;
                                 }
 
-                                showSlides();
-                            }
+                                function moveSlide(n) {
+                                    const slides = document.querySelectorAll('.slider section');
 
-                            // Initialize the slider on page load
-                            document.addEventListener('DOMContentLoaded', () => {
-                                showSlides();
-                            });
-                        </script>
+                                    slideIndex += n;
 
-                        <style>
-                            .slider-container {
-                                position: relative;
-                                max-width: 600px;
-                                /* Adjust as needed */
-                                margin: auto;
-                                overflow: hidden;
-                            }
+                                    if (slideIndex >= slides.length) {
+                                        slideIndex = 0; // Loop back to the first slide
+                                    } else if (slideIndex < 0) {
+                                        slideIndex = slides.length - 1; // Loop to the last slide
+                                    }
 
-                            .slider {
-                                display: flex;
-                                transition: transform 0.5s ease-in-out;
-                                /* Smooth transition */
-                            }
+                                    showSlides();
+                                }
 
-                            section {
-                                min-width: 100%;
-                                /* Each section takes full width */
-                            }
+                                // Initialize the slider on page load
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    showSlides();
+                                });
+                            </script>
 
-                            .prev,
-                            .next {
-                                position: absolute;
-                                top: 50%;
-                                transform: translateY(-50%);
-                                background-color: rgba(255, 255, 255, 0.8);
-                                border: none;
-                                cursor: pointer;
-                            }
+                            <style>
+                                .slider-container {
+                                    position: relative;
+                                    max-width: 600px;
+                                    /* Adjust as needed */
+                                    margin: auto;
+                                    overflow: hidden;
+                                }
 
-                            .prev {
-                                left: 10px;
-                            }
+                                .slider {
+                                    display: flex;
+                                    transition: transform 0.5s ease-in-out;
+                                    /* Smooth transition */
+                                }
 
-                            .next {
-                                right: 10px;
-                            }
-                        </style>
+                                section {
+                                    min-width: 100%;
+                                    /* Each section takes full width */
+                                }
+
+                                .prev,
+                                .next {
+                                    position: absolute;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    background-color: rgba(255, 255, 255, 0.8);
+                                    border: none;
+                                    cursor: pointer;
+                                }
+
+                                .prev {
+                                    left: 10px;
+                                }
+
+                                .next {
+                                    right: 10px;
+                                }
+                            </style>
 
 
 
@@ -360,6 +493,8 @@
                             <h4 class="text-lg font-semibold">Community Outreach</h4>
                             <canvas id="pieChart" class="mt-4 h-32"></canvas> <!-- Pie chart -->
                             <!-- 🦆 Emoji -->
+
+
 
                             <div class="mt-4 space-y-2">
                                 <div class="flex items-center justify-center space-x-2">

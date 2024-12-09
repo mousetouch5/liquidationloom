@@ -127,7 +127,8 @@
                                         data-category="{{ $category }}" {{-- 'recent', 'ongoing', or 'upcoming' --}} data-aos="zoom-in"
                                         data-aos-duration="3000"
                                         onclick="openEventModal('{{ $event->eventName }}',
-                               '{{ $event->eventDate }}', 
+                                        '{{ $event->id }}',
+                                   '{{ $event->eventStartDate }}', 
                                 '{{ $event->eventTime }}', 
                                 '{{ $event->eventType }}', 
                                  '{{ $event->eventDescription }}', 
@@ -145,14 +146,14 @@
                                         <div>
                                             <h3 class="text-md font-semibold text-left">{{ $event->eventName }}</h3>
                                             <p class="text-sm text-gray-500 text-left">
-                                                {{ \Carbon\Carbon::parse($event->eventDate)->format('d M Y') }},
+                                                {{ \Carbon\Carbon::parse($event->eventStartDate)->format('d M Y') }},
                                                 {{ \Carbon\Carbon::parse($event->eventTime)->format('h:i A') }},
                                             </p>
 
                                         </div>
                                     </div>
                                 @endforeach
-                                <x-event-modal />
+                                <x-event-modal2 />
                                 <x-budget-breakdown-modal />
 
                             </div>
@@ -164,10 +165,12 @@
                                 // Global object to store the event data
                                 let currentEventData = {};
 
-                                function openEventModal(eventName, eventDate, eventTime, eventType, eventDescription, eventLocation, eventOrganizer,
+                                function openEventModal(eventName, eventId, eventDate, eventTime, eventType, eventDescription, eventLocation,
+                                    eventOrganizer,
                                     eventImage, eventBudget, expenseAmount, expenseDescription) {
                                     // Store the event data in the global object
                                     currentEventData = {
+                                        eventId,
                                         eventBudget,
                                         eventBudget,
                                         eventName: eventName,

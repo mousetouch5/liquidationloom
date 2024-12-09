@@ -53,6 +53,20 @@ public function print(Event $event) {
 
 
 
+public function updateStatus(Request $request, $id)
+{
+    try {
+        $event = Event::findOrFail($id); // Find event by ID
+        $event->eventStatus = $request->input('status'); // Update status to 'done'
+        $event->save();
+
+        return response()->json(['success' => true, 'message' => 'Event status updated successfully.']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Failed to update event status.']);
+    }
+}
+
+
 
 
 
