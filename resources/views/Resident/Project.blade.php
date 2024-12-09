@@ -443,4 +443,39 @@
         });
     </script>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [''],
+                datasets: [{
+                    label: 'Community Outreach',
+                    data: [40, 30, 30], // Example data points, adjust as needed
+                    backgroundColor: ['#4CD7F6', '#CDF3FF'],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                }
+            } // Close the options object
+        }); // Close the Chart initialization
+    </script>
+
 </x-app-layout>

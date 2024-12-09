@@ -32,72 +32,69 @@
 
 
 
-
-                <div class="carousel w-full relative" data-aos="fade-up" data-aos-duration="2000" id="carousel">
-                    @foreach ($events as $event)
-                        <div id="event-{{ $loop->index }}" class="carousel-item w-full flex flex-col hidden">
-                            <img src="{{ asset('storage/' . $event->eventImage) }}" alt="{{ $event->eventName }}"
-                                class="rounded-lg w-full mb-4 h-72 object-cover">
-                            <div class="px-4">
-                                <h3 class="text-xl font-semibold">{{ $event->eventName }}</h3>
-                                <p class="mt-4 text-sm text-gray-500">
-                                    {{ $event->eventDescription }}
-                                </p>
+                <div class="relative w-full" data-aos="fade-up" data-aos-duration="2000">
+                    <!-- Slider Container -->
+                    <div class="carousel w-full relative" id="carousel">
+                        @foreach ($events as $event)
+                            <div id="event-{{ $loop->index }}" class="carousel-item w-full flex flex-col {{ $loop->first ? '' : 'hidden' }}">
+                                <img src="{{ asset('storage/' . $event->eventImage) }}" alt="{{ $event->eventName }}"
+                                    class="rounded-lg w-full mb-4 h-72 object-cover">
+                                <div class="px-4">
+                                    <h3 class="text-xl font-semibold">{{ $event->eventName }}</h3>
+                                    <p class="mt-4 text-sm text-gray-500">
+                                        {{ $event->eventDescription }}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
+                
+                    <!-- Navigation Buttons -->
+                    <button id="prev-btn"
+                        class="absolute left-2 top-1/2 transform -translate-y-1/2 btn btn-circle btn-sm bg-gray-800 text-white">
+                        ‹
+                    </button>
+                    <button id="next-btn"
+                        class="absolute right-2 top-1/2 transform -translate-y-1/2 btn btn-circle btn-sm bg-gray-800 text-white">
+                        ›
+                    </button>
                 </div>
-
-
-
-
-
+                
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
                         const slides = document.querySelectorAll('.carousel-item');
                         const nextButton = document.getElementById('next-btn');
                         const prevButton = document.getElementById('prev-btn');
                         let currentIndex = 0;
-                        const slideInterval = 3000; // 3 seconds
-
+                
+                        // Function to show the current slide
                         const showSlide = (index) => {
                             slides.forEach((slide, i) => {
-                                slide.classList.toggle('hidden', i !== index);
+                                slide.classList.toggle('hidden', i !== index); // Show the current slide, hide the others
                             });
                         };
-
+                
+                        // Go to the next slide
                         const nextSlide = () => {
-                            currentIndex = (currentIndex + 1) % slides.length;
+                            currentIndex = (currentIndex + 1) % slides.length;  // Wrap around to the first slide
                             showSlide(currentIndex);
                         };
-
+                
+                        // Go to the previous slide
                         const prevSlide = () => {
-                            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                            currentIndex = (currentIndex - 1 + slides.length) % slides.length; // Wrap around to the last slide
                             showSlide(currentIndex);
                         };
-
-                        // Auto-slide
-                        let autoSlideInterval = setInterval(nextSlide, slideInterval);
-
+                
                         // Next/Prev Button Click Handlers
-                        nextButton.addEventListener('click', () => {
-                            nextSlide();
-                            clearInterval(autoSlideInterval);
-                            autoSlideInterval = setInterval(nextSlide, slideInterval);
-                        });
-
-                        prevButton.addEventListener('click', () => {
-                            prevSlide();
-                            clearInterval(autoSlideInterval);
-                            autoSlideInterval = setInterval(nextSlide, slideInterval);
-                        });
-
+                        nextButton.addEventListener('click', nextSlide);
+                        prevButton.addEventListener('click', prevSlide);
+                
                         // Initialize first slide
                         showSlide(currentIndex);
                     });
                 </script>
-
-
+                
 
 
 

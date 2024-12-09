@@ -30,8 +30,14 @@ class EventController extends Controller
                 'total' => $group->sum('expense_amount'), // Calculate the total for the group
             ];
         });
+        $totalAmount = $events->flatMap(function ($event) {
+            return $event->expenses;
+        })->sum('expense_amount');
+
+
+        
         // Pass the events to the view for display
-        return view('Resident.Event', compact('events', 'expenses')); // Assuming your view is 'Resident.Event'
+        return view('Resident.Event', compact('events', 'expenses','totalAmount')); // Assuming your view is 'Resident.Event'
     }
 
 

@@ -86,8 +86,10 @@
                 <div class="flex flex-col lg:flex-row lg:space-x-6">
                     <!-- Content Section -->
                     <main class="flex-1 px-8 py-6 space-y-6 bg-gray-50">
-                        <!-- Events Section -->
+
                         <section>
+
+
                             <div class="flex justify-between items-center" data-aos="zoom-in" data-aos-duration="2000">
                                 <h2 class="text-lg font-semibold">Projects</h2>
                                 <div class="flex space-x-4">
@@ -105,7 +107,34 @@
 
 
 
-                            <!-- GRID SECTION OF EVENT CARDS -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             <div class="grid grid-cols-3 gap-4 mt-4">
                                 <!-- Event Card with modal function -->
                                 @foreach ($events as $event)
@@ -127,8 +156,9 @@
                                         data-category="{{ $category }}" {{-- 'recent', 'ongoing', or 'upcoming' --}} data-aos="zoom-in"
                                         data-aos-duration="3000"
                                         onclick="openEventModal('{{ $event->eventName }}',
+                                        '{{ $event->userId }}',
                                         '{{ $event->id }}',
-                                   '{{ $event->eventStartDate }}', 
+                               '{{ $event->eventEndDate }}', 
                                 '{{ $event->eventTime }}', 
                                 '{{ $event->eventType }}', 
                                  '{{ $event->eventDescription }}', 
@@ -146,232 +176,182 @@
                                         <div>
                                             <h3 class="text-md font-semibold text-left">{{ $event->eventName }}</h3>
                                             <p class="text-sm text-gray-500 text-left">
-                                                {{ \Carbon\Carbon::parse($event->eventStartDate)->format('d M Y') }},
+                                                {{ \Carbon\Carbon::parse($event->eventDate)->format('d M Y') }},
                                                 {{ \Carbon\Carbon::parse($event->eventTime)->format('h:i A') }},
                                             </p>
 
                                         </div>
                                     </div>
                                 @endforeach
+
+
+
                                 <x-event-modal2 />
                                 <x-budget-breakdown-modal />
 
-                            </div>
-
-                            <!-- Your HTML content here -->
-
-
-                            <script>
-                                // Global object to store the event data
-                                let currentEventData = {};
-
-                                function openEventModal(eventName, eventId, eventDate, eventTime, eventType, eventDescription, eventLocation,
-                                    eventOrganizer,
-                                    eventImage, eventBudget, expenseAmount, expenseDescription) {
-                                    // Store the event data in the global object
-                                    currentEventData = {
-                                        eventId,
-                                        eventBudget,
-                                        eventBudget,
-                                        eventName: eventName,
-                                        expenseAmount: expenseAmount,
-                                        expenseDescription: expenseDescription,
-                                        eventDate: eventDate,
-                                        eventTime: eventTime,
-                                        eventType: eventType,
-                                        eventDescription: eventDescription,
-                                        eventLocation: eventLocation,
-                                        eventOrganizer: eventOrganizer,
-                                        eventImage: eventImage,
-                                    };
-
-                                    console.log("Current Event Data:", currentEventData);
-
-                                    // Populate Modal 1 fields with event data
-                                    // Format the eventDate to match the input field format (YYYY-MM-DD)
-                                    const formattedDate = eventDate.split(" ")[0];
-
-                                    // Set the formatted date into the input field
-                                    document.getElementById('eventDate').value = formattedDate;
-
-                                    document.getElementById('eventTime').value = eventTime;
-                                    document.getElementById('eventType').value = eventType;
-                                    document.getElementById('eventDescription').value = eventDescription;
-                                    document.getElementById('eventLocation').value = eventLocation;
-                                    document.getElementById('eventOrganizer').value = eventOrganizer;
-                                    document.getElementById('eventImage').src = eventImage;
-
-                                    // Open Modal 1
-                                    document.getElementById('my_modal_1').showModal();
-                                }
-
-                                function openBudgetModal() {
-                                    const eventData = currentEventData;
-
-                                    // Check if expenseAmount is an array or a single value
-                                    let expenses = Array.isArray(eventData.expenseAmount) ? eventData.expenseAmount : [eventData.expenseAmount];
-
-                                    const expenseTableBody = document.getElementById('expenseTableBody');
-                                    expenseTableBody.innerHTML = ''; // Clear any previous rows
-
-                                    let totalExpense = 0; // Initialize total expenses
-
-                                    // Populate table rows and calculate total expenses
-                                    expenses.forEach((expense) => {
-                                        const amount = parseFloat(expense.expense_amount) || 0;
-                                        const description = expense.expense_description || 'No Description';
-
-                                        const row = document.createElement('tr');
-                                        row.innerHTML = `<td>${description}</td><td>${amount.toFixed(2)}</td>`;
-                                        expenseTableBody.appendChild(row);
-
-                                        // Add to the total expense
-                                        totalExpense += amount;
-                                    });
-
-                                    // Populate budget summary data
-                                    document.getElementById('eventName').value = eventData.eventName;
-                                    document.getElementById('totalBudget').value = eventData.eventBudget; // Total budget
-                                    //  document.getElementById('additionalExpenses').value = 0; // Placeholder for additional expenses
-                                    document.getElementById('totalSpent').value = totalExpense.toFixed(2); // Example calculation
-
-                                    // Open Modal 2
-                                    document.getElementById('budgetModal').showModal();
-                                }
-
-                                // Close modals when clicking outside
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const modal = document.getElementById('my_modal_1');
-                                    const budgetModal = document.getElementById('budgetModal');
-
-                                    [modal, budgetModal].forEach(modalElement => {
-                                        modalElement.addEventListener('click', (e) => {
-                                            if (e.target === modalElement) {
-                                                modalElement.close();
-                                            }
-                                        });
-                                    });
-                                });
-                            </script>
-
-                            <!-- closing event section -- >
-                        
 
 
 
 
 
 
+                                <script>
+                                    // Global object to store the event data
+                                    let currentEventData = {};
 
+                                    // Function to open Event Modal and populate data
+                                    function openEventModal(eventName, userId, eventId, eventDate, eventTime, eventType, eventDescription,
+                                        eventLocation,
+                                        eventOrganizer,
+                                        eventImage, eventBudget, expenseAmount, expenseDescription) {
+                                        // Store the event data in the global object
+                                        currentEventData = {
+                                            userId,
+                                            eventId,
+                                            eventBudget,
+                                            eventBudget,
+                                            eventName: eventName,
+                                            expenseAmount: expenseAmount,
+                                            expenseDescription: expenseDescription,
+                                            eventDate: eventDate,
+                                            eventTime: eventTime,
+                                            eventType: eventType,
+                                            eventDescription: eventDescription,
+                                            eventLocation: eventLocation,
+                                            eventOrganizer: eventOrganizer,
+                                            eventImage: eventImage,
+                                        };
+                                        console.log(eventId);
+                                        console.log("User: " + userId);
+                                        console.log("Current Event Data:", currentEventData);
 
+                                        // Populate Modal 1 fields with event data
+                                        // Format the eventDate to match the input field format (YYYY-MM-DD)
+                                        const formattedDate = eventDate.split(" ")[0];
 
+                                        // Set the formatted date into the input field
+                                        document.getElementById('eventDate').value = formattedDate;
 
+                                        document.getElementById('eventTime').value = eventTime;
+                                        document.getElementById('eventType').value = eventType;
+                                        document.getElementById('eventDescription').value = eventDescription;
+                                        document.getElementById('eventLocation').value = eventLocation;
+                                        document.getElementById('eventOrganizer').value = eventOrganizer;
+                                        document.getElementById('eventImage').src = eventImage;
 
-
-                        <!-- button group -->
-                            <script>
-                                // JavaScript to handle the event category toggle
-                                document.addEventListener("DOMContentLoaded", function() {
-                                    const buttons = document.querySelectorAll("button");
-                                    const eventCards = document.querySelectorAll(".event-card");
-
-                                    // Function to filter event cards based on category
-                                    function filterEvents(category) {
-                                        eventCards.forEach(card => {
-                                            if (category === "all" || card.getAttribute("data-category") === category) {
-                                                card.classList.remove("hidden");
-                                            } else {
-                                                card.classList.add("hidden");
-                                            }
-                                        });
+                                        // Open Modal 1
+                                        document.getElementById('my_modal_1').showModal();
                                     }
 
-                                    // Event listener for button clicks
-                                    buttons.forEach(button => {
-                                        button.addEventListener("click", () => {
-                                            // Reset all buttons' styles
-                                            buttons.forEach(btn => btn.classList.remove("bg-blue-100"));
-                                            button.classList.add("bg-blue-100");
+                                    // Function to open Budget Modal and populate data
+                                    // Function to open Budget Modal and populate data
+                                    function openBudgetModal() {
+                                        const eventData = currentEventData;
 
-                                            // Determine which category to filter by
-                                            if (button.id === "recent-events") {
-                                                filterEvents("recent");
-                                            } else if (button.id === "ongoing-events") {
-                                                filterEvents("ongoing");
-                                            } else if (button.id === "upcoming-events") {
-                                                filterEvents("upcoming");
-                                            }
+                                        // Check if expenseAmount is an array or a single value
+                                        let expenses = Array.isArray(eventData.expenseAmount) ? eventData.expenseAmount : [eventData.expenseAmount];
+
+                                        const expenseTableBody = document.getElementById('expenseTableBody');
+                                        expenseTableBody.innerHTML = ''; // Clear any previous rows
+
+                                        let totalExpense = 0; // Initialize total expenses
+
+                                        // Populate table rows and calculate total expenses
+                                        expenses.forEach((expense) => {
+                                            const amount = parseFloat(expense.expense_amount) || 0;
+                                            const description = expense.expense_description || 'No Description';
+
+                                            const row = document.createElement('tr');
+                                            row.innerHTML = `<td>${description}</td><td>${amount.toFixed(2)}</td>`;
+                                            expenseTableBody.appendChild(row);
+
+                                            // Add to the total expense
+                                            totalExpense += amount;
+                                        });
+
+                                        // Populate budget summary data
+                                        document.getElementById('eventName').value = eventData.eventName;
+                                        document.getElementById('totalBudget').value = eventData.eventBudget; // Total budget
+                                        //  document.getElementById('additionalExpenses').value = 0; // Placeholder for additional expenses
+                                        document.getElementById('totalSpent').value = totalExpense.toFixed(2); // Example calculation
+
+                                        // Open Modal 2
+                                        document.getElementById('budgetModal').showModal();
+                                    }
+
+
+                                    // Close modals when clicking outside
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const modal = document.getElementById('my_modal_1');
+                                        const budgetModal = document.getElementById('budgetModal');
+
+                                        [modal, budgetModal].forEach(modalElement => {
+                                            modalElement.addEventListener('click', (e) => {
+                                                if (e.target === modalElement) {
+                                                    modalElement.close();
+                                                }
+                                            });
                                         });
                                     });
-
-                                    // Initial load, show all events
-                                    filterEvents("all");
-                                });
-                            </script>
+                                </script>
 
 
 
 
-                            <script>
-                                // JavaScript for Dropdown Filtering
-                                document.getElementById('event-selector').addEventListener('change', function() {
-                                    const selectedEventId = this.value; // Get selected event ID
-                                    const expenseGroups = document.querySelectorAll('.expense-group');
 
-                                    // Show/Hide Expense Groups Based on Selection
-                                    expenseGroups.forEach(group => {
-                                        if (group.getAttribute('data-event-id') === selectedEventId) {
-                                            group.style.display = 'block'; // Show matched group
-                                        } else {
-                                            group.style.display = 'none'; // Hide other groups
+                                <!-- button group recent , incoming , upcoming  javascript function -->
+
+
+                                <script>
+                                    // JavaScript to handle the event category toggle
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        const buttons = document.querySelectorAll("button");
+                                        const eventCards = document.querySelectorAll(".event-card");
+
+                                        // Function to filter event cards based on category
+                                        function filterEvents(category) {
+                                            eventCards.forEach(card => {
+                                                if (category === "all" || card.getAttribute("data-category") === category) {
+                                                    card.classList.remove("hidden");
+                                                } else {
+                                                    card.classList.add("hidden");
+                                                }
+                                            });
                                         }
+
+                                        // Event listener for button clicks
+                                        buttons.forEach(button => {
+                                            button.addEventListener("click", () => {
+                                                // Reset all buttons' styles
+                                                buttons.forEach(btn => btn.classList.remove("bg-blue-100"));
+                                                button.classList.add("bg-blue-100");
+
+                                                // Determine which category to filter by
+                                                if (button.id === "recent-events") {
+                                                    filterEvents("recent");
+                                                } else if (button.id === "ongoing-events") {
+                                                    filterEvents("ongoing");
+                                                } else if (button.id === "upcoming-events") {
+                                                    filterEvents("upcoming");
+                                                }
+                                            });
+                                        });
+
+                                        // Initial load, show all events
+                                        filterEvents("all");
                                     });
-                                });
-                            </script>
+                                </script>
 
 
 
-                            @foreach ($expenses as $expenseGroup)
-                                <div class="expense-group bg-white shadow-md rounded-lg overflow-hidden w-full mt-5"
-                                    data-event-id="{{ $expenseGroup['id'] }}" data-aos="fade-left"
-                                    data-aos-duration="2000" id="expense-group-{{ $expenseGroup['id'] }}"
-                                    style="display: none;">
-                                    <!-- Hidden by default -->
-                                    <table class="w-full">
-                                        <thead>
-                                            <tr class="bg-gray-200 text-gray-600 text-left text-sm font-semibold">
-                                                <th class="py-3 px-4">Expenses</th>
-                                                <th class="py-3 px-4">Date</th>
-                                                <th class="py-3 px-4">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($expenseGroup['items'] as $expense)
-                                                <tr class="{{ $loop->odd ? 'odd:bg-gray-50' : '' }}">
-                                                    <td class="py-3 px-4">{{ $expense['name'] }}</td>
-                                                    <td class="py-3 px-4">{{ $expense['date'] }}</td>
-                                                    <td class="py-3 px-4 text-red-500">
-                                                        -₱{{ number_format($expense['amount'], 2) }}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                            <tr class="bg-gray-200">
-                                                <td colspan="2" class="py-3 px-4 font-semibold text-right">Total:
-                                                </td>
-                                                <td class="py-3 px-4 font-semibold text-red-600">
-                                                    ₱{{ number_format($expenseGroup['total'], 2) }}
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            @endforeach
+
+
+
+                                <!-- Expenses Table Section -->
+                                <x-expenses-table :events="$events" :totalAmount="$totalAmount" />
+
                         </section>
                     </main>
-
-
 
 
 
@@ -400,38 +380,10 @@
                     <aside class="w-full lg:w-1/3 grid grid-cols-1 gap-6 mt-5" data-aos="fade-left"
                         data-aos-duration="2000">
                         <!-- Barangay Officials -->
-                        <div class="bg-white shadow-lg rounded-lg p-6" data-aos="fade-left" data-aos-duration="2000">
-                            <h4 class="text-lg font-semibold">Barangay Officials</h4>
-                            <ul class="mt-4 space-y-4">
-                                <li class="flex items-center space-x-4">
-                                    <img src="https://via.placeholder.com/40" alt="Official"
-                                        class="w-10 h-10 rounded-full">
-                                    <div>
-                                        <p class="text-sm font-semibold">Maria Catarina Agoncillo</p>
-                                        <p class="text-xs text-gray-500">Barangay Captain</p>
-                                    </div>
-                                </li>
-                                <li class="flex items-center space-x-4">
-                                    <img src="https://via.placeholder.com/40" alt="Official"
-                                        class="w-10 h-10 rounded-full">
-                                    <div>
-                                        <p class="text-sm font-semibold">Joshua Cabatuan</p>
-                                        <p class="text-xs text-gray-500">Barangay Secretary</p>
-                                    </div>
-                                </li>
-                                <li class="flex items-center space-x-4">
-                                    <img src="https://via.placeholder.com/40" alt="Official"
-                                        class="w-10 h-10 rounded-full">
-                                    <div>
-                                        <p class="text-sm font-semibold">Dominic Tangco</p>
-                                        <p class="text-xs text-gray-500">Barangay Treasurer</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
 
 
 
+                        <x-admin.officials />
 
 
 
@@ -455,200 +407,19 @@
 
 
 
+
+
+
+
+
+
+
+
                         <!--survey boss -->
                         <!-- Button to Open the Modal Survey -->
-                        <button class="btn bg-cyan-500 w-full mb-5" onclick="Survey.showModal()">Answer
-                            Question</button>
-
-                        <!-- Modal Structure with Survey Questions -->
-                        <dialog id="Survey" class="modal">
-                            <div class="modal-box w-11/12 max-w-5xl">
-                                <h3 class="text-lg font-bold">Barangay Events and Projects Survey</h3>
-                                <p class="py-4">This survey aims to understand your experience with events
-                                    and projects held in our barangay. Your responses will help us improve
-                                    future initiatives and better serve the community.</p>
-
-                                <!-- Survey Form -->
-                                <form id="surveyForm">
-                                    <!-- Question 1: How often do you participate in barangay events? -->
-                                    <div class="mb-6">
-                                        <p class="text-sm font-semibold text-gray-700">1. How often do you
-                                            participate in barangay events?</p>
-                                        <div class="mt-2 space-y-2">
-                                            <label class="inline-flex items-center">
-                                                <input type="radio" name="participation" value="never"
-                                                    class="form-radio">
-                                                <span class="ml-2">Never</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="radio" name="participation" value="rarely"
-                                                    class="form-radio">
-                                                <span class="ml-2">Rarely (once or twice a year)</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="radio" name="participation" value="sometimes"
-                                                    class="form-radio">
-                                                <span class="ml-2">Sometimes (3-5 times a year)</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="radio" name="participation" value="often"
-                                                    class="form-radio">
-                                                <span class="ml-2">Often (6 or more times a year)</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="radio" name="participation" value="always"
-                                                    class="form-radio">
-                                                <span class="ml-2">Always</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Question 2: What types of barangay events do you find most interesting or valuable? -->
-                                    <div class="mb-6">
-                                        <p class="text-sm font-semibold text-gray-700">2. What types of
-                                            barangay events do you find most interesting or valuable? (select
-                                            all that apply)</p>
-                                        <div class="mt-2 space-y-2">
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_types"
-                                                    value="cultural_celebrations" class="form-checkbox">
-                                                <span class="ml-2">Cultural celebrations (fiestas,
-                                                    etc.)</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_types" value="sports_tournaments"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Sports tournaments</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_types" value="health_fairs"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Health fairs/medical missions</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_types" value="clean_up_drives"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Clean-up drives/environmental
-                                                    projects</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_types" value="skills_workshops"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Skills workshops (e.g., livelihood
-                                                    training)</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_types" value="youth_programs"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Youth development programs</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_types" value="community_forums"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Community forums/meetings</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_types" value="social_events"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Social events (e.g., movie nights)</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Question 3: How do you usually find out about upcoming barangay events? -->
-                                    <div class="mb-6">
-                                        <p class="text-sm font-semibold text-gray-700">3. How do you usually
-                                            find out about upcoming barangay events? (select all that apply)</p>
-                                        <div class="mt-2 space-y-2">
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_info"
-                                                    value="barangay_announcements" class="form-checkbox">
-                                                <span class="ml-2">Barangay announcements (posters,
-                                                    flyers)</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_info" value="social_media"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Barangay social media page</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_info" value="barangay_website"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Barangay website</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_info" value="text_alerts"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Community text message alerts</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_info" value="community_meetings"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Announcements during community
-                                                    meetings</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="event_info" value="word_of_mouth"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Word-of-mouth</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Question 4: In your opinion, how have these projects impacted the barangay? -->
-                                    <div class="mb-6">
-                                        <p class="text-sm font-semibold text-gray-700">4. In your opinion, how
-                                            have these projects impacted the barangay? (select all that apply)
-                                        </p>
-                                        <div class="mt-2 space-y-2">
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="impact" value="improved_infrastructure"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Improved infrastructure (roads, drainage,
-                                                    etc.)</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="impact" value="enhanced_safety"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Enhanced safety and security</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="impact"
-                                                    value="environmental_sustainability" class="form-checkbox">
-                                                <span class="ml-2">Increased environmental
-                                                    sustainability</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="impact" value="improved_services"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Improved access to basic services (water,
-                                                    sanitation)</span>
-                                            </label>
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="impact" value="community_development"
-                                                    class="form-checkbox">
-                                                <span class="ml-2">Boosted community development and
-                                                    livelihood opportunities</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Submit Button -->
-                                    <div class="flex justify-center mt-6">
-                                        <button type="submit"
-                                            class="btn bg-cyan-500 text-white hover:bg-cyan-600 rounded-lg px-6 py-2">Submit</button>
-                                    </div>
-
-                                </form>
-
-                                <!-- Close Button -->
-                                <div class="modal-action">
-                                    <form method="dialog">
-                                        <button class="btn">Close</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </dialog>
+                        <button class="btn bg-cyan-500 w-full mt-5" onclick="Survey.showModal()">Answer
+                            Survey</button>
+                        <x-survey />
                 </div>
         </aside>
     </div>
