@@ -344,10 +344,6 @@
                                 </script>
 
 
-
-
-
-
                                 <!-- Expenses Table Section -->
                                 <x-expenses-table :events="$events" :totalAmount="$totalAmount" />
 
@@ -385,13 +381,6 @@
 
 
                         <x-admin.officials />
-
-
-
-
-
-
-
 
 
 

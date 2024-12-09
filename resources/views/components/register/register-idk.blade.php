@@ -34,11 +34,10 @@
                         <select id="position" name="position"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                             <option value="" disabled selected>Select Position</option>
-                            <option value="Baranggay Chair Man">Baranggay ChairMan</option>
-                            <option value="Mayor">Mayor</option>
-                            <option value="Clerk">Clerk</option>
-                            <option value="Baranggay Manager">Baranggay Manager</option>
-                            <option value="Baranggay Tambay">Baranggay Tambay</option>
+                            <option value="Barangay Captain">Barangay Captain</option>
+                            <option value="Barangay Secretary">Barangay Secretary</option>
+                            <option value="Barangay Treasurer">Barangay Treasurer</option>
+                            <option value="Assitant">Assitant</option>
                         </select>
                     </div>
                 </div>

@@ -189,6 +189,108 @@
                                 <x-event-modal2 />
                                 <x-budget-breakdown-modal />
 
+<<<<<<< HEAD
+=======
+                            </div>
+
+                            <!-- Your HTML content here -->
+
+
+                            <script>
+                                // Global object to store the event data
+                                let currentEventData = {};
+
+                                function openEventModal(eventName, eventId, eventDate, eventTime, eventType, eventDescription, eventLocation,
+                                    eventOrganizer,
+                                    eventImage, eventBudget, expenseAmount, expenseDescription) {
+                                    // Store the event data in the global object
+                                    currentEventData = {
+                                        eventId,
+                                        eventBudget,
+                                        eventBudget,
+                                        eventName: eventName,
+                                        expenseAmount: expenseAmount,
+                                        expenseDescription: expenseDescription,
+                                        eventDate: eventDate,
+                                        eventTime: eventTime,
+                                        eventType: eventType,
+                                        eventDescription: eventDescription,
+                                        eventLocation: eventLocation,
+                                        eventOrganizer: eventOrganizer,
+                                        eventImage: eventImage,
+                                    };
+
+                                    console.log("Current Event Data:", currentEventData);
+
+                                    // Populate Modal 1 fields with event data
+                                    // Format the eventDate to match the input field format (YYYY-MM-DD)
+                                    const formattedDate = eventDate.split(" ")[0];
+
+                                    // Set the formatted date into the input field
+                                    document.getElementById('eventDate').value = formattedDate;
+
+                                    document.getElementById('eventTime').value = eventTime;
+                                    document.getElementById('eventType').value = eventType;
+                                    document.getElementById('eventDescription').value = eventDescription;
+                                    document.getElementById('eventLocation').value = eventLocation;
+                                    document.getElementById('eventOrganizer').value = eventOrganizer;
+                                    document.getElementById('eventImage').src = eventImage;
+
+                                    // Open Modal 1
+                                    document.getElementById('my_modal_1').showModal();
+                                }
+
+                                function openBudgetModal() {
+                                    const eventData = currentEventData;
+
+                                    // Check if expenseAmount is an array or a single value
+                                    let expenses = Array.isArray(eventData.expenseAmount) ? eventData.expenseAmount : [eventData.expenseAmount];
+
+                                    const expenseTableBody = document.getElementById('expenseTableBody');
+                                    expenseTableBody.innerHTML = ''; // Clear any previous rows
+
+                                    let totalExpense = 0; // Initialize total expenses
+
+                                    // Populate table rows and calculate total expenses
+                                    expenses.forEach((expense) => {
+                                        const amount = parseFloat(expense.expense_amount) || 0;
+                                        const description = expense.expense_description || 'No Description';
+
+                                        const row = document.createElement('tr');
+                                        row.innerHTML = `<td>${description}</td><td>${amount.toFixed(2)}</td>`;
+                                        expenseTableBody.appendChild(row);
+
+                                        // Add to the total expense
+                                        totalExpense += amount;
+                                    });
+
+                                    // Populate budget summary data
+                                    document.getElementById('eventName').value = eventData.eventName;
+                                    document.getElementById('totalBudget').value = eventData.eventBudget; // Total budget
+                                    //  document.getElementById('additionalExpenses').value = 0; // Placeholder for additional expenses
+                                    document.getElementById('totalSpent').value = totalExpense.toFixed(2); // Example calculation
+
+                                    // Open Modal 2
+                                    document.getElementById('budgetModal').showModal();
+                                }
+
+                                // Close modals when clicking outside
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const modal = document.getElementById('my_modal_1');
+                                    const budgetModal = document.getElementById('budgetModal');
+
+                                    [modal, budgetModal].forEach(modalElement => {
+                                        modalElement.addEventListener('click', (e) => {
+                                            if (e.target === modalElement) {
+                                                modalElement.close();
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+
+                            <!-- closing event section -->
+>>>>>>> 16e1eaea04f901a098fc10083810afd3361e89c2
 
 
 
@@ -239,8 +341,29 @@
                                         document.getElementById('eventOrganizer').value = eventOrganizer;
                                         document.getElementById('eventImage').src = eventImage;
 
+<<<<<<< HEAD
                                         // Open Modal 1
                                         document.getElementById('my_modal_1').showModal();
+=======
+
+
+                            <!-- button group -->
+                            <script>
+                                // JavaScript to handle the event category toggle
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    const buttons = document.querySelectorAll("button");
+                                    const eventCards = document.querySelectorAll(".event-card");
+
+                                    // Function to filter event cards based on category
+                                    function filterEvents(category) {
+                                        eventCards.forEach(card => {
+                                            if (category === "all" || card.getAttribute("data-category") === category) {
+                                                card.classList.remove("hidden");
+                                            } else {
+                                                card.classList.add("hidden");
+                                            }
+                                        });
+>>>>>>> 16e1eaea04f901a098fc10083810afd3361e89c2
                                     }
 
                                     // Function to open Budget Modal and populate data
@@ -380,6 +503,7 @@
                     <aside class="w-full lg:w-1/3 grid grid-cols-1 gap-6 mt-5" data-aos="fade-left"
                         data-aos-duration="2000">
                         <!-- Barangay Officials -->
+<<<<<<< HEAD
 
 
 
@@ -395,10 +519,14 @@
 
 
 
+=======
+>>>>>>> 16e1eaea04f901a098fc10083810afd3361e89c2
 
+                        <x-admin.officials />
 
                         <x-community-outreach />
 
+<<<<<<< HEAD
 
 
 
@@ -419,45 +547,18 @@
                         <!-- Button to Open the Modal Survey -->
                         <button class="btn bg-cyan-500 w-full mt-5" onclick="Survey.showModal()">Answer
                             Survey</button>
+=======
+                        <!--survey boss -->
+                        <!-- Button to Open the Modal Survey -->
+                        <button class="btn bg-cyan-500 w-full mb-5" onclick="Survey.showModal()">Answer
+                            Question</button>
+
+                        <!-- Modal Structure with Surv  ey Questions -->
+>>>>>>> 16e1eaea04f901a098fc10083810afd3361e89c2
                         <x-survey />
                 </div>
         </aside>
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var ctx = document.getElementById('pieChart').getContext('2d');
-        var pieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: [''],
-                datasets: [{
-                    label: 'Community Outreach',
-                    data: [40, 30, 30], // Example data points, adjust as needed
-                    backgroundColor: ['#4CD7F6', '#CDF3FF'],
-                    borderColor: '#ffffff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-                            }
-                        }
-                    }
-                }
-            } // Close the options object
-        }); // Close the Chart initialization
-    </script>
-
 
 
     <!-- JavaScript for Modal Survey -->
