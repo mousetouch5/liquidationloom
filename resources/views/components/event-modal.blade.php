@@ -51,13 +51,35 @@
                  </div>
              </div>
 
-
-
              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+             <script>
+                 function fetchSurveyCounts() {
+                     const eventId = currentEventData.eventId;
 
+                     if (!eventId) {
+                         console.log("Event ID is missing!");
+                         return;
+                     }
 
-
+                     $.ajax({
+                         url: '/survey-count',
+                         method: 'GET',
+                         data: {
+                             event_id: eventId
+                         },
+                         success: function(response) {
+                             console.log("Survey Counts:", response);
+                             $('#likeCount').text(response.likeCount);
+                             $('#unlikeCount').text(response.unlikeCount);
+                             $('#surveyCount').text(response.totalCount);
+                         },
+                         error: function() {
+                             console.log('Failed to fetch survey counts. Please try again.');
+                         }
+                     });
+                 }
+             </script>
 
          </div>
 

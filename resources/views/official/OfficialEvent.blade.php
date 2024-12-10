@@ -36,7 +36,8 @@
                     <!-- Slider Container -->
                     <div class="carousel w-full relative" id="carousel">
                         @foreach ($events as $event)
-                            <div id="event-{{ $loop->index }}" class="carousel-item w-full flex flex-col {{ $loop->first ? '' : 'hidden' }}">
+                            <div id="event-{{ $loop->index }}"
+                                class="carousel-item w-full flex flex-col {{ $loop->first ? '' : 'hidden' }}">
                                 <img src="{{ asset('storage/' . $event->eventImage) }}" alt="{{ $event->eventName }}"
                                     class="rounded-lg w-full mb-4 h-72 object-cover">
                                 <div class="px-4">
@@ -48,7 +49,7 @@
                             </div>
                         @endforeach
                     </div>
-                
+
                     <!-- Navigation Buttons -->
                     <button id="prev-btn"
                         class="absolute left-2 top-1/2 transform -translate-y-1/2 btn btn-circle btn-sm bg-gray-800 text-white">
@@ -59,42 +60,45 @@
                         ›
                     </button>
                 </div>
-                
+
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
-                        const slides = document.querySelectorAll('.carousel-item');
-                        const nextButton = document.getElementById('next-btn');
-                        const prevButton = document.getElementById('prev-btn');
-                        let currentIndex = 0;
-                
+                        const slides = document.querySelectorAll('.carousel-item'); // All slides
+                        const nextButton = document.getElementById('next-btn'); // Next button
+                        const prevButton = document.getElementById('prev-btn'); // Previous button
+                        let currentIndex = 0; // Start with the first slide
+
                         // Function to show the current slide
                         const showSlide = (index) => {
                             slides.forEach((slide, i) => {
-                                slide.classList.toggle('hidden', i !== index); // Show the current slide, hide the others
+                                slide.classList.toggle('hidden', i !==
+                                    index); // Show the current slide, hide the others
                             });
                         };
-                
+
                         // Go to the next slide
                         const nextSlide = () => {
-                            currentIndex = (currentIndex + 1) % slides.length;  // Wrap around to the first slide
+                            currentIndex = (currentIndex + 1) % slides.length; // Wrap around to the first slide
                             showSlide(currentIndex);
                         };
-                
+
                         // Go to the previous slide
                         const prevSlide = () => {
-                            currentIndex = (currentIndex - 1 + slides.length) % slides.length; // Wrap around to the last slide
+                            currentIndex = (currentIndex - 1 + slides.length) % slides
+                                .length; // Wrap around to the last slide
                             showSlide(currentIndex);
                         };
-                
+
                         // Next/Prev Button Click Handlers
                         nextButton.addEventListener('click', nextSlide);
                         prevButton.addEventListener('click', prevSlide);
-                
-                        // Initialize first slide
+
+                        // Initialize the first slide to be shown
                         showSlide(currentIndex);
                     });
                 </script>
-                
+
+
 
 
 

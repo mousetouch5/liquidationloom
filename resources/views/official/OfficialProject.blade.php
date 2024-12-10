@@ -150,31 +150,7 @@
                             }
 
 
-                            function fetchSurveyCounts() {
-                                const eventId = currentEventData.eventId;
 
-                                if (!eventId) {
-                                    console.error("Event ID is missing!");
-                                    return;
-                                }
-
-                                $.ajax({
-                                    url: '/survey-count',
-                                    method: 'GET',
-                                    data: {
-                                        event_id: eventId
-                                    },
-                                    success: function(response) {
-                                        console.log("Survey Counts:", response);
-                                        $('#likeCount').text(response.likeCount);
-                                        $('#unlikeCount').text(response.unlikeCount);
-                                        $('#surveyCount').text(response.totalCount);
-                                    },
-                                    error: function() {
-                                        alert('Failed to fetch survey counts. Please try again.');
-                                    }
-                                });
-                            }
 
                             // Function to open Budget Modal and populate data
                             function openBudgetModal() {
@@ -217,35 +193,6 @@
                                 // Open Modal 2
                                 document.getElementById('budgetModal').showModal();
                             }
-
-
-                            function fetchSurveyCounts() {
-                                const eventId = currentEventData.eventId;
-
-                                if (!eventId) {
-                                    console.error("Event ID is missing!");
-                                    return;
-                                }
-
-                                $.ajax({
-                                    url: '/survey-count',
-                                    method: 'GET',
-                                    data: {
-                                        event_id: eventId
-                                    },
-                                    success: function(response) {
-                                        console.log("Survey Counts:", response);
-                                        $('#likeCount').text(response.likeCount);
-                                        $('#unlikeCount').text(response.unlikeCount);
-                                        $('#surveyCount').text(response.totalCount);
-                                    },
-                                    error: function() {
-                                        alert('Failed to fetch survey counts. Please try again.');
-                                    }
-                                });
-                            }
-
-
 
                             // Close modals when clicking outside
                             document.addEventListener('DOMContentLoaded', function() {

@@ -112,6 +112,6 @@
         })
         .catch(error => {
             console.error('Error:', error.message); // Log any errors to the console
-            alert('Failed to load survey data. Please try again later.');
+            console.log('Failed to load survey data. Please try again later.');
         });
 </script>
