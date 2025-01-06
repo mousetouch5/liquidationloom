@@ -14,13 +14,14 @@ use App\Http\Controllers\OfficialProjectController;
 use App\Http\Controllers\EditController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OfficialActivityLogController;
+use App\Http\Controllers\BudgetPlanningController;
 
 //use App\Http\Controllers\CustomLoginController;
 
 use App\Http\Controllers\SurveyLikeController;
 use App\Http\Controllers\SuperAdminLoginDashboard;
 
-
+use App\Http\Controllers\BudgetPreparationController;
 
 use App\Http\Controller\TransactionController;
 
@@ -128,3 +129,7 @@ Route::get('/survey-count', [SurveyLikeController::class, 'getSurveyCounts']);
 
 
 Route::post('/submit-survey', [SurveyLikeController::class, 'store']);
+
+
+Route::get('official/BudgetPreparation', [BudgetPreparationController::class, 'index'])->name('Official.BudgetPreparation.index');
+Route::get('official/BudgetPlanning', [BudgetPlanningController::class, 'index'])->name('Official.BudgetPlanning.index');

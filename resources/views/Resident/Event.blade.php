@@ -426,7 +426,7 @@
 
 
                                 <script>
-                                    // JavaScript to handle the event category toggle
+                                 
                                     document.addEventListener("DOMContentLoaded", function() {
                                         const buttons = document.querySelectorAll("button");
                                         const eventCards = document.querySelectorAll(".event-card");
